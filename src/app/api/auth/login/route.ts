@@ -6,6 +6,8 @@ import { getPostAuthRedirect, signToken, setAuthCookie } from "@/lib/auth";
 import { zodErrorMessage } from "@/lib/zod-utils";
 import { loginSchema } from "@/lib/validators";
 import { ROLE_LABELS } from "@/lib/roles";
+import fs from "fs";
+import path from "path";
 
 export async function POST(request: Request) {
   try {
@@ -89,9 +91,19 @@ export async function POST(request: Request) {
 
     return response;
   } catch (error) {
+    try {
+      const logPath = path.join(process.cwd(), "server-error.log");
+      fs.appendFileSync(
+        logPath,
+        `[${new Date().toISOString()}] LOGIN ERROR:\n${error instanceof Error ? error.stack : String(error)}\n\n`
+      );
+    } catch (e) {
+      console.error("Failed to write to server-error.log:", e);
+    }
     return NextResponse.json(
       { error: (error as Error).message },
       { status: 500 },
     );
   }
 }
+

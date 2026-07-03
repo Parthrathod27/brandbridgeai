@@ -6,6 +6,8 @@ import { generateOtp, signToken, setAuthCookie } from "@/lib/auth";
 import { zodErrorMessage } from "@/lib/zod-utils";
 import { registerSchema } from "@/lib/validators";
 import { sendOtpEmail } from "@/lib/mail";
+import fs from "fs";
+import path from "path";
 
 export async function POST(request: Request) {
   try {
@@ -49,7 +51,17 @@ export async function POST(request: Request) {
 
     try {
       await sendOtpEmail(email, otp);
-    } catch {
+    } catch (mailError) {
+      // Log the mail error to server-error.log as well
+      try {
+        const logPath = path.join(process.cwd(), "server-error.log");
+        fs.appendFileSync(
+          logPath,
+          `[${new Date().toISOString()}] MAIL ERROR DURING REGISTRATION:\n${mailError instanceof Error ? mailError.stack : String(mailError)}\n\n`
+        );
+      } catch (e) {
+        console.error("Failed to write to server-error.log:", e);
+      }
       return NextResponse.json(
         { error: "Account created but failed to send verification email. Please try again." },
         { status: 500 },
@@ -61,9 +73,19 @@ export async function POST(request: Request) {
       email,
     });
   } catch (error) {
+    try {
+      const logPath = path.join(process.cwd(), "server-error.log");
+      fs.appendFileSync(
+        logPath,
+        `[${new Date().toISOString()}] REGISTER ERROR:\n${error instanceof Error ? error.stack : String(error)}\n\n`
+      );
+    } catch (e) {
+      console.error("Failed to write to server-error.log:", e);
+    }
     return NextResponse.json(
       { error: (error as Error).message },
       { status: 500 },
     );
   }
 }
+

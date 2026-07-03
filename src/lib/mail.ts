@@ -18,6 +18,16 @@ function getTransporter() {
 }
 
 export async function sendOtpEmail(to: string, otp: string) {
+  if (!GMAIL_USER || !GMAIL_APP_PASSWORD) {
+    console.log(`\n\n=========================================`);
+    console.log(`📧 DEVELOPMENT EMAIL MOCK`);
+    console.log(`To: ${to}`);
+    console.log(`Subject: Verify your BrandBridge AI account`);
+    console.log(`OTP Code: ${otp}`);
+    console.log(`=========================================\n\n`);
+    return;
+  }
+
   const transporter = getTransporter();
 
   await transporter.sendMail({
@@ -41,6 +51,16 @@ export async function sendResetPasswordEmail(
   to: string,
   resetUrl: string,
 ) {
+  if (!GMAIL_USER || !GMAIL_APP_PASSWORD) {
+    console.log(`\n\n=========================================`);
+    console.log(`📧 DEVELOPMENT EMAIL MOCK`);
+    console.log(`To: ${to}`);
+    console.log(`Subject: Reset your BrandBridge AI password`);
+    console.log(`Reset Link: ${resetUrl}`);
+    console.log(`=========================================\n\n`);
+    return;
+  }
+
   const transporter = getTransporter();
 
   await transporter.sendMail({
