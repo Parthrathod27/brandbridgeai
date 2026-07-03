@@ -29,10 +29,10 @@ export default function EarningsPage() {
     <div>
       <PageHeader title="Earnings" subtitle="Track your project income and hire requests" />
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Total Earnings" value={`$${totalEarnings}`} icon={DollarSign} />
-        <StatCard label="Pending Requests" value={String(pending.length)} icon={DollarSign} />
-        <StatCard label="Active Projects" value={String(active.length)} icon={DollarSign} />
-        <StatCard label="Completed Jobs" value={String(completed.length)} icon={DollarSign} />
+        <StatCard label="Total Earnings" value={`$${totalEarnings}`} icon={DollarSign} href="/dashboard/freelancer/earnings" />
+        <StatCard label="Pending Requests" value={String(pending.length)} icon={DollarSign} href="/dashboard/freelancer/earnings" />
+        <StatCard label="Active Projects" value={String(active.length)} icon={DollarSign} href="/dashboard/freelancer/projects" />
+        <StatCard label="Completed Jobs" value={String(completed.length)} icon={DollarSign} href="/dashboard/freelancer/earnings" />
       </div>
       <MyHiresPage
         viewAs="freelancer"

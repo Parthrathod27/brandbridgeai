@@ -1,16 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import {
   getRoleDashboardConfig,
   ROLE_LABELS,
   type UserRole,
   isValidRole,
-  getDashboardPath,
 } from "@/lib/roles";
 import StatCard from "@/components/dashboard/StatCard";
 import EmptyState from "@/components/dashboard/EmptyState";
+import BrandDashboard from "@/components/dashboard/brand/BrandDashboard";
 import { Sparkles } from "lucide-react";
 
 interface UserData {
@@ -23,6 +22,14 @@ interface RoleDashboardProps {
 }
 
 export default function RoleDashboard({ role }: RoleDashboardProps) {
+  if (role === "brand") {
+    return <BrandDashboard />;
+  }
+
+  return <GenericRoleDashboard role={role} />;
+}
+
+function GenericRoleDashboard({ role }: { role: UserRole }) {
   const [user, setUser] = useState<UserData | null>(null);
   const [stats, setStats] = useState<{ label: string; value: string; icon: typeof Sparkles }[]>([]);
   const [panels, setPanels] = useState<{ title: string; items: unknown[] }[]>([]);
@@ -67,7 +74,13 @@ export default function RoleDashboard({ role }: RoleDashboardProps) {
         <>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {stats.map(({ label, value, icon }) => (
-              <StatCard key={label} label={label} value={value} icon={icon} />
+              <StatCard
+                key={label}
+                label={label}
+                value={value}
+                icon={icon}
+                href={getDashboardPath(role)}
+              />
             ))}
           </div>
 
@@ -78,7 +91,7 @@ export default function RoleDashboard({ role }: RoleDashboardProps) {
                 {panel.items.length === 0 ? (
                   <p className="mt-4 text-sm text-white/45">
                     {config.panels.find((p) => p.title === panel.title)?.desc ??
-                      "No items yet. Get started by exploring the platform."}
+                      "No items yet."}
                   </p>
                 ) : (
                   <div className="mt-4 space-y-3">
@@ -87,8 +100,6 @@ export default function RoleDashboard({ role }: RoleDashboardProps) {
                       const title =
                         (rec.companyName as string) ??
                         (rec.title as string) ??
-                        ((rec.initiatorId as { name?: string })?.name) ??
-                        ((rec.userId as { name?: string })?.name) ??
                         "Item";
                       return (
                         <div key={i} className="rounded-xl bg-white/3 px-4 py-3 text-sm">
@@ -105,6 +116,10 @@ export default function RoleDashboard({ role }: RoleDashboardProps) {
       )}
     </div>
   );
+}
+
+function getDashboardPath(role: UserRole) {
+  return `/dashboard/${role}`;
 }
 
 export { isValidRole };
