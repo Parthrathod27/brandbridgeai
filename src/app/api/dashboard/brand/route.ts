@@ -48,49 +48,44 @@ export async function GET() {
       profileComplete: true,
     }).limit(5);
 
-    const recommendationsPromise = Promise.all(
-      candidateBrands.slice(0, 3).map(async (b) => {
-        const match = await analyzeBrandCompatibility(
-          {
-            companyName: myProfile.companyName,
-            industry: myProfile.industry,
-            targetAudience: myProfile.targetAudience,
-            marketingBudget: myProfile.marketingBudget,
-            bio: myProfile.bio,
-          },
-          {
-            brandId: b.userId.toString(),
-            companyName: b.companyName,
-            industry: b.industry,
-            targetAudience: b.targetAudience,
-            marketingBudget: b.marketingBudget,
-            bio: b.bio,
-          },
-        );
-        return {
+    // Run sequentially instead of Promise.all to avoid hitting the free tier burst rate limit
+    const recommendations = [];
+    for (const b of candidateBrands.slice(0, 3)) {
+      const match = await analyzeBrandCompatibility(
+        {
+          companyName: myProfile.companyName,
+          industry: myProfile.industry,
+          targetAudience: myProfile.targetAudience,
+          marketingBudget: myProfile.marketingBudget,
+          bio: myProfile.bio,
+        },
+        {
           brandId: b.userId.toString(),
-          companyName: b.companyName || "Brand",
-          logo: b.logo,
+          companyName: b.companyName,
           industry: b.industry,
-          compatibilityScore: match.compatibilityScore,
-          reason: match.audienceMatch,
-          estimatedReach: match.estimatedReach,
-        };
-      }),
-    );
+          targetAudience: b.targetAudience,
+          marketingBudget: b.marketingBudget,
+          bio: b.bio,
+        },
+      );
+      recommendations.push({
+        brandId: b.userId.toString(),
+        companyName: b.companyName || "Brand",
+        logo: b.logo,
+        industry: b.industry,
+        compatibilityScore: match.compatibilityScore,
+        reason: match.audienceMatch,
+        estimatedReach: match.estimatedReach,
+      });
+    }
 
-    const externalRecommendationsPromise = discoverExternalBrands({
+    const externalRecommendations = await discoverExternalBrands({
       companyName: myProfile.companyName,
       industry: myProfile.industry,
       targetAudience: myProfile.targetAudience,
       marketingBudget: myProfile.marketingBudget,
       bio: myProfile.bio,
     });
-
-    const [recommendations, externalRecommendations] = await Promise.all([
-      recommendationsPromise,
-      externalRecommendationsPromise,
-    ]);
 
     recommendations.sort((a, b) => b.compatibilityScore - a.compatibilityScore);
 

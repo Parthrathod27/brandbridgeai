@@ -37,6 +37,20 @@
   -webkit-backdrop-filter: blur(20px);
 }
 
+/* Solid sidebar on mobile — glass transparency breaks over page content */
+.bb-sidebar-mobile {
+  background: #0f0f18;
+  border-right: 1px solid var(--border);
+}
+
+@media (min-width: 1024px) {
+  .bb-sidebar-mobile {
+    background: var(--surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+}
+
 .bb-btn-primary {
   background: linear-gradient(135deg, var(--purple), var(--blue));
   color: #fff;

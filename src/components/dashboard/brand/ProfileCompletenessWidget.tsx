@@ -6,11 +6,13 @@ import { UserCircle } from "lucide-react";
 interface ProfileCompletenessWidgetProps {
   percent: number;
   missing: string[];
+  profileHref?: string;
 }
 
 export default function ProfileCompletenessWidget({
   percent,
   missing,
+  profileHref = "/dashboard/brand/profile",
 }: ProfileCompletenessWidgetProps) {
   return (
     <div className="bb-glass bb-card-interactive rounded-2xl p-5 transition-all duration-200">
@@ -44,7 +46,7 @@ export default function ProfileCompletenessWidget({
       )}
       {percent < 100 && (
         <Link
-          href="/dashboard/brand/profile"
+          href={profileHref}
           className="bb-btn-primary mt-4 inline-block rounded-xl px-4 py-2 text-xs font-medium"
         >
           Complete Profile

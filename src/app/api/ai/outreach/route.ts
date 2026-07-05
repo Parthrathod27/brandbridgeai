@@ -42,7 +42,25 @@ The email should:
 5. End with a soft call to action to chat further.
 `;
 
-    const emailDraft = await generateText(prompt);
+    let emailDraft = await generateText(prompt);
+
+    if (!emailDraft) {
+      console.warn("Outreach email generation rate-limited, using intelligent fallback.");
+      emailDraft = `Subject: Exploring a Co-Marketing Partnership: ${myProfile.companyName || "Our Brand"} x ${targetBrandName}
+
+Hi there,
+
+I hope this email finds you well. I’ve been a big fan of ${targetBrandName} and love what you're doing in the industry!
+
+I’m reaching out from ${myProfile.companyName || "Our Brand"}. We specialize in ${myProfile.industry || "our industry"}, and we've been helping our audience with ${myProfile.bio || "our services"}. 
+
+Given the natural synergy between our audiences, I’d love to explore a co-marketing collaboration. I think a joint campaign—perhaps a cross-promotion or shared content piece—would provide immense value to both of our customer bases.
+
+Would you be open to a quick 10-minute chat next week to brainstorm some high-level ideas?
+
+Best regards,
+The ${myProfile.companyName || "Our Brand"} Team`;
+    }
 
     return NextResponse.json({ emailDraft });
   } catch (error: any) {

@@ -41,7 +41,7 @@ export default function DashboardSidebar({
 
   return (
     <aside
-      className={`bb-glass fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-white/10 transition-transform lg:static lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+      className={`bb-sidebar-mobile fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-white/10 transition-transform lg:static lg:z-40 lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
     >
       <div className="flex items-center justify-between p-5">
         <Link

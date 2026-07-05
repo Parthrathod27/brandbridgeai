@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, ArrowLeft } from "lucide-react";
 import PageHeader from "./PageHeader";
 import EmptyState from "./EmptyState";
 import type { UserRole } from "@/lib/roles";
@@ -75,6 +75,8 @@ export default function MessagesPage({ role }: MessagesPageProps) {
     loadConversations();
   }
 
+  const activeConversation = conversations.find((c) => c._id === activeId);
+
   if (loading) {
     return <div className="text-white/50">Loading messages...</div>;
   }
@@ -90,45 +92,108 @@ export default function MessagesPage({ role }: MessagesPageProps) {
         />
       ) : (
         <div className="bb-glass flex h-[calc(100vh-220px)] min-h-[400px] overflow-hidden rounded-2xl">
-          <div className="w-full max-w-xs shrink-0 border-r border-white/10 overflow-y-auto">
+          {/* ── Conversation List ── */}
+          <div
+            className={`w-full shrink-0 border-r border-white/10 overflow-y-auto md:block md:w-72 lg:w-80 ${activeId ? "hidden" : "block"
+              }`}
+          >
             {conversations.map((c) => (
               <button
                 key={c._id}
                 onClick={() => setActiveId(c._id)}
-                className={`w-full border-b border-white/5 px-4 py-3 text-left transition hover:bg-white/5 ${activeId === c._id ? "bg-purple-500/10" : ""}`}
+                className={`w-full border-b border-white/5 px-4 py-3 text-left transition hover:bg-white/5 ${activeId === c._id ? "bg-purple-500/10" : ""
+                  }`}
               >
-                <div className="text-sm font-medium">{c.otherUser?.name ?? "User"}</div>
-                <div className="mt-0.5 truncate text-xs text-white/40">{c.lastMessage}</div>
+                <div className="flex items-center gap-3">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-purple-500/20 text-xs font-semibold text-purple-200">
+                    {(c.otherUser?.name ?? "U").charAt(0).toUpperCase()}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="truncate text-sm font-medium">
+                      {c.otherUser?.name ?? "User"}
+                    </div>
+                    <div className="mt-0.5 truncate text-xs text-white/40">
+                      {c.lastMessage || "No messages yet"}
+                    </div>
+                  </div>
+                </div>
               </button>
             ))}
           </div>
-          <div className="flex flex-1 flex-col">
+
+          {/* ── Chat Area ── */}
+          <div
+            className={`flex flex-1 flex-col ${activeId ? "flex" : "hidden md:flex"
+              }`}
+          >
             {activeId ? (
               <>
+                {/* Chat Header — with back button on mobile */}
+                <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3">
+                  <button
+                    onClick={() => setActiveId(null)}
+                    className="rounded-lg p-1.5 text-white/60 hover:bg-white/5 hover:text-white md:hidden"
+                  >
+                    <ArrowLeft size={18} />
+                  </button>
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-purple-500/20 text-xs font-semibold text-purple-200">
+                    {(activeConversation?.otherUser?.name ?? "U")
+                      .charAt(0)
+                      .toUpperCase()}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="truncate text-sm font-medium">
+                      {activeConversation?.otherUser?.name ?? "User"}
+                    </div>
+                    <div className="text-[10px] text-white/35">
+                      {activeConversation?.otherUser?.email}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Messages */}
                 <div className="flex-1 space-y-3 overflow-y-auto p-4">
+                  {messages.length === 0 && (
+                    <div className="flex h-full items-center justify-center text-xs text-white/30">
+                      No messages yet — send the first one!
+                    </div>
+                  )}
                   {messages.map((m) => {
-                    const senderId = typeof m.senderId === "object" ? m.senderId._id : m.senderId;
+                    const senderId =
+                      typeof m.senderId === "object"
+                        ? m.senderId._id
+                        : m.senderId;
                     const isMine = String(senderId) === String(myId);
                     return (
                       <div
                         key={m._id}
-                        className={`max-w-[80%] rounded-2xl px-4 py-2 text-sm ${isMine ? "ml-auto bg-purple-500/20" : "bg-white/5"}`}
+                        className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm sm:max-w-[70%] ${isMine
+                            ? "ml-auto bg-purple-500/20"
+                            : "bg-white/5"
+                          }`}
                       >
-                        <div className="text-[10px] text-white/40">{m.senderId?.name}</div>
-                        {m.text}
+                        <div className="text-[10px] text-white/40">
+                          {m.senderId?.name}
+                        </div>
+                        <div className="mt-0.5 break-words">{m.text}</div>
                       </div>
                     );
                   })}
                 </div>
-                <div className="flex gap-2 border-t border-white/10 p-4">
+
+                {/* Input */}
+                <div className="flex gap-2 border-t border-white/10 p-3 sm:p-4">
                   <input
-                    className="bb-input flex-1 rounded-xl px-4 py-2.5 text-sm"
+                    className="bb-input min-w-0 flex-1 rounded-xl px-3 py-2.5 text-sm sm:px-4"
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && sendMessage()}
                     placeholder="Type a message..."
                   />
-                  <button onClick={sendMessage} className="bb-btn-primary rounded-xl px-4 py-2.5 text-sm">
+                  <button
+                    onClick={sendMessage}
+                    className="bb-btn-primary shrink-0 rounded-xl px-3 py-2.5 text-sm sm:px-4"
+                  >
                     Send
                   </button>
                 </div>
