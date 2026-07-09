@@ -130,17 +130,18 @@ export default function FindBrandsPage() {
 
   async function handleCollaborate(partner: ExtendedBrand) {
     const selected = products.find((p) => p._id === selectedProductId);
+    const outreachText = outreachProposal?.trim();
+    const defaultMessage = selected
+      ? `Interested in promoting "${selected.name}" through your brand.`
+      : "Interested in promoting our product through your brand.";
     const res = await fetch(`${PO_API_BASE}/collaborations`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         partnerId: partner.profile.userId,
         productId: selectedProductId || undefined,
-        message:
-          message ||
-          (selected
-            ? `Interested in promoting "${selected.name}" through your brand.`
-            : "Interested in promoting our product through your brand."),
+        message: message || outreachText || defaultMessage,
+        proposal: outreachText || undefined,
       }),
     });
     if (res.ok) {

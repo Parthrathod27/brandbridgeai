@@ -7,6 +7,7 @@ import {
 } from "../../../lib/api-utils";
 import { productOwnerCollaborationUpdateSchema } from "../../../lib/validators";
 import ProductOwnerCollaborationRequest from "../../../_models/ProductOwnerCollaborationRequest";
+import Collaboration from "@/models/Collaboration";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -33,6 +34,22 @@ export async function PATCH(request: Request, { params }: Params) {
       .populate("productId", "name");
 
     if (!collaboration) return jsonError("Collaboration not found", 404);
+
+    await Collaboration.updateMany(
+      {
+        $or: [
+          {
+            initiatorId: collaboration.userId,
+            partnerId: collaboration.partnerId,
+          },
+          {
+            initiatorId: collaboration.partnerId,
+            partnerId: collaboration.userId,
+          },
+        ],
+      },
+      { $set: { status: parsed.data!.status } },
+    );
 
     return NextResponse.json({ collaboration });
   } catch (error) {

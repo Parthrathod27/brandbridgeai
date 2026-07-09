@@ -4,6 +4,7 @@ import { requireAuth, jsonError, parseBody } from "@/lib/api-utils";
 import { collaborationUpdateSchema } from "@/lib/validators";
 import { createNotification } from "@/lib/notifications";
 import Collaboration from "@/models/Collaboration";
+import ProductOwnerCollaborationRequest from "@/app/(protected)/dashboard/product_owner/_models/ProductOwnerCollaborationRequest";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -27,6 +28,22 @@ export async function PATCH(request: Request, { params }: Params) {
 
     collaboration.status = parsed.data!.status;
     await collaboration.save();
+
+    await ProductOwnerCollaborationRequest.updateMany(
+      {
+        $or: [
+          {
+            userId: collaboration.initiatorId,
+            partnerId: collaboration.partnerId,
+          },
+          {
+            userId: collaboration.partnerId,
+            partnerId: collaboration.initiatorId,
+          },
+        ],
+      },
+      { $set: { status: parsed.data!.status } },
+    );
 
     const notifyId = isPartner
       ? collaboration.initiatorId.toString()

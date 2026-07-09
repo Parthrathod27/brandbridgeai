@@ -13,8 +13,8 @@ export interface CollaborationItem {
   message?: string;
   proposal?: string;
   compatibilityScore?: number;
-  initiatorId: { _id: string; name: string };
-  partnerId: { _id: string; name: string };
+  isIncoming?: boolean;
+  partnerName?: string;
 }
 
 export interface ProductItem {

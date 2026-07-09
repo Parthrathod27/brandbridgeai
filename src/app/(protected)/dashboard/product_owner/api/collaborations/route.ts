@@ -13,6 +13,9 @@ import {
 } from "../../lib/validators";
 import ProductOwnerCollaborationRequest from "../../_models/ProductOwnerCollaborationRequest";
 import ProductOwnerProduct from "../../_models/ProductOwnerProduct";
+import Collaboration from "@/models/Collaboration";
+import User from "@/models/User";
+import { createNotification } from "@/lib/notifications";
 
 export async function GET() {
   try {
@@ -66,6 +69,35 @@ export async function POST(request: Request) {
       proposal: parsed.data!.proposal,
       compatibilityScore: parsed.data!.compatibilityScore,
     });
+
+    const partner = await User.findById(parsed.data!.partnerId);
+    if (partner) {
+      const existingShared = await Collaboration.findOne({
+        $or: [
+          { initiatorId: result.auth.userId, partnerId: parsed.data!.partnerId },
+          { initiatorId: parsed.data!.partnerId, partnerId: result.auth.userId },
+        ],
+      });
+
+      if (!existingShared) {
+        await Collaboration.create({
+          initiatorId: result.auth.userId,
+          partnerId: parsed.data!.partnerId,
+          message: parsed.data!.message,
+          proposal: parsed.data!.proposal,
+          compatibilityScore: parsed.data!.compatibilityScore,
+        });
+
+        await createNotification(
+          parsed.data!.partnerId,
+          "collaboration",
+          "New collaboration request",
+          parsed.data!.message ||
+            "You received a new collaboration request from a product owner.",
+          `/dashboard/${partner.role}/collaborations`,
+        );
+      }
+    }
 
     return NextResponse.json({ collaboration }, { status: 201 });
   } catch (error) {

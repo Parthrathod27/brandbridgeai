@@ -9,17 +9,15 @@ import type { CollaborationItem } from "@/lib/dashboard-types";
 
 export default function BrandCollaborationsPage() {
   const [collaborations, setCollaborations] = useState<CollaborationItem[]>([]);
-  const [myId, setMyId] = useState("");
   const [loading, setLoading] = useState(true);
 
   function load() {
-    Promise.all([
-      fetch("/api/collaborations").then((r) => r.json()),
-      fetch("/api/auth/me").then((r) => r.json()),
-    ]).then(([collabData, userData]) => {
-      setCollaborations(collabData.collaborations ?? []);
-      setMyId(userData.user?._id ?? "");
-    }).finally(() => setLoading(false));
+    fetch("/api/collaborations")
+      .then((r) => r.json())
+      .then((collabData) => {
+        setCollaborations(collabData.collaborations ?? []);
+      })
+      .finally(() => setLoading(false));
   }
 
   useEffect(() => { load(); }, []);
@@ -46,23 +44,19 @@ export default function BrandCollaborationsPage() {
         />
       ) : (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {collaborations.map((c) => {
-            const isIncoming = c.partnerId._id === myId;
-            const partnerName = isIncoming ? c.initiatorId.name : c.partnerId.name;
-            return (
+          {collaborations.map((c) => (
               <CollaborationCard
                 key={c._id}
-                partnerName={partnerName}
+                partnerName={c.partnerName ?? "Unknown brand"}
                 status={c.status}
                 message={c.message}
                 proposal={c.proposal}
                 compatibilityScore={c.compatibilityScore}
-                isIncoming={isIncoming}
-                onAccept={isIncoming && c.status === "pending" ? () => updateStatus(c._id, "accepted") : undefined}
-                onDecline={isIncoming && c.status === "pending" ? () => updateStatus(c._id, "declined") : undefined}
+                isIncoming={c.isIncoming}
+                onAccept={c.isIncoming && c.status === "pending" ? () => updateStatus(c._id, "accepted") : undefined}
+                onDecline={c.isIncoming && c.status === "pending" ? () => updateStatus(c._id, "declined") : undefined}
               />
-            );
-          })}
+          ))}
         </div>
       )}
     </div>

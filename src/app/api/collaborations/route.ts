@@ -5,6 +5,7 @@ import { requireAuth, jsonError, parseBody } from "@/lib/api-utils";
 import { collaborationSchema } from "@/lib/validators";
 import { createNotification } from "@/lib/notifications";
 import Collaboration from "@/models/Collaboration";
+import Profile from "@/models/Profile";
 import User from "@/models/User";
 
 export async function GET() {
@@ -14,12 +15,36 @@ export async function GET() {
 
     await connectDB();
     const uid = new Types.ObjectId(result.auth.userId);
-    const collaborations = await Collaboration.find({
+    const raw = await Collaboration.find({
       $or: [{ initiatorId: uid }, { partnerId: uid }],
     })
       .sort({ createdAt: -1 })
-      .populate("initiatorId", "name email")
-      .populate("partnerId", "name email");
+      .lean();
+
+    const collaborations = await Promise.all(
+      raw.map(async (c) => {
+        const isIncoming = c.partnerId.toString() === uid.toString();
+        const otherId = isIncoming ? c.initiatorId : c.partnerId;
+        const [otherUser, otherProfile] = await Promise.all([
+          User.findById(otherId).select("name email").lean(),
+          Profile.findOne({ userId: otherId }).select("companyName").lean(),
+        ]);
+        const partnerName =
+          otherProfile?.companyName || otherUser?.name || "Unknown brand";
+
+        return {
+          _id: c._id.toString(),
+          status: c.status,
+          message: c.message,
+          proposal: c.proposal,
+          compatibilityScore: c.compatibilityScore,
+          createdAt: c.createdAt,
+          updatedAt: c.updatedAt,
+          isIncoming,
+          partnerName,
+        };
+      }),
+    );
 
     return NextResponse.json({ collaborations });
   } catch (error) {
