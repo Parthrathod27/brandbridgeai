@@ -14,6 +14,11 @@ export interface MatchResult {
   companyName: string;
   industry?: string;
   compatibilityScore: number;
+  scoreBreakdown: {
+    audienceOverlap: number;
+    categoryRelevance: number;
+    budgetCompatibility: number;
+  };
   audienceMatch: string;
   campaignSuggestions: string[];
   marketingStrategy: string;
@@ -32,6 +37,11 @@ function fallbackMatch(
     companyName: companyName || "Unknown Brand",
     industry,
     compatibilityScore: score,
+    scoreBreakdown: {
+      audienceOverlap: Math.min(score + 5, 95),
+      categoryRelevance: Math.min(score - 2, 90),
+      budgetCompatibility: 75,
+    },
     audienceMatch: "Moderate overlap in target demographics based on industry alignment.",
     campaignSuggestions: [
       "Co-branded social media campaign",
@@ -85,6 +95,10 @@ export function heuristicBrandMatch(
     score,
   );
 
+  result.scoreBreakdown.categoryRelevance = 50 + (currentBrand.industry && targetBrand.industry && currentBrand.industry.toLowerCase() === targetBrand.industry.toLowerCase() ? 40 : 0);
+  result.scoreBreakdown.audienceOverlap = score;
+  result.scoreBreakdown.budgetCompatibility = currentBrand.marketingBudget && targetBrand.marketingBudget ? 80 : 60;
+
   if (currentBrand.industry && targetBrand.industry && currentBrand.industry === targetBrand.industry) {
     result.audienceMatch = `Strong alignment — both brands operate in ${targetBrand.industry}.`;
   }
@@ -104,10 +118,12 @@ export async function analyzeBrandCompatibility(
   }
 
   const prompt = `You are a B2B brand collaboration analyst. Analyze compatibility between two brands.
+Critically evaluate the synergies. Provide a UNIQUE analysis tailored specifically to these exact profiles. DO NOT provide generic text like "Strong alignment — both brands operate in Fashion". Instead, synthesize their target audiences, bio, and specific sub-categories into a custom rationale.
 
 Brand A (current user):
 - Company: ${currentBrand.companyName || "N/A"}
 - Industry: ${currentBrand.industry || "N/A"}
+- Location: ${currentBrand.location || "N/A"}
 - Target Audience: ${currentBrand.targetAudience || "N/A"}
 - Budget: ${currentBrand.marketingBudget || "N/A"}
 - Bio: ${currentBrand.bio || "N/A"}
@@ -115,6 +131,7 @@ Brand A (current user):
 Brand B (potential partner):
 - Company: ${targetBrand.companyName || "N/A"}
 - Industry: ${targetBrand.industry || "N/A"}
+- Location: ${targetBrand.location || "N/A"}
 - Target Audience: ${targetBrand.targetAudience || "N/A"}
 - Budget: ${targetBrand.marketingBudget || "N/A"}
 - Bio: ${targetBrand.bio || "N/A"}
@@ -122,9 +139,14 @@ Brand B (potential partner):
 Respond in JSON only with this exact structure:
 {
   "compatibilityScore": <number 0-100>,
-  "audienceMatch": "<1-2 sentence summary>",
-  "campaignSuggestions": ["<suggestion1>", "<suggestion2>", "<suggestion3>"],
-  "marketingStrategy": "<2-3 sentence strategy>",
+  "scoreBreakdown": {
+    "audienceOverlap": <number 0-100>,
+    "categoryRelevance": <number 0-100>,
+    "budgetCompatibility": <number 0-100>
+  },
+  "audienceMatch": "<1-2 sentence UNIQUE summary of why these specific brands fit together based on their precise bio and audience>",
+  "campaignSuggestions": ["<highly specific suggestion 1>", "<highly specific suggestion 2>", "<highly specific suggestion 3>"],
+  "marketingStrategy": "<2-3 sentence tailored strategy>",
   "suggestedFreelancerCategories": ["<category1>", "<category2>"],
   "estimatedReach": "<estimated combined reach>"
 }`;
@@ -140,6 +162,7 @@ Respond in JSON only with this exact structure:
       companyName: targetBrand.companyName || "Unknown",
       industry: targetBrand.industry,
       compatibilityScore: parsed.compatibilityScore ?? 70,
+      scoreBreakdown: parsed.scoreBreakdown ?? { audienceOverlap: 70, categoryRelevance: 70, budgetCompatibility: 70 },
       audienceMatch: parsed.audienceMatch ?? "",
       campaignSuggestions: parsed.campaignSuggestions ?? [],
       marketingStrategy: parsed.marketingStrategy ?? "",
@@ -168,7 +191,8 @@ Brand: ${brand.companyName}
 Industry: ${brand.industry || "N/A"}
 Audience: ${brand.targetAudience || "N/A"}
 
-Respond JSON only: {"compatibilityScore":<number>,"audienceMatch":"<text>","campaignSuggestions":["<s1>"],"marketingStrategy":"<text>","suggestedFreelancerCategories":["<c>"],"estimatedReach":"<text>"}`;
+Respond JSON only: {"compatibilityScore":<number>,"scoreBreakdown":{"audienceOverlap":<number>,"categoryRelevance":<number>,"budgetCompatibility":<number>},"audienceMatch":"<text>","campaignSuggestions":["<s1>"],"marketingStrategy":"<text>","suggestedFreelancerCategories":["<c>"],"estimatedReach":"<text>"}
+`;
 
     try {
       const text = await generateText(prompt);
@@ -183,6 +207,7 @@ Respond JSON only: {"compatibilityScore":<number>,"audienceMatch":"<text>","camp
         companyName: brand.companyName || "Unknown",
         industry: brand.industry,
         compatibilityScore: parsed.compatibilityScore ?? 65,
+        scoreBreakdown: parsed.scoreBreakdown ?? { audienceOverlap: 65, categoryRelevance: 65, budgetCompatibility: 65 },
         audienceMatch: parsed.audienceMatch ?? "",
         campaignSuggestions: parsed.campaignSuggestions ?? [],
         marketingStrategy: parsed.marketingStrategy ?? "",

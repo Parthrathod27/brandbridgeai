@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Schema, Document, Model, Types } from "mongoose";
 
 export type UserRole = "brand" | "product_owner" | "freelancer" | "hirer";
 export type AuthProvider = "email" | "google";
@@ -14,6 +14,7 @@ export interface IUser extends Document {
   resetToken?: { token: string; expiresAt: Date };
   role?: UserRole | null;
   onboardingComplete: boolean;
+  blockedUsers: Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -50,6 +51,7 @@ const UserSchema = new Schema<IUser>(
       default: null,
     },
     onboardingComplete: { type: Boolean, default: false },
+    blockedUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true },
 );

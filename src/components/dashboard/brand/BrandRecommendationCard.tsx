@@ -10,12 +10,18 @@ export interface BrandRecommendation {
   compatibilityScore: number;
   reason: string;
   estimatedReach: string;
+  campaignSuggestions: string[];
+  matchedAt: string | Date;
+  isSaved?: boolean;
+  isRequested?: boolean;
 }
 
 interface BrandRecommendationCardProps {
   rec: BrandRecommendation;
   onViewDetails: () => void;
   onSendRequest: () => void;
+  onToggleSave: () => void;
+  onCampaignIdeaClick: (idea: string) => void;
 }
 
 function ScoreRing({ score }: { score: number }) {
@@ -50,19 +56,37 @@ function ScoreRing({ score }: { score: number }) {
   );
 }
 
+import { formatDistanceToNow } from "date-fns";
+
 export default function BrandRecommendationCard({
   rec,
   onViewDetails,
   onSendRequest,
+  onToggleSave,
+  onCampaignIdeaClick,
 }: BrandRecommendationCardProps) {
+  let borderColorClass = "border-white/5 border-l-[3px] border-l-gray-500/50";
+  if (rec.compatibilityScore >= 80) borderColorClass = "border-white/5 border-l-[3px] border-l-green-500";
+  else if (rec.compatibilityScore >= 50) borderColorClass = "border-white/5 border-l-[3px] border-l-yellow-500";
+
+  const timeAgo = rec.matchedAt ? formatDistanceToNow(new Date(rec.matchedAt), { addSuffix: true }) : "recently";
+
   return (
     <div
-      className="bb-glass bb-card-interactive cursor-pointer rounded-2xl p-5 transition-all duration-200"
+      className={`bb-glass bb-card-interactive cursor-pointer rounded-2xl p-5 transition-all duration-200 group relative ${borderColorClass}`}
       onClick={onViewDetails}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === "Enter" && onViewDetails()}
     >
+      <button 
+        onClick={(e) => { e.stopPropagation(); onToggleSave(); }}
+        className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-white/10 transition-colors z-10"
+      >
+        <svg className={`w-5 h-5 ${rec.isSaved ? 'text-yellow-400 fill-yellow-400' : 'text-white/40'}`} stroke="currentColor" viewBox="0 0 24 24" fill="none">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+        </svg>
+      </button>
       <div className="flex items-start gap-4">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-purple-500/20">
           {rec.logo ? (
@@ -74,19 +98,38 @@ export default function BrandRecommendationCard({
           )}
         </div>
         <div className="min-w-0 flex-1">
-          <div className="flex items-start justify-between gap-2">
+          <div className="flex items-start justify-between gap-2 pr-8">
             <div>
-              <h3 className="bb-display font-medium">{rec.companyName}</h3>
-              {rec.industry && (
-                <p className="text-xs text-purple-300">{rec.industry}</p>
-              )}
+              <h3 className="bb-display font-medium text-lg">{rec.companyName}</h3>
+              <div className="flex items-center gap-2 mt-0.5">
+                {rec.industry && (
+                  <span className="text-xs text-purple-300">{rec.industry}</span>
+                )}
+                <span className="text-[10px] text-white/30">•</span>
+                <span className="text-[10px] text-white/40">Matched {timeAgo}</span>
+              </div>
             </div>
             <ScoreRing score={rec.compatibilityScore} />
           </div>
-          <p className="mt-2 line-clamp-2 text-xs text-white/50">{rec.reason}</p>
-          <div className="mt-2 flex items-center gap-1 text-xs text-white/40">
+          <p className="mt-2 line-clamp-2 text-xs text-white/60 leading-relaxed">{rec.reason}</p>
+          
+          {rec.campaignSuggestions && rec.campaignSuggestions.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-1.5" onClick={(e) => e.stopPropagation()}>
+              {rec.campaignSuggestions.slice(0, 2).map((idea, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => onCampaignIdeaClick(idea)}
+                  className="rounded-full bg-white/5 border border-white/10 px-2.5 py-1 text-[10px] text-white/70 hover:bg-white/10 transition-colors line-clamp-1 text-left max-w-[200px]"
+                >
+                  {idea}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div className="mt-3 flex items-center gap-1 text-xs text-white/40">
             <Sparkles size={12} className="text-purple-300" />
-            Est. Reach: {rec.estimatedReach}
+            Est. Reach: <span className="text-white/60">{rec.estimatedReach}</span>
           </div>
         </div>
       </div>
@@ -98,10 +141,15 @@ export default function BrandRecommendationCard({
           View Brand Details
         </button>
         <button
-          onClick={onSendRequest}
-          className="bb-btn-primary flex-1 rounded-xl py-2 text-xs font-medium"
+          onClick={rec.isRequested ? undefined : onSendRequest}
+          disabled={rec.isRequested}
+          className={`flex-1 rounded-xl py-2 text-xs font-medium transition-colors ${
+            rec.isRequested 
+              ? "bg-green-500/20 text-green-300 border border-green-500/30 cursor-default" 
+              : "bb-btn-primary"
+          }`}
         >
-          Send Collaboration Request
+          {rec.isRequested ? "Request Sent ✓" : "Collaborate"}
         </button>
       </div>
     </div>

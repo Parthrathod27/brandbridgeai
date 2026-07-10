@@ -15,6 +15,21 @@ export interface BrandDetail {
   verified?: boolean;
   audienceSize?: string;
   pastCollaborations?: number;
+  companySize?: string;
+  foundedYear?: number;
+  businessType?: string;
+  targetGender?: string;
+  primaryMarket?: string;
+  collaborationLookingFor?: string[];
+  preferredCollaborationType?: string;
+  budgetRange?: string;
+  availabilityStatus?: string;
+  socialMediaReach?: {
+    instagram?: number;
+    youtube?: number;
+    facebook?: number;
+    tiktok?: number;
+  };
 }
 
 export interface CompatibilityDetail {
@@ -24,7 +39,7 @@ export interface CompatibilityDetail {
   breakdown: {
     audienceOverlap: number;
     categoryRelevance: number;
-    engagementScore: number;
+    budgetCompatibility: number;
   };
 }
 
@@ -97,20 +112,72 @@ export default function BrandDetailModal({
                 <p className="mt-4 text-sm text-white/60">{brand.bio}</p>
               )}
 
-              <div className="mt-4 grid grid-cols-2 gap-3">
-                {brand.audienceSize && (
+              <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {brand.foundedYear && (
                   <div className="rounded-xl bg-white/3 px-3 py-2">
-                    <div className="text-[10px] uppercase text-white/35">Audience</div>
-                    <div className="text-sm">{brand.audienceSize}</div>
+                    <div className="text-[10px] uppercase text-white/35">Founded</div>
+                    <div className="text-sm text-white/80">{brand.foundedYear}</div>
+                  </div>
+                )}
+                {brand.companySize && (
+                  <div className="rounded-xl bg-white/3 px-3 py-2">
+                    <div className="text-[10px] uppercase text-white/35">Size</div>
+                    <div className="text-sm text-white/80">{brand.companySize}</div>
                   </div>
                 )}
                 {brand.location && (
                   <div className="rounded-xl bg-white/3 px-3 py-2">
                     <div className="text-[10px] uppercase text-white/35">Location</div>
-                    <div className="text-sm">{brand.location}</div>
+                    <div className="text-sm text-white/80">{brand.location}</div>
+                  </div>
+                )}
+                {brand.budgetRange && (
+                  <div className="rounded-xl bg-white/3 px-3 py-2">
+                    <div className="text-[10px] uppercase text-white/35">Budget Range</div>
+                    <div className="text-sm text-white/80">{brand.budgetRange}</div>
+                  </div>
+                )}
+                {brand.availabilityStatus && (
+                  <div className="rounded-xl bg-white/3 px-3 py-2">
+                    <div className="text-[10px] uppercase text-white/35">Status</div>
+                    <div className="text-sm text-white/80">{brand.availabilityStatus}</div>
+                  </div>
+                )}
+                {brand.preferredCollaborationType && (
+                  <div className="rounded-xl bg-white/3 px-3 py-2">
+                    <div className="text-[10px] uppercase text-white/35">Collab Type</div>
+                    <div className="text-sm text-white/80">{brand.preferredCollaborationType}</div>
                   </div>
                 )}
               </div>
+
+              {(brand.targetGender || brand.targetAudience || brand.primaryMarket) && (
+                <div className="mt-4 border-t border-white/10 pt-4">
+                  <h4 className="text-xs font-medium uppercase text-white/50 mb-2">Audience</h4>
+                  <p className="text-sm text-white/70">
+                    {brand.targetAudience}
+                    {brand.targetGender && ` • ${brand.targetGender}`}
+                    {brand.primaryMarket && ` • ${brand.primaryMarket}`}
+                  </p>
+                </div>
+              )}
+
+              {brand.socialMediaReach && Object.keys(brand.socialMediaReach).length > 0 && (
+                <div className="mt-4 border-t border-white/10 pt-4">
+                  <h4 className="text-xs font-medium uppercase text-white/50 mb-2">Social Reach</h4>
+                  <div className="flex flex-wrap gap-3">
+                    {brand.socialMediaReach.instagram ? (
+                      <span className="text-sm text-white/70">IG: {brand.socialMediaReach.instagram}</span>
+                    ) : null}
+                    {brand.socialMediaReach.youtube ? (
+                      <span className="text-sm text-white/70">YT: {brand.socialMediaReach.youtube}</span>
+                    ) : null}
+                    {brand.socialMediaReach.tiktok ? (
+                      <span className="text-sm text-white/70">TT: {brand.socialMediaReach.tiktok}</span>
+                    ) : null}
+                  </div>
+                </div>
+              )}
 
               {compatibility && (
                 <div className="mt-5 rounded-2xl bg-purple-500/8 p-4">
@@ -125,7 +192,7 @@ export default function BrandDetailModal({
                     {[
                       { label: "Audience Overlap", val: compatibility.breakdown.audienceOverlap },
                       { label: "Category Relevance", val: compatibility.breakdown.categoryRelevance },
-                      { label: "Engagement Score", val: compatibility.breakdown.engagementScore },
+                      { label: "Budget Compatibility", val: compatibility.breakdown.budgetCompatibility },
                     ].map(({ label, val }) => (
                       <div key={label}>
                         <div className="flex justify-between text-xs text-white/45">

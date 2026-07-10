@@ -5,7 +5,7 @@ export interface IMessage extends Document {
   senderId: Types.ObjectId;
   text: string;
   attachments: string[];
-  readBy: Types.ObjectId[];
+  readAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -16,7 +16,7 @@ const MessageSchema = new Schema<IMessage>(
     senderId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     text: { type: String, required: true },
     attachments: [{ type: String }],
-    readBy: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    readAt: { type: Date },
   },
   { timestamps: true },
 );

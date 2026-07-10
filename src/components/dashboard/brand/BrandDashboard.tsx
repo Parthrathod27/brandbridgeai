@@ -31,6 +31,7 @@ import EmptyState from "@/components/dashboard/EmptyState";
 import ExternalBrandCard from "@/components/dashboard/brand/ExternalBrandCard";
 import OutreachEmailModal from "@/components/dashboard/brand/OutreachEmailModal";
 import type { ExternalBrandRecommendation } from "@/lib/ai/matching";
+import MatchesToolbar, { type FilterState } from "@/components/dashboard/brand/MatchesToolbar";
 
 interface UserData {
   name: string;
@@ -67,11 +68,27 @@ const STAT_META: Omit<StatCardConfig, "value">[] = [
   },
 ];
 
-export default function BrandDashboard() {
+interface BrandDashboardProps {
+  standaloneMatches?: boolean;
+}
+
+export default function BrandDashboard({ standaloneMatches = false }: BrandDashboardProps = {}) {
   const [user, setUser] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState<{ label: string; value: number }[]>([]);
+  
+  // Tab & Filters State
+  const [activeTab, setActiveTab] = useState<"registered" | "external">("registered");
+  const [filters, setFilters] = useState<FilterState>({
+    search: "", sort: "score", industry: "", location: "", availability: "", collabType: "", savedOnly: false
+  });
+  
+  // Matches State
   const [recommendations, setRecommendations] = useState<BrandRecommendation[]>([]);
+  const [matchesLoading, setMatchesLoading] = useState(true);
+  const [matchesPage, setMatchesPage] = useState(1);
+  const [matchesHasMore, setMatchesHasMore] = useState(false);
+  const [matchesTotal, setMatchesTotal] = useState(0);
   const [externalRecommendations, setExternalRecommendations] = useState<ExternalBrandRecommendation[]>([]);
   const [externalLoading, setExternalLoading] = useState(true);
   const [externalSource, setExternalSource] = useState<"ai" | "curated" | "none">("none");
@@ -139,6 +156,44 @@ export default function BrandDashboard() {
       setExternalLoading(false);
     }
   }, []);
+
+  const loadRegisteredMatches = useCallback(async (pageToLoad = 1, append = false) => {
+    setMatchesLoading(true);
+    try {
+      const params = new URLSearchParams();
+      if (filters.search) params.append("search", filters.search);
+      if (filters.sort) params.append("sort", filters.sort);
+      if (filters.industry) params.append("industry", filters.industry);
+      if (filters.location) params.append("location", filters.location);
+      if (filters.availability) params.append("availability", filters.availability);
+      if (filters.collabType) params.append("type", filters.collabType);
+      params.append("page", pageToLoad.toString());
+
+      const res = await fetch(`/api/brands/matches?${params.toString()}`, { credentials: "include" });
+      const data = await res.json();
+      
+      let newMatches = data.matches || [];
+      if (filters.savedOnly) {
+        newMatches = newMatches.filter((m: any) => m.isSaved);
+      }
+
+      setRecommendations(prev => append ? [...prev, ...newMatches] : newMatches);
+      setMatchesPage(data.page || 1);
+      setMatchesHasMore((data.page || 1) < (data.pages || 1));
+      setMatchesTotal(data.total || 0);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setMatchesLoading(false);
+    }
+  }, [filters]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      loadRegisteredMatches(1, false);
+    }, 400); // debounce search/filters
+    return () => clearTimeout(timer);
+  }, [loadRegisteredMatches]);
 
   useEffect(() => {
     loadDashboard();
@@ -238,6 +293,30 @@ export default function BrandDashboard() {
     loadDashboard();
   }
 
+  async function handleToggleSave(brandId: string) {
+    const rec = recommendations.find(r => r.brandId === brandId);
+    if (!rec) return;
+    const isSaved = rec.isSaved;
+
+    // Optimistic update
+    setRecommendations(prev => prev.map(r => r.brandId === brandId ? { ...r, isSaved: !isSaved } : r));
+
+    try {
+      if (isSaved) {
+        await fetch(`/api/brands/saved?targetBrandId=${brandId}`, { method: "DELETE" });
+      } else {
+        await fetch("/api/brands/saved", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ targetBrandId: brandId })
+        });
+      }
+    } catch (err) {
+      // Revert on error
+      setRecommendations(prev => prev.map(r => r.brandId === brandId ? { ...r, isSaved } : r));
+    }
+  }
+
   const statCards: StatCardConfig[] = STAT_META.map((meta, i) => ({
     ...meta,
     value: stats[i]?.value ?? 0,
@@ -245,27 +324,33 @@ export default function BrandDashboard() {
 
   return (
     <div>
-      <div className="mb-6">
-        <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-purple-500/10 px-3 py-1 text-xs text-purple-300">
-          {ROLE_LABELS.brand} Dashboard
-        </div>
-        <h1 className="bb-display text-2xl font-semibold sm:text-3xl">
-          Welcome back{user ? `, ${user.name.split(" ")[0]}` : ""}
-        </h1>
-        <p className="mt-1 text-sm text-white/55">
-          Manage brand collaborations and AI-powered partner matching.
-        </p>
-      </div>
+      {!standaloneMatches && (
+        <>
+          <div className="mb-6">
+            <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-purple-500/10 px-3 py-1 text-xs text-purple-300">
+              {ROLE_LABELS.brand} Dashboard
+            </div>
+            <h1 className="bb-display text-2xl font-semibold sm:text-3xl">
+              Welcome back{user ? `, ${user.name.split(" ")[0]}` : ""}
+            </h1>
+            <p className="mt-1 text-sm text-white/55">
+              Manage brand collaborations and AI-powered partner matching.
+            </p>
+          </div>
 
-      <QuickActionsBar />
+          <QuickActionsBar />
+        </>
+      )}
 
       {loading ? (
         <>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <StatCardSkeleton key={i} />
-            ))}
-          </div>
+          {!standaloneMatches && (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <StatCardSkeleton key={i} />
+              ))}
+            </div>
+          )}
           <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3">
             <CardSkeleton />
             <CardSkeleton />
@@ -274,161 +359,224 @@ export default function BrandDashboard() {
         </>
       ) : (
         <>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {statCards.map((s) => (
-              <StatCard key={s.label} {...s} />
-            ))}
-          </div>
+          {!standaloneMatches && (
+            <>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                {statCards.map((s) => (
+                  <StatCard key={s.label} {...s} />
+                ))}
+              </div>
 
-          <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3">
-            <ProfileCompletenessWidget
-              percent={profileCompleteness.percent}
-              missing={profileCompleteness.missing}
-            />
-            <EscrowOverviewCard {...escrow} />
-            <ActivityFeed items={activity} />
-          </div>
+              <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3">
+                <ProfileCompletenessWidget
+                  percent={profileCompleteness.percent}
+                  missing={profileCompleteness.missing}
+                />
+                <EscrowOverviewCard {...escrow} />
+                <ActivityFeed items={activity} />
+              </div>
+            </>
+          )}
 
-          {/* Registered Brand Matches */}
-          <div className="mt-8">
-            <div className="mb-4 flex items-center gap-2">
-              <Sparkles size={18} className="text-purple-300" />
-              <h2 className="bb-display text-lg font-medium">Registered Brand Matches</h2>
+          <div className="mt-8 border-b border-white/10">
+            <div className="flex gap-6">
+              <button
+                className={`pb-4 text-sm font-medium transition-colors relative ${activeTab === 'registered' ? 'text-purple-300' : 'text-white/50 hover:text-white/80'}`}
+                onClick={() => setActiveTab('registered')}
+              >
+                Registered Brands
+                {activeTab === 'registered' && (
+                  <span className="absolute bottom-0 left-0 w-full h-[2px] bg-purple-500 rounded-t-full" />
+                )}
+              </button>
+              <button
+                className={`pb-4 text-sm font-medium transition-colors relative flex items-center gap-2 ${activeTab === 'external' ? 'text-purple-300' : 'text-white/50 hover:text-white/80'}`}
+                onClick={() => setActiveTab('external')}
+              >
+                Discover External Brands
+                <span className="rounded bg-white/10 px-1.5 py-0.5 text-[9px] uppercase tracking-wider text-white/70">AI</span>
+                {activeTab === 'external' && (
+                  <span className="absolute bottom-0 left-0 w-full h-[2px] bg-purple-500 rounded-t-full" />
+                )}
+              </button>
             </div>
-            {recommendations.length === 0 ? (
+          </div>
+
+          <div className="mt-6">
+            <MatchesToolbar 
+              filters={filters} 
+              onFilterChange={setFilters} 
+              industries={["Fashion", "Technology", "Beauty", "Food & Beverage", "Fitness", "Gaming", "Travel"]} 
+            />
+          </div>
+
+          {/* Matches Tab Content */}
+          <div className="mt-4">
+            {activeTab === 'registered' ? (
+              matchesLoading && recommendations.length === 0 ? (
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <RecommendationSkeleton key={i} />
+                  ))}
+                </div>
+              ) : recommendations.length === 0 ? (
               <EmptyState
                 icon={Sparkles}
-                title="No recommendations yet"
-                description="Complete your profile and we'll use Gemini AI to find compatible brand partners."
+                title="No matches found"
+                description={filters.search || filters.industry || filters.location || filters.availability || filters.collabType || filters.savedOnly ? "Try adjusting your filters or search terms." : "Complete your profile to get AI-powered brand matches."}
                 action={
-                  <button
-                    onClick={loadDashboard}
-                    className="bb-btn-primary rounded-xl px-4 py-2 text-sm"
-                  >
-                    Refresh Recommendations
-                  </button>
+                  (filters.search || filters.industry || filters.location || filters.availability || filters.collabType || filters.savedOnly) ? (
+                    <button
+                      onClick={() => setFilters({search: "", sort: "score", industry: "", location: "", availability: "", collabType: "", savedOnly: false})}
+                      className="bb-btn-primary rounded-xl px-4 py-2 text-sm"
+                    >
+                      Clear Filters
+                    </button>
+                  ) : (
+                    <a href="/dashboard/brand/profile" className="bb-btn-primary rounded-xl px-4 py-2 text-sm text-center inline-block">
+                      Complete Profile
+                    </a>
+                  )
                 }
               />
             ) : (
-              <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
-                {recommendations.map((rec) => (
-                  <BrandRecommendationCard
-                    key={rec.brandId}
-                    rec={rec}
-                    onViewDetails={() => openBrandDetail(rec.brandId)}
-                    onSendRequest={() => startCollaboration(rec.brandId, rec.companyName)}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Discover External Brands */}
-          <div className="mt-8 pt-8 border-t border-white/5">
-            <div className="mb-4 flex items-center gap-2">
-              <Globe size={18} className="text-purple-300" />
-              <h2 className="bb-display text-lg font-medium">Discover External Brands</h2>
-            </div>
-            <p className="mb-4 text-sm text-white/50">
-              {externalSource === "ai"
-                ? "AI-generated suggestions for real-world brands that align with your profile. These brands are not yet on BrandBridge."
-                : externalSource === "curated"
-                  ? "Profile-matched brand suggestions while Gemini AI is rate-limited. Refresh in a few minutes for fully AI-generated leads."
-                  : "AI-generated suggestions for real-world brands that align with your profile. These brands are not yet on BrandBridge."}
-            </p>
-            {externalQuotaBlocked && externalSource === "curated" && (
-              <p className="mb-4 rounded-xl border border-amber-500/20 bg-amber-500/10 px-4 py-2 text-xs text-amber-200/90">
-                Gemini API quota reached — showing curated matches for your industry. Wait ~5 minutes, then click Retry for fresh AI suggestions.
-              </p>
-            )}
-            {externalLoading ? (
-              <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
-                {Array.from({ length: 3 }).map((_, i) => (
-                  <RecommendationSkeleton key={i} />
-                ))}
-              </div>
-            ) : externalRecommendations.length === 0 ? (
-              <EmptyState
-                icon={Globe}
-                title="No external leads found"
-                description={
-                  externalQuotaBlocked
-                    ? "Gemini API quota is temporarily exceeded. Wait a few minutes and retry, or complete your industry and location in your profile for better matches."
-                    : "We couldn't generate external brand leads. Ensure GEMINI_API_KEY is set in .env.local and your profile is complete."
-                }
-                action={
-                  <button
-                    onClick={() => loadExternalBrands(true)}
-                    className="bb-btn-primary rounded-xl px-4 py-2 text-sm"
-                  >
-                    Retry AI Suggestions
-                  </button>
-                }
-              />
-            ) : (
-              <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
-                {externalRecommendations.map((rec) => (
-                  <ExternalBrandCard
-                    key={rec.companyName}
-                    rec={rec}
-                    onGenerateOutreach={() => generateOutreachEmail(rec.companyName)}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Pending Proposals */}
-          <div className="mt-8">
-            <div className="mb-4 flex items-center gap-2">
-              <Handshake size={18} className="text-purple-300" />
-              <h2 className="bb-display text-lg font-medium">Pending Proposals</h2>
-            </div>
-            <div className="bb-glass rounded-2xl p-6">
-              {pendingProposals.length === 0 ? (
-                <EmptyState
-                  icon={Handshake}
-                  title="No pending proposals right now"
-                  description="Collaboration requests you send or receive will appear here."
-                />
-              ) : (
-                <div className="space-y-3">
-                  {pendingProposals.map((p) => (
-                    <PendingProposalRow
-                      key={p._id}
-                      item={p}
-                      onAccept={
-                        p.isIncoming
-                          ? () => handleProposalAction(p._id, "accepted")
-                          : undefined
-                      }
-                      onDecline={
-                        p.isIncoming
-                          ? () => handleProposalAction(p._id, "declined")
-                          : undefined
-                      }
-                      onView={
-                        p.proposal
-                          ? () => {
-                              setProposalText(p.proposal!);
-                              setEmailDraft("");
-                              setProposalPartnerName(p.partnerName);
-                              setProposalOpen(true);
-                              setProposalLoading(false);
-                            }
-                          : undefined
-                      }
+              <>
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
+                  {recommendations.map((rec) => (
+                    <BrandRecommendationCard
+                      key={rec.brandId}
+                      rec={rec}
+                      onViewDetails={() => openBrandDetail(rec.brandId)}
+                      onSendRequest={() => startCollaboration(rec.brandId, rec.companyName)}
+                      onToggleSave={() => handleToggleSave(rec.brandId)}
+                      onCampaignIdeaClick={(idea) => {
+                        setProposalText(`I really liked the idea: ${idea}`);
+                        startCollaboration(rec.brandId, rec.companyName);
+                      }}
                     />
                   ))}
                 </div>
-              )}
-            </div>
+                {matchesHasMore && (
+                  <div className="mt-8 flex justify-center">
+                    <button
+                      onClick={() => loadRegisteredMatches(matchesPage + 1, true)}
+                      disabled={matchesLoading}
+                      className="rounded-xl border border-white/10 bg-white/5 px-6 py-2.5 text-sm font-medium text-white/70 hover:bg-white/10 transition-colors disabled:opacity-50"
+                    >
+                      {matchesLoading ? "Loading..." : "Load More"}
+                    </button>
+                  </div>
+                )}
+              </>
+            )
+            ) : (
+              // External Brands Content
+              <div className="pt-2">
+                <p className="mb-4 text-sm text-white/50">
+                  {externalSource === "ai"
+                    ? "AI-generated suggestions for real-world brands that align with your profile. These brands are not yet on BrandBridge."
+                    : externalSource === "curated"
+                      ? "Profile-matched brand suggestions while Gemini AI is rate-limited. Refresh in a few minutes for fully AI-generated leads."
+                      : "AI-generated suggestions for real-world brands that align with your profile. These brands are not yet on BrandBridge."}
+                </p>
+                {externalQuotaBlocked && externalSource === "curated" && (
+                  <p className="mb-4 rounded-xl border border-amber-500/20 bg-amber-500/10 px-4 py-2 text-xs text-amber-200/90">
+                    Gemini API quota reached — showing curated matches for your industry. Wait ~5 minutes, then click Retry for fresh AI suggestions.
+                  </p>
+                )}
+                {externalLoading ? (
+                  <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
+                    {Array.from({ length: 3 }).map((_, i) => (
+                      <RecommendationSkeleton key={i} />
+                    ))}
+                  </div>
+                ) : externalRecommendations.length === 0 ? (
+                  <EmptyState
+                    icon={Globe}
+                    title="No external leads found"
+                    description={
+                      externalQuotaBlocked
+                        ? "Gemini API quota is temporarily exceeded. Wait a few minutes and retry, or complete your industry and location in your profile for better matches."
+                        : "We couldn't generate external brand leads. Ensure GEMINI_API_KEY is set in .env.local and your profile is complete."
+                    }
+                    action={
+                      <button
+                        onClick={() => loadExternalBrands(true)}
+                        className="bb-btn-primary rounded-xl px-4 py-2 text-sm"
+                      >
+                        Retry AI Suggestions
+                      </button>
+                    }
+                  />
+                ) : (
+                  <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
+                    {externalRecommendations.map((rec) => (
+                      <ExternalBrandCard
+                        key={rec.companyName}
+                        rec={rec}
+                        onGenerateOutreach={() => generateOutreachEmail(rec.companyName)}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
-          {/* Recommended Freelancers */}
-          <div className="mt-8">
-            <RecommendedFreelancersSection freelancers={freelancers} />
-          </div>
+          {/* Pending Proposals & Recommended Freelancers */}
+          {!standaloneMatches && (
+            <>
+              <div className="mt-8">
+                <div className="mb-4 flex items-center gap-2">
+                  <Handshake size={18} className="text-purple-300" />
+                  <h2 className="bb-display text-lg font-medium">Pending Proposals</h2>
+                </div>
+                <div className="bb-glass rounded-2xl p-6">
+                  {pendingProposals.length === 0 ? (
+                    <EmptyState
+                      icon={Handshake}
+                      title="No pending proposals right now"
+                      description="Collaboration requests you send or receive will appear here."
+                    />
+                  ) : (
+                    <div className="space-y-3">
+                      {pendingProposals.map((p) => (
+                        <PendingProposalRow
+                          key={p._id}
+                          item={p}
+                          onAccept={
+                            p.isIncoming
+                              ? () => handleProposalAction(p._id, "accepted")
+                              : undefined
+                          }
+                          onDecline={
+                            p.isIncoming
+                              ? () => handleProposalAction(p._id, "declined")
+                              : undefined
+                          }
+                          onView={
+                            p.proposal
+                              ? () => {
+                                  setProposalText(p.proposal!);
+                                  setEmailDraft("");
+                                  setProposalPartnerName(p.partnerName);
+                                  setProposalOpen(true);
+                                  setProposalLoading(false);
+                                }
+                              : undefined
+                          }
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="mt-8">
+                <RecommendedFreelancersSection freelancers={freelancers} />
+              </div>
+            </>
+          )}
         </>
       )}
 

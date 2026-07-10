@@ -4,6 +4,7 @@ import { requireAuth, jsonError } from "@/lib/api-utils";
 import Profile from "@/models/Profile";
 import User from "@/models/User";
 import Collaboration from "@/models/Collaboration";
+import BrandMatchCache from "@/models/BrandMatchCache";
 import { analyzeBrandCompatibility } from "@/lib/ai/matching";
 
 type Params = { params: Promise<{ id: string }> };
@@ -33,32 +34,28 @@ export async function GET(_request: Request, { params }: Params) {
 
     let compatibility = null;
     if (myProfile) {
-      const match = await analyzeBrandCompatibility(
-        {
-          companyName: myProfile.companyName,
-          industry: myProfile.industry,
-          targetAudience: myProfile.targetAudience,
-          marketingBudget: myProfile.marketingBudget,
-          bio: myProfile.bio,
-        },
-        {
-          brandId: id,
-          companyName: profile.companyName,
-          industry: profile.industry,
-          targetAudience: profile.targetAudience,
-          marketingBudget: profile.marketingBudget,
-          bio: profile.bio,
-        },
-      );
+      let cache = await BrandMatchCache.findOne({ brandA: myProfile.userId, brandB: id });
+      
+      if (!cache) {
+        const match = await analyzeBrandCompatibility(myProfile as any, { ...profile.toObject(), brandId: id } as any);
+        cache = await BrandMatchCache.create({
+          brandA: myProfile.userId,
+          brandB: id,
+          compatibilityScore: match.compatibilityScore,
+          scoreBreakdown: match.scoreBreakdown,
+          audienceMatch: match.audienceMatch,
+          campaignSuggestions: match.campaignSuggestions,
+          marketingStrategy: match.marketingStrategy,
+          suggestedFreelancerCategories: match.suggestedFreelancerCategories,
+          estimatedReach: match.estimatedReach,
+        });
+      }
+
       compatibility = {
-        score: match.compatibilityScore,
-        reason: match.audienceMatch,
-        estimatedReach: match.estimatedReach,
-        breakdown: {
-          audienceOverlap: Math.min(100, match.compatibilityScore + 5),
-          categoryRelevance: Math.min(100, match.compatibilityScore - 3),
-          engagementScore: Math.min(100, match.compatibilityScore - 8),
-        },
+        score: cache.compatibilityScore,
+        reason: cache.audienceMatch,
+        estimatedReach: cache.estimatedReach,
+        breakdown: cache.scoreBreakdown,
       };
     }
 
@@ -80,6 +77,16 @@ export async function GET(_request: Request, { params }: Params) {
           : "Audience data pending",
         pastCollaborations,
         socialLinks: profile.socialLinks,
+        companySize: profile.companySize,
+        foundedYear: profile.foundedYear,
+        businessType: profile.businessType,
+        targetGender: profile.targetGender,
+        primaryMarket: profile.primaryMarket,
+        collaborationLookingFor: profile.collaborationLookingFor,
+        preferredCollaborationType: profile.preferredCollaborationType,
+        budgetRange: profile.budgetRange,
+        availabilityStatus: profile.availabilityStatus,
+        socialMediaReach: profile.socialMediaReach,
       },
       compatibility,
     });

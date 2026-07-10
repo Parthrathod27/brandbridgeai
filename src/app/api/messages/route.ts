@@ -6,6 +6,7 @@ import { messageSchema } from "@/lib/validators";
 import { createNotification } from "@/lib/notifications";
 import Conversation from "@/models/Conversation";
 import Message from "@/models/Message";
+import User from "@/models/User";
 
 export async function GET(request: Request) {
   try {
@@ -63,19 +64,31 @@ export async function POST(request: Request) {
       return jsonError("Conversation not found", 404);
     }
 
+    const recipientId = conv.participants.find((p) => p.toString() !== result.auth.userId);
+
+    if (recipientId) {
+      const currentUser = await User.findById(result.auth.userId);
+      const recipientUser = await User.findById(recipientId);
+
+      if (currentUser?.blockedUsers?.some((id: any) => id.toString() === recipientId.toString())) {
+        return jsonError("You have blocked this user", 403);
+      }
+      if (recipientUser?.blockedUsers?.some((id: any) => id.toString() === result.auth.userId)) {
+        return jsonError("You have been blocked by this user", 403);
+      }
+    }
+
     const message = await Message.create({
       conversationId,
       senderId: result.auth.userId,
       text: parsed.data!.text,
       attachments: parsed.data!.attachments ?? [],
-      readBy: [new Types.ObjectId(result.auth.userId)],
     });
 
     conv.lastMessageAt = new Date();
     conv.lastMessage = parsed.data!.text;
     await conv.save();
 
-    const recipientId = conv.participants.find((p) => p.toString() !== result.auth.userId);
     if (recipientId) {
       await createNotification(
         recipientId.toString(),
