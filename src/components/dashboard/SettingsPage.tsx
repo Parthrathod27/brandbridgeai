@@ -120,30 +120,33 @@ export default function SettingsPage({ role }: SettingsPageProps) {
         </div>
 
         {/* API Keys & Webhooks */}
-        <div className="bb-glass rounded-2xl p-6 space-y-4">
-          <h2 className="bb-display text-lg font-medium text-white">API Keys & Webhooks</h2>
-          <div className="space-y-1.5">
-            <span className="block text-xs text-white/50">Active API Token</span>
-            <div className="bg-white/3 border border-white/5 rounded-xl p-3.5 text-xs font-mono text-white/80 flex justify-between items-center">
-              <span>bb_live_pk_f8934ha89f7fhq93f...</span>
-              <button
-                type="button"
-                onClick={() => alert("Copied API Key to clipboard")}
-                className="text-purple-300 hover:underline cursor-pointer"
-              >
-                Copy Key
-              </button>
+        {role !== "product_owner" && (
+          <div className="bb-glass rounded-2xl p-6 space-y-4">
+            <h2 className="bb-display text-lg font-medium text-white">API Keys & Webhooks</h2>
+            <div className="space-y-1.5">
+              <span className="block text-xs text-white/50">Active API Token</span>
+              <div className="bg-white/3 border border-white/5 rounded-xl p-3.5 text-xs font-mono text-white/80 flex justify-between items-center">
+                <span>bb_live_pk_f8934ha89f7fhq93f...</span>
+                <button
+                  type="button"
+                  onClick={() => alert("Copied API Key to clipboard")}
+                  className="text-purple-300 hover:underline cursor-pointer"
+                >
+                  Copy Key
+                </button>
+              </div>
+            </div>
+            <div className="space-y-1.5">
+              <label className="block text-xs text-white/50">Webhook Endpoint URL</label>
+              <input
+                className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
+                placeholder="https://yourdomain.com/webhooks/brandbridge"
+                defaultValue="https://api.brandbridgeai.com/v1/webhook"
+              />
             </div>
           </div>
-          <div className="space-y-1.5">
-            <label className="block text-xs text-white/50">Webhook Endpoint URL</label>
-            <input
-              className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
-              placeholder="https://yourdomain.com/webhooks/brandbridge"
-              defaultValue="https://api.brandbridgeai.com/v1/webhook"
-            />
-          </div>
-        </div>
+        )}
+
 
         {/* Workflow Automations Hub */}
         <div className="bb-glass rounded-2xl p-6 space-y-4">
