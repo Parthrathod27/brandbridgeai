@@ -142,6 +142,31 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
     }
   };
 
+  const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
+  const [editingText, setEditingText] = useState("");
+
+  const handleMessageAction = async (msgId: string, action: "edit" | "delete" | "react", payload?: any) => {
+    try {
+      const res = await fetch(`/api/messages/${msgId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action, ...payload }),
+      });
+      if (res.ok) {
+        if (action === "edit") {
+          setEditingMessageId(null);
+          setEditingText("");
+        }
+        fetchMessages(conversation._id);
+      } else {
+        const data = await res.json();
+        setToast(data.error || `Failed to ${action} message`);
+      }
+    } catch (err) {
+      setToast(`Failed to ${action} message`);
+    }
+  };
+
   const handleBlock = async () => {
     if (isBlocking || !conversation.otherUser?._id) return;
     setIsBlocking(true);
@@ -321,30 +346,129 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
               : msg.senderId !== conversation.otherUser?._id;
 
             return (
-              <div key={msg._id || idx} className={`flex flex-col ${isMe ? "items-end" : "items-start"}`}>
-                <div className={`max-w-[75%] rounded-2xl px-4 py-2 ${
-                  isMe 
-                    ? "bg-[#6C5CE7] text-white rounded-br-sm" 
-                    : "bg-[#1A1A1D] text-gray-200 rounded-bl-sm border border-white/5"
-                }`}>
-                  {msg.text && msg.text.trim() && <p className="whitespace-pre-wrap break-words">{msg.text}</p>}
-                  {msg.attachments && msg.attachments.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {msg.attachments.map((url: string, i: number) => (
-                        <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="block">
-                          <img src={url} alt="attachment" className="max-w-[200px] max-h-[200px] object-cover rounded-lg border border-white/20" />
-                        </a>
-                      ))}
+              <div key={msg._id || idx} className={`flex flex-col group ${isMe ? "items-end" : "items-start"}`}>
+                {msg.isDeleted ? (
+                  <div className={`max-w-[75%] rounded-2xl px-4 py-2 italic text-gray-500 bg-white/5 border border-white/10`}>
+                    This message was unsent.
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    {/* Action Menu for ME */}
+                    {isMe && (
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                        <button 
+                          onClick={() => { setEditingMessageId(msg._id); setEditingText(msg.text); }}
+                          className="p-1.5 text-gray-400 hover:text-white bg-white/5 rounded-full"
+                          title="Edit"
+                        >
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                          </svg>
+                        </button>
+                        <button 
+                          onClick={() => { if(confirm("Unsend message?")) handleMessageAction(msg._id, "delete") }}
+                          className="p-1.5 text-gray-400 hover:text-red-400 bg-white/5 rounded-full"
+                          title="Unsend"
+                        >
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      </div>
+                    )}
+                    
+                    {/* Message Bubble */}
+                    <div className="relative flex flex-col">
+                      <div className={`max-w-xs sm:max-w-md md:max-w-[75%] rounded-2xl px-4 py-2 relative ${
+                        isMe 
+                          ? "bg-[#6C5CE7] text-white rounded-br-sm" 
+                          : "bg-[#1A1A1D] text-gray-200 rounded-bl-sm border border-white/5"
+                      }`}>
+                        {editingMessageId === msg._id ? (
+                          <div className="flex flex-col gap-2">
+                            <textarea 
+                              value={editingText} 
+                              onChange={e => setEditingText(e.target.value)} 
+                              className="bg-black/20 rounded p-2 text-sm w-full outline-none resize-none min-w-[200px]"
+                              rows={2}
+                            />
+                            <div className="flex justify-end gap-2">
+                              <button onClick={() => setEditingMessageId(null)} className="text-[10px] uppercase tracking-wider">Cancel</button>
+                              <button onClick={() => handleMessageAction(msg._id, "edit", { text: editingText })} className="text-[10px] font-bold uppercase tracking-wider bg-white/20 px-2 py-1 rounded">Save</button>
+                            </div>
+                          </div>
+                        ) : (
+                          <>
+                            {msg.text && msg.text.trim() && <p className="whitespace-pre-wrap break-words">{msg.text}</p>}
+                            {msg.attachments && msg.attachments.length > 0 && (
+                              <div className="flex flex-wrap gap-2 mt-2">
+                                {msg.attachments.map((url: string, i: number) => (
+                                  <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="block">
+                                    <img src={url} alt="attachment" className="max-w-[200px] max-h-[200px] object-cover rounded-lg border border-white/20" />
+                                  </a>
+                                ))}
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </div>
+                      
+                      {/* Reactions Overlay Menu Trigger */}
+                      {!isMe && !editingMessageId && (
+                        <div className="absolute top-1/2 -translate-y-1/2 -right-8 opacity-0 group-hover:opacity-100 transition-opacity">
+                           <div className="relative group/react">
+                            <button className="p-1.5 text-gray-400 hover:text-white bg-white/5 rounded-full">
+                              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                            </button>
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 hidden group-hover/react:flex bg-[#1A1A1D] border border-white/10 rounded-full shadow-lg p-1 gap-1 z-10">
+                              {['👍', '❤️', '😂', '😮', '😢', '🔥'].map(emoji => (
+                                <button 
+                                  key={emoji} 
+                                  onClick={() => handleMessageAction(msg._id, "react", { emoji })}
+                                  className="hover:scale-125 transition-transform text-lg"
+                                >
+                                  {emoji}
+                                </button>
+                              ))}
+                            </div>
+                           </div>
+                        </div>
+                      )}
+                      
+                      {/* Display Reactions */}
+                      {msg.reactions && msg.reactions.length > 0 && (
+                        <div className={`absolute -bottom-3 flex gap-1 ${isMe ? 'right-2' : 'left-2'}`}>
+                          {Array.from(new Set(msg.reactions.map((r: any) => r.emoji))).map((emoji) => {
+                            const count = msg.reactions.filter((r: any) => r.emoji === emoji).length;
+                            const didIReact = msg.reactions.some((r: any) => r.emoji === emoji && r.userId === currentUserId);
+                            return (
+                              <button 
+                                key={emoji as string} 
+                                onClick={() => handleMessageAction(msg._id, "react", { emoji })}
+                                className={`flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded-full border ${didIReact ? 'bg-[#6C5CE7]/20 border-[#6C5CE7]/50' : 'bg-[#1A1A1D] border-white/10'} shadow-sm`}
+                              >
+                                <span>{emoji as string}</span>
+                                {count > 1 && <span className="text-white/60">{count}</span>}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+
                     </div>
-                  )}
-                </div>
-                <div className="flex items-center gap-1 mt-1 text-[10px] text-gray-500">
+                  </div>
+                )}
+                
+                <div className={`flex items-center gap-1 mt-1.5 text-[10px] text-gray-500 ${msg.reactions?.length > 0 ? 'mt-4' : ''}`}>
                   <span>{format(new Date(msg.createdAt), "h:mm a")}</span>
-                  {isMe && (
+                  {msg.isEdited && <span>(edited)</span>}
+                  {isMe && !msg.isDeleted && (
                     msg.readAt ? (
-                      <span className="text-[#6C5CE7]">Seen</span>
+                      <span className="text-[#6C5CE7] ml-1">Seen</span>
                     ) : (
-                      <span>Sent</span>
+                      <span className="ml-1">Sent</span>
                     )
                   )}
                 </div>

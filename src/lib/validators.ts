@@ -132,11 +132,23 @@ export const collaborationUpdateSchema = z.object({
 export const campaignSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().optional(),
-  status: z.enum(["draft", "active", "completed", "cancelled"]).optional(),
+  status: z.enum(["draft", "active", "completed", "cancelled", "paused"]).optional(),
   participants: z.array(z.string()).optional(),
   budget: z.number().min(0).optional(),
   collaborationId: z.string().optional(),
   productId: z.string().optional(),
+  type: z.string().optional(),
+  startDate: z.string().or(z.date()).optional(),
+  endDate: z.string().or(z.date()).optional(),
+  goal: z.string().optional(),
+  freelancerId: z.string().optional(),
+  spent: z.number().min(0).optional(),
+  stats: z.object({
+    reach: z.number().optional(),
+    engagement: z.number().optional(),
+    clicks: z.number().optional(),
+  }).optional(),
+  assets: z.array(z.string()).optional(),
 });
 
 export const hireSchema = z.object({
@@ -144,12 +156,19 @@ export const hireSchema = z.object({
   campaignId: z.string().optional(),
   rate: z.number().min(0).optional(),
   notes: z.string().optional(),
+  endDate: z.string().or(z.date()).optional(),
 });
 
 export const hireUpdateSchema = z.object({
   status: z.enum(["pending", "active", "completed", "cancelled"]).optional(),
   rate: z.number().min(0).optional(),
   notes: z.string().optional(),
+  endDate: z.string().or(z.date()).optional(),
+  declineReason: z.string().optional(),
+  deliverables: z.array(z.object({
+    fileUrl: z.string(),
+    name: z.string(),
+  })).optional(),
 });
 
 export const proposalSchema = z.object({
@@ -187,4 +206,11 @@ export const aiMatchSchema = z.object({
 
 export const aiProposalSchema = z.object({
   partnerId: z.string().min(1),
+});
+
+export const reviewSchema = z.object({
+  hireId: z.string().min(1),
+  freelancerId: z.string().min(1),
+  rating: z.number().min(1).max(5),
+  text: z.string().optional(),
 });

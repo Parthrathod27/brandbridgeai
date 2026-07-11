@@ -10,6 +10,8 @@ export interface IHire extends Document {
   startDate?: Date;
   endDate?: Date;
   notes?: string;
+  declineReason?: string;
+  deliverables?: { fileUrl: string; name: string }[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,6 +30,13 @@ const HireSchema = new Schema<IHire>(
     startDate: Date,
     endDate: Date,
     notes: String,
+    declineReason: String,
+    deliverables: [
+      {
+        fileUrl: String,
+        name: String,
+      }
+    ]
   },
   { timestamps: true },
 );

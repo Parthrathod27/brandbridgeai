@@ -13,7 +13,15 @@ export async function GET(_request: Request, { params }: Params) {
 
     const { id } = await params;
     await connectDB();
-    const campaign = await Campaign.findById(id).populate("ownerId", "name");
+    const campaign = await Campaign.findById(id)
+      .populate("ownerId", "name")
+      .populate({
+        path: "collaborationId",
+        populate: [
+          { path: "partnerId", select: "name email" },
+          { path: "initiatorId", select: "name email" }
+        ]
+      });
     if (!campaign) return jsonError("Campaign not found", 404);
     return NextResponse.json({ campaign });
   } catch (error) {

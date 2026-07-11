@@ -6,6 +6,9 @@ export interface IMessage extends Document {
   text: string;
   attachments: string[];
   readAt?: Date;
+  isDeleted?: boolean;
+  isEdited?: boolean;
+  reactions?: { emoji: string; userId: Types.ObjectId }[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -17,6 +20,14 @@ const MessageSchema = new Schema<IMessage>(
     text: { type: String, required: true },
     attachments: [{ type: String }],
     readAt: { type: Date },
+    isDeleted: { type: Boolean, default: false },
+    isEdited: { type: Boolean, default: false },
+    reactions: [
+      {
+        emoji: { type: String, required: true },
+        userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+      }
+    ],
   },
   { timestamps: true },
 );

@@ -25,7 +25,14 @@ export async function GET(request: Request) {
 
     const campaigns = await Campaign.find(filter)
       .sort({ createdAt: -1 })
-      .populate("ownerId", "name");
+      .populate("ownerId", "name")
+      .populate({
+        path: "collaborationId",
+        populate: [
+          { path: "partnerId", select: "name email" },
+          { path: "initiatorId", select: "name email" }
+        ]
+      });
 
     return NextResponse.json({ campaigns });
   } catch (error) {
@@ -52,6 +59,14 @@ export async function POST(request: Request) {
       budget: parsed.data!.budget,
       collaborationId: parsed.data!.collaborationId,
       productId: parsed.data!.productId,
+      type: parsed.data!.type,
+      startDate: parsed.data!.startDate,
+      endDate: parsed.data!.endDate,
+      goal: parsed.data!.goal,
+      freelancerId: parsed.data!.freelancerId,
+      spent: parsed.data!.spent,
+      stats: parsed.data!.stats,
+      assets: parsed.data!.assets,
     });
     return NextResponse.json({ campaign }, { status: 201 });
   } catch (error) {

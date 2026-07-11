@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import ConversationList from "./ConversationList";
 import ChatWindow from "./ChatWindow";
 import ContextPanel from "./ContextPanel";
@@ -11,6 +12,7 @@ interface MessagesCenterProps {
 }
 
 export default function MessagesCenter({ role }: MessagesCenterProps) {
+  const router = useRouter();
   const [conversations, setConversations] = useState<any[]>([]);
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
   const [isContextPanelOpen, setIsContextPanelOpen] = useState(false);
@@ -94,7 +96,10 @@ export default function MessagesCenter({ role }: MessagesCenterProps) {
             <p className="text-gray-400 max-w-sm mb-6">
               Select a conversation from the left to start collaborating, or explore new connections.
             </p>
-            <button className="px-6 py-2 bg-[#6C5CE7] hover:bg-[#5B4BC4] text-white rounded-full font-medium transition-colors">
+            <button 
+              onClick={() => router.push(role === "brand" ? "/dashboard/brand/matches" : `/dashboard/${role}/marketplace`)}
+              className="px-6 py-2 bg-[#6C5CE7] hover:bg-[#5B4BC4] text-white rounded-full font-medium transition-colors"
+            >
               {role === "brand" ? "Explore AI Matches" : "Browse Projects"}
             </button>
           </div>

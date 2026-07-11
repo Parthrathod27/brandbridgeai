@@ -5,6 +5,8 @@ import { collaborationUpdateSchema } from "@/lib/validators";
 import { createNotification } from "@/lib/notifications";
 import Collaboration from "@/models/Collaboration";
 import ProductOwnerCollaborationRequest from "@/app/(protected)/dashboard/product_owner/_models/ProductOwnerCollaborationRequest";
+import { logActivity } from "@/lib/activity";
+import User from "@/models/User";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -54,6 +56,16 @@ export async function PATCH(request: Request, { params }: Params) {
       "collaboration",
       `Collaboration ${parsed.data!.status}`,
       `A collaboration request was ${parsed.data!.status}.`,
+    );
+
+    const currentUser = await User.findById(result.auth.userId);
+
+    await logActivity(
+      result.auth.userId,
+      currentUser?.name || "User",
+      parsed.data!.status === "accepted" ? "Accepted" : "Declined",
+      `Collaboration request was ${parsed.data!.status}`,
+      { entityId: collaboration._id, entityType: "collaboration" }
     );
 
     return NextResponse.json({ collaboration });

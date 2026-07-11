@@ -24,11 +24,15 @@ export async function GET(request: Request) {
     const freelancerUsers = await User.find({ role: "freelancer" }).select("_id name email");
     const userIds = freelancerUsers.map((u) => u._id);
 
-    const fpFilter: Record<string, unknown> = { userId: { $in: userIds } };
+    const fpFilter: Record<string, unknown> = { 
+      userId: { $in: userIds },
+      hourlyRate: { $exists: true, $ne: null },
+      "skills.0": { $exists: true } // at least one skill
+    };
     if (category) fpFilter.categories = category;
     if (skill) fpFilter.skills = skill;
     if (minRate || maxRate) {
-      fpFilter.hourlyRate = {};
+      fpFilter.hourlyRate = { ...(fpFilter.hourlyRate as any) };
       if (minRate) (fpFilter.hourlyRate as Record<string, number>).$gte = Number(minRate);
       if (maxRate) (fpFilter.hourlyRate as Record<string, number>).$lte = Number(maxRate);
     }

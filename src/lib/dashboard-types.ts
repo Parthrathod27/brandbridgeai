@@ -5,6 +5,18 @@ export interface CampaignItem {
   status: string;
   budget?: number;
   ownerId?: { name?: string };
+  type?: string;
+  startDate?: string;
+  endDate?: string;
+  goal?: string;
+  spent?: number;
+  stats?: {
+    reach?: number;
+    engagement?: number;
+    clicks?: number;
+  };
+  assets?: string[];
+  collaborationId?: any; // To allow populated data
 }
 
 export interface CollaborationItem {
@@ -56,11 +68,17 @@ export interface ProposalItem {
 
 export interface HireItem {
   _id: string;
+  hirerId?: { _id: string; name: string };
+  freelancerId?: { _id: string; name: string };
+  campaignId?: { _id: string; title: string };
   status: string;
   rate?: number;
-  hirerId?: { name?: string };
-  freelancerId?: { name?: string };
-  campaignId?: { title?: string };
+  notes?: string;
+  startDate?: string;
+  endDate?: string;
+  declineReason?: string;
+  deliverables?: { fileUrl: string; name: string }[];
+  createdAt: string;
 }
 
 export interface FreelancerItem {

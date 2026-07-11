@@ -56,6 +56,11 @@ export async function PATCH(request: Request, { params }: Params) {
 
     if (parsed.data!.rate !== undefined) hire.rate = parsed.data!.rate;
     if (parsed.data!.notes !== undefined) hire.notes = parsed.data!.notes;
+    if (parsed.data!.declineReason !== undefined) hire.declineReason = parsed.data!.declineReason;
+    if (parsed.data!.deliverables !== undefined) {
+      if (!hire.deliverables) hire.deliverables = [];
+      hire.deliverables.push(...parsed.data!.deliverables);
+    }
     await hire.save();
 
     const notifyId = isHirer ? hire.freelancerId.toString() : hire.hirerId.toString();

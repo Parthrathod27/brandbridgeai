@@ -7,6 +7,7 @@ import { createNotification } from "@/lib/notifications";
 import Collaboration from "@/models/Collaboration";
 import Profile from "@/models/Profile";
 import User from "@/models/User";
+import { logActivity } from "@/lib/activity";
 
 export async function GET() {
   try {
@@ -88,6 +89,16 @@ export async function POST(request: Request) {
       "New collaboration request",
       "You received a new collaboration request.",
       `/dashboard/${partner.role}/collaborations`,
+    );
+
+    const currentUser = await User.findById(result.auth.userId);
+
+    await logActivity(
+      result.auth.userId,
+      currentUser?.name || "User",
+      "Request sent",
+      "Sent a collaboration request",
+      { entityId: collaboration._id, entityType: "collaboration" }
     );
 
     return NextResponse.json({ collaboration }, { status: 201 });
