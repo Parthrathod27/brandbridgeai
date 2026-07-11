@@ -26,6 +26,7 @@ export interface CollaborationItem {
   proposal?: string;
   compatibilityScore?: number;
   isIncoming?: boolean;
+  partnerId?: string;
   partnerName?: string;
 }
 

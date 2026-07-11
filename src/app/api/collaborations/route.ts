@@ -42,6 +42,7 @@ export async function GET() {
           createdAt: c.createdAt,
           updatedAt: c.updatedAt,
           isIncoming,
+          partnerId: otherId.toString(),
           partnerName,
         };
       }),

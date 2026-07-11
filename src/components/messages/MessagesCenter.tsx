@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import ConversationList from "./ConversationList";
 import ChatWindow from "./ChatWindow";
 import ContextPanel from "./ContextPanel";
@@ -22,21 +22,56 @@ export default function MessagesCenter({ role }: MessagesCenterProps) {
   // For mobile layout flow
   const [showChatOnMobile, setShowChatOnMobile] = useState(false);
 
+  const searchParams = useSearchParams();
+  const partnerId = searchParams?.get("partnerId");
+  const partnerName = searchParams?.get("partnerName");
+
   useEffect(() => {
+    let activeId = "";
     fetch("/api/auth/me")
       .then((r) => r.json())
       .then((d) => {
-        if (d.user?._id) setCurrentUserId(d.user._id);
+        if (d.user?._id) {
+          setCurrentUserId(d.user._id);
+          activeId = d.user._id;
+        }
       });
-    fetchConversations();
+    // fetchConversations needs to run independently of auth/me just in case, but temp conversation participants array will be populated by activeId.
   }, []);
+
+  useEffect(() => {
+    fetchConversations();
+  }, [partnerId, partnerName]);
 
   const fetchConversations = async () => {
     try {
       const res = await fetch("/api/conversations");
       if (res.ok) {
         const data = await res.json();
-        setConversations(data.conversations || []);
+        let convs = data.conversations || [];
+
+        if (partnerId) {
+          const existing = convs.find((c: any) => c.otherUser?._id === partnerId);
+          if (existing) {
+            setActiveConversationId(existing._id);
+            setShowChatOnMobile(true);
+          } else {
+            const tempExists = convs.find((c: any) => c._id === `temp-${partnerId}`);
+            if (!tempExists) {
+              const tempConv = {
+                _id: `temp-${partnerId}`,
+                isTemp: true,
+                participants: [currentUserId || "temp", partnerId],
+                otherUser: { _id: partnerId, name: partnerName || "New Chat" }
+              };
+              convs = [tempConv, ...convs];
+            }
+            setActiveConversationId(`temp-${partnerId}`);
+            setShowChatOnMobile(true);
+          }
+        }
+
+        setConversations(convs);
       }
     } catch (error) {
       console.error("Failed to fetch conversations", error);
@@ -60,11 +95,11 @@ export default function MessagesCenter({ role }: MessagesCenterProps) {
   return (
     <div className="flex h-[calc(100vh-80px)] overflow-hidden bg-[#0A0A0B] text-white">
       {/* Left Panel: Conversation List */}
-      <div 
+      <div
         className={`${showChatOnMobile ? "hidden md:flex" : "flex"} w-full md:w-80 lg:w-96 flex-col border-r border-white/10`}
       >
-        <ConversationList 
-          conversations={conversations} 
+        <ConversationList
+          conversations={conversations}
           activeId={activeConversationId}
           onSelect={handleSelectConversation}
           isLoading={isLoading}
@@ -73,17 +108,21 @@ export default function MessagesCenter({ role }: MessagesCenterProps) {
       </div>
 
       {/* Center Panel: Chat Window */}
-      <div 
+      <div
         className={`${showChatOnMobile ? "flex" : "hidden md:flex"} flex-1 flex-col relative`}
       >
         {activeConversation ? (
-          <ChatWindow 
+          <ChatWindow
             conversation={activeConversation}
             role={role}
             currentUserId={currentUserId}
             onBack={handleBackToList}
             onToggleContext={() => setIsContextPanelOpen(!isContextPanelOpen)}
             onRefresh={fetchConversations}
+            onConversationCreated={(newId: string) => {
+              setActiveConversationId(newId);
+              fetchConversations();
+            }}
           />
         ) : (
           <div className="flex-1 flex flex-col items-center justify-center text-center p-8">
@@ -96,7 +135,7 @@ export default function MessagesCenter({ role }: MessagesCenterProps) {
             <p className="text-gray-400 max-w-sm mb-6">
               Select a conversation from the left to start collaborating, or explore new connections.
             </p>
-            <button 
+            <button
               onClick={() => router.push(role === "brand" ? "/dashboard/brand/matches" : `/dashboard/${role}/marketplace`)}
               className="px-6 py-2 bg-[#6C5CE7] hover:bg-[#5B4BC4] text-white rounded-full font-medium transition-colors"
             >
@@ -109,9 +148,9 @@ export default function MessagesCenter({ role }: MessagesCenterProps) {
       {/* Right Panel: Context Panel */}
       {activeConversation && isContextPanelOpen && (
         <div className="w-80 border-l border-white/10 hidden lg:flex flex-col bg-[#0F0F12]">
-          <ContextPanel 
-            conversation={activeConversation} 
-            role={role} 
+          <ContextPanel
+            conversation={activeConversation}
+            role={role}
             onClose={() => setIsContextPanelOpen(false)}
           />
         </div>
@@ -129,9 +168,9 @@ export default function MessagesCenter({ role }: MessagesCenterProps) {
               </button>
             </div>
             <div className="overflow-y-auto flex-1">
-              <ContextPanel 
-                conversation={activeConversation} 
-                role={role} 
+              <ContextPanel
+                conversation={activeConversation}
+                role={role}
                 onClose={() => setIsContextPanelOpen(false)}
               />
             </div>
