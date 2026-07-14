@@ -39,7 +39,7 @@ export function BillingSection() {
 }
 
 export function ApiKeysSection({ role }: { role: UserRole }) {
-  if (role === "product_owner") return null;
+
 
   return (
     <div className="bb-glass rounded-2xl p-6 space-y-4 relative overflow-hidden group">
