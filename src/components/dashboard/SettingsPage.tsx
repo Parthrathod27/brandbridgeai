@@ -6,10 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import AccountSection from "@/components/dashboard/settings/AccountSection";
 import ChangePasswordSection from "@/components/dashboard/settings/ChangePasswordSection";
-import { BillingSection, ApiKeysSection } from "@/components/dashboard/settings/LockedSections";
-import AutomationsSection from "@/components/dashboard/settings/AutomationsSection";
 import SecuritySection from "@/components/dashboard/settings/SecuritySection";
-import NotificationsSection from "@/components/dashboard/settings/NotificationsSection";
 import DeleteAccountSection from "@/components/dashboard/settings/DeleteAccountSection";
 
 interface SettingsPageProps {
@@ -60,19 +57,11 @@ export default function SettingsPage({ role }: SettingsPageProps) {
       </div>
 
       <AccountSection initialName={user.name} initialEmail={user.email} pendingEmail={user.pendingEmail} />
-      
+
       <ChangePasswordSection isEmailProvider={user.authProvider === "email"} />
-      
-      <BillingSection />
-      
-      <ApiKeysSection role={role} />
-      
-      <AutomationsSection role={role} />
-      
-      <NotificationsSection initialPreferences={user.notificationPreferences} />
-      
-      <SecuritySection is2faEnabled={user.twoFactorEnabled} />
-      
+
+      <SecuritySection />
+
       <DeleteAccountSection userEmail={user.email} isEmailProvider={user.authProvider === "email"} />
 
       <button
