@@ -139,7 +139,7 @@ export default function ProductOwnerHomePage() {
         <div className="flex items-center gap-2.5">
           <button
             onClick={() => setShowNotifications(true)}
-            className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-white/60 hover:bg-white/10 hover:text-white cursor-pointer relative"
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-white/60 hover:bg-white/10 hover:text-white hover:scale-105 active:scale-95 transition-all cursor-pointer relative"
             title="Notifications"
           >
             <Bell size={18} />
@@ -149,14 +149,14 @@ export default function ProductOwnerHomePage() {
           </button>
           <button
             onClick={() => setShowTasks(true)}
-            className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-white/60 hover:bg-white/10 hover:text-white cursor-pointer"
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-white/60 hover:bg-white/10 hover:text-white hover:scale-105 active:scale-95 transition-all cursor-pointer"
             title="Tasks Board"
           >
             <CheckSquare size={18} />
           </button>
           <button
             onClick={() => setShowCustomizer(true)}
-            className="flex items-center gap-2 rounded-xl bg-purple-500/10 border border-purple-500/20 px-4 py-2 text-sm text-purple-300 hover:bg-purple-500/20 cursor-pointer"
+            className="flex items-center gap-2 rounded-xl bg-purple-500/10 border border-purple-500/20 px-4 py-2 text-sm text-purple-300 hover:bg-purple-500/20 hover:scale-105 active:scale-95 transition-all cursor-pointer"
           >
             <Settings size={16} />
             <span>Customize</span>
@@ -205,7 +205,7 @@ export default function ProductOwnerHomePage() {
           <Link
             key={href}
             href={href}
-            className="bb-glass flex items-center gap-2 rounded-xl px-4 py-3 text-sm text-white/70 hover:text-purple-200"
+            className="bb-glass flex items-center justify-center sm:justify-start gap-2 rounded-xl px-4 py-3 text-sm text-white/70 hover:text-purple-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/5 active:scale-95 transition-all duration-200"
           >
             <Icon size={16} />
             {label}
@@ -262,12 +262,12 @@ export default function ProductOwnerHomePage() {
                       <Link
                         key={String(item._id ?? i)}
                         href={`/dashboard/product_owner/products/${item._id}`}
-                        className="flex items-center justify-between rounded-xl bg-white/3 px-4 py-3 text-sm hover:bg-white/5"
+                        className="flex items-center justify-between rounded-xl bg-white/3 px-4 py-3 text-sm hover:bg-white/5 hover:scale-[1.01] transition-all"
                       >
-                        <div>
-                          <span className="font-medium">{String(item.name ?? "Product")}</span>
+                        <div className="flex-1 min-w-0 pr-2 truncate">
+                          <span className="font-medium truncate">{String(item.name ?? "Product")}</span>
                           {!!item.category && (
-                            <span className="ml-2 text-xs text-white/40">{String(item.category)}</span>
+                            <span className="ml-2 text-xs text-white/40 truncate">{String(item.category)}</span>
                           )}
                         </div>
                         <ProductStatusBadge status={String(item.status ?? "draft")} />
@@ -301,13 +301,13 @@ export default function ProductOwnerHomePage() {
                       const partner = item.partnerId as { name?: string } | undefined;
                       const product = item.productId as { name?: string } | undefined;
                       return (
-                        <div key={String(item._id ?? i)} className="rounded-xl bg-white/3 px-4 py-3 text-sm">
-                          <div className="flex items-center justify-between">
-                            <span>{partner?.name ?? "Brand partner"}</span>
+                        <div key={String(item._id ?? i)} className="rounded-xl bg-white/3 px-4 py-3 text-sm hover:bg-white/5 hover:scale-[1.01] transition-all cursor-default">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="truncate">{partner?.name ?? "Brand partner"}</span>
                             <ProductStatusBadge status={String(item.status ?? "pending")} />
                           </div>
                           {product?.name && (
-                            <p className="mt-1 text-xs text-white/40">Re: {product.name}</p>
+                            <p className="mt-1 text-xs text-white/40 truncate">Re: {product.name}</p>
                           )}
                         </div>
                       );
@@ -336,11 +336,11 @@ export default function ProductOwnerHomePage() {
                         ((item.userId as { name?: string })?.name) ??
                         "Brand";
                       return (
-                        <div key={i} className="rounded-xl bg-white/3 px-4 py-3 text-sm flex justify-between items-center">
-                          <div>
-                            <span className="font-medium">{company}</span>
+                        <div key={i} className="rounded-xl bg-white/3 px-4 py-3 text-sm flex justify-between items-center gap-2 hover:bg-white/5 hover:scale-[1.01] transition-all cursor-default">
+                          <div className="flex-1 min-w-0 truncate">
+                            <span className="font-medium truncate">{company}</span>
                             {!!item.industry && (
-                              <span className="ml-2 text-xs text-white/40">{String(item.industry)}</span>
+                              <span className="ml-2 text-xs text-white/40 truncate">{String(item.industry)}</span>
                             )}
                           </div>
                           <span className="text-[10px] bg-purple-500/10 text-purple-300 font-semibold px-2 py-0.5 rounded">
