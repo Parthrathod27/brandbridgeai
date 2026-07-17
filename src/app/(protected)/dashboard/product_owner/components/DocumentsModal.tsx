@@ -84,22 +84,22 @@ export default function DocumentsModal({ onClose }: DocumentsModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-      <div className="bb-glass w-full max-w-3xl overflow-hidden rounded-2xl border border-white/10 shadow-2xl flex flex-col max-h-[85vh]">
+      <div className="bb-glass w-full max-w-3xl overflow-hidden rounded-2xl border border-[var(--border)] shadow-2xl flex flex-col max-h-[85vh]">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
-          <h3 className="bb-display text-base font-semibold text-white flex items-center gap-2">
-            <Folder size={18} className="text-purple-400" />
+        <div className="flex items-center justify-between border-b border-[var(--border)] px-6 py-4">
+          <h3 className="bb-display text-base font-semibold text-ink flex items-center gap-2">
+            <Folder size={18} className="text-purple" />
             Document Storage Center
           </h3>
-          <button onClick={onClose} className="text-white/60 hover:text-white cursor-pointer">
+          <button onClick={onClose} className="text-ink-soft hover:text-ink cursor-pointer">
             <X size={18} />
           </button>
         </div>
 
         {/* Console control toolbar */}
-        <div className="flex flex-col sm:flex-row gap-3 border-b border-white/5 bg-white/2 p-4">
+        <div className="flex flex-col sm:flex-row gap-3 border-b border-[var(--border)] bg-white/2 p-4">
           <div className="relative flex-1">
-            <Search size={14} className="absolute left-3 top-2.5 text-white/40" />
+            <Search size={14} className="absolute left-3 top-2.5 text-ink-faint" />
             <input
               className="bb-input w-full rounded-xl pl-8 pr-3 py-1.5 text-xs"
               placeholder="Search files by title..."
@@ -138,17 +138,17 @@ export default function DocumentsModal({ onClose }: DocumentsModalProps) {
         {/* Workspace Body */}
         <div className="flex-1 flex overflow-hidden">
           {/* Sidebar */}
-          <div className="w-40 border-r border-white/5 bg-black/10 overflow-y-auto p-4 space-y-1">
-            <span className="block text-[10px] text-white/40 font-bold uppercase mb-2">Folders</span>
+          <div className="w-40 border-r border-[var(--border)] bg-[var(--bg)]/10 overflow-y-auto p-4 space-y-1">
+            <span className="block text-[10px] text-ink-faint font-bold uppercase mb-2">Folders</span>
             {folders.map((f) => (
               <button
                 key={f}
                 onClick={() => setActiveFolder(f)}
                 className={`w-full text-left rounded-lg px-2.5 py-1.5 text-xs font-medium cursor-pointer transition flex items-center gap-1.5 ${
-                  activeFolder === f ? "bg-purple-500/20 text-purple-200" : "text-white/50 hover:bg-white/5 hover:text-white"
+                  activeFolder === f ? "bg-purple-500/20 text-purple" : "text-ink-faint hover:bg-[var(--surface-strong)] hover:text-ink"
                 }`}
               >
-                <Folder size={12} className={activeFolder === f ? "text-purple-400" : "text-white/35"} />
+                <Folder size={12} className={activeFolder === f ? "text-purple" : "text-ink-faint"} />
                 {f}
               </button>
             ))}
@@ -157,21 +157,21 @@ export default function DocumentsModal({ onClose }: DocumentsModalProps) {
           {/* Documents list */}
           <div className="flex-1 overflow-y-auto p-6 space-y-3">
             {loading ? (
-              <p className="text-xs text-white/45">Loading document list...</p>
+              <p className="text-xs text-ink-faint">Loading document list...</p>
             ) : filtered.length === 0 ? (
-              <p className="text-xs text-white/45 py-10 text-center">No documents in this folder.</p>
+              <p className="text-xs text-ink-faint py-10 text-center">No documents in this folder.</p>
             ) : (
               <div className="space-y-2">
                 {filtered.map((doc) => (
                   <div
                     key={doc._id}
-                    className="flex items-center justify-between bg-white/3 border border-white/5 rounded-xl p-3.5 hover:bg-white/5 transition"
+                    className="flex items-center justify-between bg-[var(--surface-strong)] border border-[var(--border)] rounded-xl p-3.5 hover:bg-[var(--surface-strong)] transition"
                   >
                     <div className="flex items-center gap-3">
-                      <File size={16} className="text-purple-400" />
+                      <File size={16} className="text-purple" />
                       <div>
-                        <h4 className="text-xs font-semibold text-white/90">{doc.title}</h4>
-                        <div className="flex items-center gap-3 text-[10px] text-white/40 mt-1">
+                        <h4 className="text-xs font-semibold text-ink">{doc.title}</h4>
+                        <div className="flex items-center gap-3 text-[10px] text-ink-faint mt-1">
                           <span className="capitalize">{doc.fileType}</span>
                           <span>{(doc.fileSize / 1024).toFixed(1)} KB</span>
                           <span>{new Date(doc.createdAt).toLocaleDateString()}</span>
@@ -181,7 +181,7 @@ export default function DocumentsModal({ onClose }: DocumentsModalProps) {
                     <div className="flex gap-2">
                       <button
                         onClick={() => alert(`Previewing mock document url: ${doc.url}`)}
-                        className="p-1.5 rounded-lg bg-white/3 hover:bg-white/5 text-white/60 hover:text-white cursor-pointer"
+                        className="p-1.5 rounded-lg bg-[var(--surface-strong)] hover:bg-[var(--surface-strong)] text-ink-soft hover:text-ink cursor-pointer"
                         title="Preview"
                       >
                         <Eye size={12} />
@@ -198,7 +198,7 @@ export default function DocumentsModal({ onClose }: DocumentsModalProps) {
                           link.click();
                           document.body.removeChild(link);
                         }}
-                        className="p-1.5 rounded-lg bg-white/3 hover:bg-white/5 text-white/60 hover:text-white cursor-pointer"
+                        className="p-1.5 rounded-lg bg-[var(--surface-strong)] hover:bg-[var(--surface-strong)] text-ink-soft hover:text-ink cursor-pointer"
                         title="Download"
                       >
                         <Download size={12} />

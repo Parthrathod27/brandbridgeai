@@ -23,12 +23,12 @@ export default function ProductImageGallery({ images, name }: ProductImageGaller
 
   return (
     <div className="space-y-3">
-      <div className="relative aspect-video overflow-hidden rounded-2xl bg-white/5">
+      <div className="relative aspect-video overflow-hidden rounded-2xl bg-[var(--surface-strong)]">
         {current ? (
           <img src={current} alt={`${name} image ${index + 1}`} className="h-full w-full object-cover" />
         ) : (
           <div className="flex h-full items-center justify-center">
-            <Package size={40} className="text-white/20" />
+            <Package size={40} className="text-ink-faint" />
           </div>
         )}
         {images.length > 1 && (
@@ -36,7 +36,7 @@ export default function ProductImageGallery({ images, name }: ProductImageGaller
             <button
               type="button"
               onClick={prev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white/80 hover:bg-black/70"
+              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-ink hover:bg-[var(--bg)]/70"
               aria-label="Previous image"
             >
               <ChevronLeft size={18} />
@@ -44,7 +44,7 @@ export default function ProductImageGallery({ images, name }: ProductImageGaller
             <button
               type="button"
               onClick={next}
-              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white/80 hover:bg-black/70"
+              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-ink hover:bg-[var(--bg)]/70"
               aria-label="Next image"
             >
               <ChevronRight size={18} />

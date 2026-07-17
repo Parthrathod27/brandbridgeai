@@ -25,8 +25,8 @@ export default function DashboardRedirectPage() {
 
   return (
     <div className="flex min-h-[40vh] items-center justify-center gap-2">
-      <Loader2 className="animate-spin text-purple-400" size={20} />
-      <p className="text-sm text-white/50">Redirecting to your dashboard...</p>
+      <Loader2 className="animate-spin text-purple" size={20} />
+      <p className="text-sm text-ink-faint">Redirecting to your dashboard...</p>
     </div>
   );
 }

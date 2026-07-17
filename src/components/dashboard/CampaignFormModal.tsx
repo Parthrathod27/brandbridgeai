@@ -82,16 +82,16 @@ export default function CampaignFormModal({ onClose, onSuccess, initialCollabora
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-0">
-      <div className="bg-[#1a1a24] border border-white/10 w-full max-w-xl rounded-2xl shadow-2xl flex flex-col max-h-[90vh]">
+      <div className="bg-[#1a1a24] border border-[var(--border)] w-full max-w-xl rounded-2xl shadow-2xl flex flex-col max-h-[90vh]">
         
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-white/10 shrink-0">
+        <div className="flex items-center justify-between p-6 border-b border-[var(--border)] shrink-0">
           <div>
             <h2 className="bb-display text-xl font-semibold">New Campaign</h2>
-            <p className="text-sm text-white/50 mt-1">Setup your marketing initiative</p>
+            <p className="text-sm text-ink-faint mt-1">Setup your marketing initiative</p>
           </div>
-          <button onClick={onClose} className="p-2 rounded-full hover:bg-white/10 transition-colors">
-            <X size={20} className="text-white/70" />
+          <button onClick={onClose} className="p-2 rounded-full hover:bg-[var(--surface-strong)] transition-colors">
+            <X size={20} className="text-ink-soft" />
           </button>
         </div>
 
@@ -106,7 +106,7 @@ export default function CampaignFormModal({ onClose, onSuccess, initialCollabora
           <form id="campaign-form" onSubmit={handleSubmit} className="space-y-5">
             
             <div>
-              <label className="block text-xs text-white/60 mb-2 uppercase tracking-wider">Campaign Name *</label>
+              <label className="block text-xs text-ink-soft mb-2 uppercase tracking-wider">Campaign Name *</label>
               <input 
                 name="title"
                 value={formData.title}
@@ -117,7 +117,7 @@ export default function CampaignFormModal({ onClose, onSuccess, initialCollabora
             </div>
 
             <div>
-              <label className="block text-xs text-white/60 mb-2 uppercase tracking-wider">Linked Collaboration *</label>
+              <label className="block text-xs text-ink-soft mb-2 uppercase tracking-wider">Linked Collaboration *</label>
               <select 
                 name="collaborationId"
                 value={formData.collaborationId}
@@ -134,9 +134,9 @@ export default function CampaignFormModal({ onClose, onSuccess, initialCollabora
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs text-white/60 mb-2 uppercase tracking-wider">Campaign Type *</label>
+                <label className="block text-xs text-ink-soft mb-2 uppercase tracking-wider">Campaign Type *</label>
                 <div className="relative">
-                  <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" size={16} />
+                  <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" size={16} />
                   <select 
                     name="type"
                     value={formData.type}
@@ -154,9 +154,9 @@ export default function CampaignFormModal({ onClose, onSuccess, initialCollabora
               </div>
 
               <div>
-                <label className="block text-xs text-white/60 mb-2 uppercase tracking-wider">Goal *</label>
+                <label className="block text-xs text-ink-soft mb-2 uppercase tracking-wider">Goal *</label>
                 <div className="relative">
-                  <Target className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" size={16} />
+                  <Target className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" size={16} />
                   <select 
                     name="goal"
                     value={formData.goal}
@@ -175,9 +175,9 @@ export default function CampaignFormModal({ onClose, onSuccess, initialCollabora
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs text-white/60 mb-2 uppercase tracking-wider">Start Date *</label>
+                <label className="block text-xs text-ink-soft mb-2 uppercase tracking-wider">Start Date *</label>
                 <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" size={16} />
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" size={16} />
                   <input 
                     type="date"
                     name="startDate"
@@ -189,9 +189,9 @@ export default function CampaignFormModal({ onClose, onSuccess, initialCollabora
               </div>
 
               <div>
-                <label className="block text-xs text-white/60 mb-2 uppercase tracking-wider">End Date *</label>
+                <label className="block text-xs text-ink-soft mb-2 uppercase tracking-wider">End Date *</label>
                 <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" size={16} />
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" size={16} />
                   <input 
                     type="date"
                     name="endDate"
@@ -204,9 +204,9 @@ export default function CampaignFormModal({ onClose, onSuccess, initialCollabora
             </div>
 
             <div>
-              <label className="block text-xs text-white/60 mb-2 uppercase tracking-wider">Budget ($) (Optional)</label>
+              <label className="block text-xs text-ink-soft mb-2 uppercase tracking-wider">Budget ($) (Optional)</label>
               <div className="relative">
-                <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" size={16} />
+                <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" size={16} />
                 <input 
                   type="number"
                   name="budget"
@@ -222,8 +222,8 @@ export default function CampaignFormModal({ onClose, onSuccess, initialCollabora
         </div>
         
         {/* Footer */}
-        <div className="p-6 border-t border-white/10 shrink-0 flex justify-end gap-3">
-          <button onClick={onClose} className="px-5 py-2.5 rounded-xl text-sm hover:bg-white/5 transition-colors">
+        <div className="p-6 border-t border-[var(--border)] shrink-0 flex justify-end gap-3">
+          <button onClick={onClose} className="px-5 py-2.5 rounded-xl text-sm hover:bg-[var(--surface-strong)] transition-colors">
             Cancel
           </button>
           <button 

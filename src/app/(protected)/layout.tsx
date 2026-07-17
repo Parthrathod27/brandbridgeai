@@ -96,7 +96,7 @@ export default function ProtectedLayout({
   if (!authChecked) {
     return (
       <div className="bb-page flex min-h-screen items-center justify-center">
-        <Loader2 className="animate-spin text-purple-400" size={28} />
+        <Loader2 className="animate-spin text-purple" size={28} />
       </div>
     );
   }

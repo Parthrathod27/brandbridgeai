@@ -83,7 +83,7 @@ function BrandCampaignsContent() {
     { id: "paused", label: "Paused" },
   ] as const;
 
-  if (loading) return <div className="text-white/50 animate-pulse">Loading campaigns...</div>;
+  if (loading) return <div className="text-ink-faint animate-pulse">Loading campaigns...</div>;
 
   return (
     <div>
@@ -107,8 +107,8 @@ function BrandCampaignsContent() {
               onClick={() => setActiveTab(tab.id)}
               className={`whitespace-nowrap rounded-xl px-4 py-2 text-sm transition-colors ${
                 activeTab === tab.id
-                  ? "bg-purple-500/20 text-purple-300"
-                  : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white"
+                  ? "bg-purple-500/20 text-purple"
+                  : "bg-[var(--surface-strong)] text-ink-soft hover:bg-[var(--surface-strong)] hover:text-ink"
               }`}
             >
               {tab.label}
@@ -117,7 +117,7 @@ function BrandCampaignsContent() {
         </div>
 
         <div className="relative flex-1 sm:w-64 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" size={16} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" size={16} />
           <input
             type="text"
             placeholder="Search campaigns..."
@@ -149,7 +149,7 @@ function BrandCampaignsContent() {
           }
         />
       ) : filteredCampaigns.length === 0 ? (
-        <div className="text-center py-10 text-white/50">No campaigns match your filters.</div>
+        <div className="text-center py-10 text-ink-faint">No campaigns match your filters.</div>
       ) : (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {filteredCampaigns.map((c) => {
@@ -165,13 +165,13 @@ function BrandCampaignsContent() {
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <h3 className="bb-display font-medium text-lg leading-tight">{c.title}</h3>
-                    {partnerName && <p className="text-xs text-white/50 mt-1">w/ {partnerName}</p>}
+                    {partnerName && <p className="text-xs text-ink-faint mt-1">w/ {partnerName}</p>}
                   </div>
                   <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] uppercase font-medium tracking-wider
                     ${c.status === "active" ? "bg-green-500/20 text-green-400" :
-                      c.status === "completed" ? "bg-purple-500/20 text-purple-400" :
+                      c.status === "completed" ? "bg-purple-500/20 text-purple" :
                       c.status === "paused" ? "bg-orange-500/20 text-orange-400" :
-                      "bg-white/10 text-white/50"}`}
+                      "bg-[var(--surface-strong)] text-ink-faint"}`}
                   >
                     {c.status}
                   </span>
@@ -179,24 +179,24 @@ function BrandCampaignsContent() {
                 
                 {c.status === "active" && (
                   <div className="mb-4">
-                    <div className="flex justify-between text-[10px] text-white/40 mb-1">
+                    <div className="flex justify-between text-[10px] text-ink-faint mb-1">
                       <span>Timeline</span>
                       <span>{progress}%</span>
                     </div>
-                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-1.5 w-full bg-[var(--surface-strong)] rounded-full overflow-hidden">
                       <div className="h-full bg-purple-500" style={{ width: `${progress}%` }}></div>
                     </div>
                   </div>
                 )}
 
-                <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-white/5">
+                <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-[var(--border)]">
                   <div>
-                    <p className="text-[10px] text-white/40 uppercase">Spent</p>
-                    <p className="text-sm font-medium text-white/80">${c.spent || 0} / ${c.budget || 0}</p>
+                    <p className="text-[10px] text-ink-faint uppercase">Spent</p>
+                    <p className="text-sm font-medium text-ink">${c.spent || 0} / ${c.budget || 0}</p>
                   </div>
                   <div>
-                    <p className="text-[10px] text-white/40 uppercase">Goal</p>
-                    <p className="text-sm font-medium text-white/80">{c.goal || "N/A"}</p>
+                    <p className="text-[10px] text-ink-faint uppercase">Goal</p>
+                    <p className="text-sm font-medium text-ink">{c.goal || "N/A"}</p>
                   </div>
                 </div>
 
@@ -227,7 +227,7 @@ function BrandCampaignsContent() {
 
 export default function BrandCampaignsPage() {
   return (
-    <Suspense fallback={<div className="text-white/50 animate-pulse">Loading...</div>}>
+    <Suspense fallback={<div className="text-ink-faint animate-pulse">Loading...</div>}>
       <BrandCampaignsContent />
     </Suspense>
   );

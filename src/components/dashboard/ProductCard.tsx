@@ -25,12 +25,12 @@ export default function ProductCard({
 }: ProductCardProps) {
   return (
     <div className="bb-glass bb-card rounded-2xl overflow-hidden">
-      <div className="aspect-video bg-white/5">
+      <div className="aspect-video bg-[var(--surface-strong)]">
         {image ? (
           <img src={image} alt={name} className="h-full w-full object-cover" />
         ) : (
           <div className="flex h-full items-center justify-center">
-            <Package size={32} className="text-white/20" />
+            <Package size={32} className="text-ink-faint" />
           </div>
         )}
       </div>
@@ -38,16 +38,16 @@ export default function ProductCard({
         <div className="flex items-start justify-between gap-2">
           <div>
             <h3 className="bb-display font-medium">{name}</h3>
-            {category && <p className="mt-0.5 text-xs text-purple-300">{category}</p>}
+            {category && <p className="mt-0.5 text-xs text-purple">{category}</p>}
           </div>
           {status && (
-            <span className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] capitalize text-white/50">
+            <span className="rounded-full bg-[var(--surface-strong)] px-2 py-0.5 text-[10px] capitalize text-ink-faint">
               {status}
             </span>
           )}
         </div>
         {description && (
-          <p className="mt-2 line-clamp-2 text-xs text-white/45">{description}</p>
+          <p className="mt-2 line-clamp-2 text-xs text-ink-faint">{description}</p>
         )}
         <div className="mt-4 flex gap-2">
           {onMatch && (
@@ -56,12 +56,12 @@ export default function ProductCard({
             </button>
           )}
           {onEdit && (
-            <button onClick={onEdit} className="rounded-xl border border-white/10 p-2 text-white/60 hover:bg-white/5">
+            <button onClick={onEdit} className="rounded-xl border border-[var(--border)] p-2 text-ink-soft hover:bg-[var(--surface-strong)]">
               <Pencil size={14} />
             </button>
           )}
           {onDelete && (
-            <button onClick={onDelete} className="rounded-xl border border-white/10 p-2 text-red-400/70 hover:bg-white/5">
+            <button onClick={onDelete} className="rounded-xl border border-[var(--border)] p-2 text-red-400/70 hover:bg-[var(--surface-strong)]">
               <Trash2 size={14} />
             </button>
           )}

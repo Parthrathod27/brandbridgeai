@@ -178,13 +178,13 @@ function FreelancerDashboard() {
     <div>
       {/* Header */}
       <div className="mb-6">
-        <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-purple-500/10 px-3 py-1 text-xs text-purple-300">
+        <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-purple-500/10 px-3 py-1 text-xs text-purple">
           {ROLE_LABELS.freelancer} Dashboard
         </div>
         <h1 className="bb-display text-2xl font-semibold sm:text-3xl">
           Welcome back{user ? `, ${user.name.split(" ")[0]}` : ""}
         </h1>
-        <p className="mt-1 text-sm text-white/55">
+        <p className="mt-1 text-sm text-ink-soft">
           Showcase your work and land creative projects.
         </p>
       </div>
@@ -295,17 +295,17 @@ function GenericRoleDashboard({ role }: { role: UserRole }) {
   return (
     <div>
       <div className="mb-8">
-        <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-purple-500/10 px-3 py-1 text-xs text-purple-300">
+        <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-purple-500/10 px-3 py-1 text-xs text-purple">
           {ROLE_LABELS[role]} Dashboard
         </div>
         <h1 className="bb-display text-2xl font-semibold sm:text-3xl">
           Welcome back{user ? `, ${user.name.split(" ")[0]}` : ""}
         </h1>
-        <p className="mt-1 text-sm text-white/55">{config.subtitle}</p>
+        <p className="mt-1 text-sm text-ink-soft">{config.subtitle}</p>
       </div>
 
       {loading ? (
-        <div className="text-white/50">Loading dashboard...</div>
+        <div className="text-ink-faint">Loading dashboard...</div>
       ) : (
         <>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -325,7 +325,7 @@ function GenericRoleDashboard({ role }: { role: UserRole }) {
               <div key={panel.title} className="bb-glass rounded-2xl p-6">
                 <h2 className="bb-display text-lg font-medium">{panel.title}</h2>
                 {panel.items.length === 0 ? (
-                  <p className="mt-4 text-sm text-white/45">
+                  <p className="mt-4 text-sm text-ink-faint">
                     {config.panels.find((p) => p.title === panel.title)?.desc ??
                       "No items yet."}
                   </p>
@@ -338,7 +338,7 @@ function GenericRoleDashboard({ role }: { role: UserRole }) {
                         (rec.title as string) ??
                         "Item";
                       return (
-                        <div key={i} className="rounded-xl bg-white/3 px-4 py-3 text-sm">
+                        <div key={i} className="rounded-xl bg-[var(--surface-strong)] px-4 py-3 text-sm">
                           {title}
                         </div>
                       );

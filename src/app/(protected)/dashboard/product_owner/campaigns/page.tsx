@@ -141,7 +141,7 @@ export default function ProductOwnerCampaignsPage() {
   const estimatedCTR = goals === "sales" ? 0.038 : 0.054;
   const estimatedROI = numBudget ? ((numBudget * estimatedCTR * 4.8) / 10).toFixed(1) + "x" : "2.5x";
 
-  if (loading) return <div className="text-white/50">Loading campaigns...</div>;
+  if (loading) return <div className="text-ink-faint">Loading campaigns...</div>;
 
   return (
     <div className="space-y-6">
@@ -162,19 +162,19 @@ export default function ProductOwnerCampaignsPage() {
       {showWizard && (
         <div className="bb-glass rounded-2xl p-6 space-y-6 border border-purple-500/10 shadow-2xl">
           {/* Progress bar */}
-          <div className="flex items-center justify-between border-b border-white/5 pb-4 text-xs font-semibold">
-            <span className={step >= 1 ? "text-purple-300" : "text-white/45"}>1. Core Details</span>
-            <ChevronRight size={14} className="text-white/30" />
-            <span className={step >= 2 ? "text-purple-300" : "text-white/45"}>2. Milestones & Goals</span>
-            <ChevronRight size={14} className="text-white/30" />
-            <span className={step >= 3 ? "text-purple-300" : "text-white/45"}>3. Budget & ROI</span>
+          <div className="flex items-center justify-between border-b border-[var(--border)] pb-4 text-xs font-semibold">
+            <span className={step >= 1 ? "text-purple" : "text-ink-faint"}>1. Core Details</span>
+            <ChevronRight size={14} className="text-ink-faint" />
+            <span className={step >= 2 ? "text-purple" : "text-ink-faint"}>2. Milestones & Goals</span>
+            <ChevronRight size={14} className="text-ink-faint" />
+            <span className={step >= 3 ? "text-purple" : "text-ink-faint"}>3. Budget & ROI</span>
           </div>
 
           <form onSubmit={handleCreate} className="space-y-4">
             {step === 1 && (
               <div className="space-y-4">
                 <div className="space-y-1">
-                  <label className="text-xs text-white/50">Campaign Title</label>
+                  <label className="text-xs text-ink-faint">Campaign Title</label>
                   <input
                     className="bb-input w-full rounded-xl px-4 py-2.5 text-xs"
                     placeholder="e.g. Summer ActiveWear Blast"
@@ -184,7 +184,7 @@ export default function ProductOwnerCampaignsPage() {
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs text-white/50">Description</label>
+                  <label className="text-xs text-ink-faint">Description</label>
                   <textarea
                     className="bb-input w-full rounded-xl px-4 py-2.5 text-xs"
                     placeholder="Describe target demographics, platforms, content assets..."
@@ -196,7 +196,7 @@ export default function ProductOwnerCampaignsPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {products.length > 0 && (
                     <div className="space-y-1">
-                      <label className="text-xs text-white/50">Link to active Product</label>
+                      <label className="text-xs text-ink-faint">Link to active Product</label>
                       <select
                         className="bb-input w-full rounded-xl px-4 py-2.5 text-xs"
                         value={productId}
@@ -211,7 +211,7 @@ export default function ProductOwnerCampaignsPage() {
                     </div>
                   )}
                   <div className="space-y-1">
-                    <label className="text-xs text-white/50">Assigned Brand Partner (Optional)</label>
+                    <label className="text-xs text-ink-faint">Assigned Brand Partner (Optional)</label>
                     <input
                       className="bb-input w-full rounded-xl px-4 py-2.5 text-xs"
                       placeholder="e.g. Aura Lifestyle Inc"
@@ -233,7 +233,7 @@ export default function ProductOwnerCampaignsPage() {
             {step === 2 && (
               <div className="space-y-4">
                 <div className="space-y-1">
-                  <label className="text-xs text-white/50">Select Primary Campaign Goal</label>
+                  <label className="text-xs text-ink-faint">Select Primary Campaign Goal</label>
                   <select
                     className="bb-input w-full rounded-xl px-4 py-2.5 text-xs"
                     value={goals}
@@ -246,11 +246,11 @@ export default function ProductOwnerCampaignsPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs text-white/50 block">Define Milestones</label>
+                  <label className="text-xs text-ink-faint block">Define Milestones</label>
                   {milestones.map((mil, idx) => (
                     <div key={idx} className="flex gap-3 items-center text-xs">
-                      <CheckCircle size={14} className="text-purple-400" />
-                      <span className="font-medium text-white/80 flex-1">{mil.title}</span>
+                      <CheckCircle size={14} className="text-purple" />
+                      <span className="font-medium text-ink flex-1">{mil.title}</span>
                       <input
                         className="bb-input rounded-xl px-3 py-1.5 text-xs"
                         type="date"
@@ -270,7 +270,7 @@ export default function ProductOwnerCampaignsPage() {
                   <button
                     type="button"
                     onClick={() => setStep(1)}
-                    className="rounded-xl px-4 py-2 text-xs text-white/50 hover:text-white cursor-pointer"
+                    className="rounded-xl px-4 py-2 text-xs text-ink-faint hover:text-ink cursor-pointer"
                   >
                     Back
                   </button>
@@ -289,7 +289,7 @@ export default function ProductOwnerCampaignsPage() {
               <div className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-xs text-white/50">Marketing Budget ($)</label>
+                    <label className="text-xs text-ink-faint">Marketing Budget ($)</label>
                     <input
                       className="bb-input w-full rounded-xl px-4 py-2.5 text-xs"
                       placeholder="e.g. 5000"
@@ -302,28 +302,28 @@ export default function ProductOwnerCampaignsPage() {
                   </div>
                   {/* ROI Calculator Card */}
                   <div className="bg-purple-500/5 border border-purple-500/10 rounded-xl p-4 space-y-1">
-                    <div className="flex items-center gap-1.5 text-[10px] text-purple-300 font-semibold uppercase">
+                    <div className="flex items-center gap-1.5 text-[10px] text-purple font-semibold uppercase">
                       <Target size={12} /> Live ROI Forecaster
                     </div>
-                    <p className="text-xl font-bold text-white">{estimatedROI} Est. ROI</p>
-                    <p className="text-[10px] text-white/40 leading-relaxed">
+                    <p className="text-xl font-bold text-ink">{estimatedROI} Est. ROI</p>
+                    <p className="text-[10px] text-ink-faint leading-relaxed">
                       Estimated based on a target {goals === "sales" ? "3.8%" : "5.4%"} Click-through Rate (CTR).
                     </p>
                   </div>
                 </div>
 
                 {/* AI Assistant section */}
-                <div className="space-y-2 border-t border-white/5 pt-4">
+                <div className="space-y-2 border-t border-[var(--border)] pt-4">
                   <button
                     type="button"
                     onClick={handleAskAISuggestions}
                     disabled={aiLoading}
-                    className="flex items-center gap-1.5 text-[10px] font-semibold text-purple-300 hover:text-purple-200 cursor-pointer"
+                    className="flex items-center gap-1.5 text-[10px] font-semibold text-purple hover:text-purple cursor-pointer"
                   >
                     <Sparkles size={12} /> Ask AI to Optimize Milestones & Keywords
                   </button>
                   {aiSuggest && (
-                    <div className="bg-white/2 border border-white/5 rounded-xl p-3.5 text-xs text-white/70 font-mono leading-relaxed max-h-32 overflow-y-auto">
+                    <div className="bg-white/2 border border-[var(--border)] rounded-xl p-3.5 text-xs text-ink-soft font-mono leading-relaxed max-h-32 overflow-y-auto">
                       {aiSuggest}
                     </div>
                   )}
@@ -333,7 +333,7 @@ export default function ProductOwnerCampaignsPage() {
                   <button
                     type="button"
                     onClick={() => setStep(2)}
-                    className="rounded-xl px-4 py-2 text-xs text-white/50 hover:text-white cursor-pointer"
+                    className="rounded-xl px-4 py-2 text-xs text-ink-faint hover:text-ink cursor-pointer"
                   >
                     Back
                   </button>
@@ -359,11 +359,11 @@ export default function ProductOwnerCampaignsPage() {
       ) : (
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           {campaigns.map((c) => (
-            <div key={c._id} className="bb-glass rounded-2xl p-6 space-y-4 border border-white/5">
-              <div className="flex justify-between items-start border-b border-white/5 pb-3">
+            <div key={c._id} className="bb-glass rounded-2xl p-6 space-y-4 border border-[var(--border)]">
+              <div className="flex justify-between items-start border-b border-[var(--border)] pb-3">
                 <div>
-                  <h3 className="bb-display text-base font-semibold text-white">{c.title}</h3>
-                  <span className="inline-block text-[10px] uppercase font-bold text-purple-300 mt-1">
+                  <h3 className="bb-display text-base font-semibold text-ink">{c.title}</h3>
+                  <span className="inline-block text-[10px] uppercase font-bold text-purple mt-1">
                     {c.goals}
                   </span>
                 </div>
@@ -372,22 +372,22 @@ export default function ProductOwnerCampaignsPage() {
                 </span>
               </div>
 
-              {c.description && <p className="text-xs text-white/60 leading-relaxed">{c.description}</p>}
+              {c.description && <p className="text-xs text-ink-soft leading-relaxed">{c.description}</p>}
 
-              <div className="grid grid-cols-3 gap-3 text-xs bg-white/2 border border-white/5 rounded-xl p-3 text-center">
+              <div className="grid grid-cols-3 gap-3 text-xs bg-white/2 border border-[var(--border)] rounded-xl p-3 text-center">
                 <div>
-                  <span className="block text-[9px] text-white/40">Budget</span>
-                  <span className="font-semibold text-white">
+                  <span className="block text-[9px] text-ink-faint">Budget</span>
+                  <span className="font-semibold text-ink">
                     {c.budget != null ? `$${c.budget.toLocaleString()}` : "—"}
                   </span>
                 </div>
                 <div>
-                  <span className="block text-[9px] text-white/40">ROI Forecast</span>
-                  <span className="font-semibold text-purple-300">{c.roi}</span>
+                  <span className="block text-[9px] text-ink-faint">ROI Forecast</span>
+                  <span className="font-semibold text-purple">{c.roi}</span>
                 </div>
                 <div>
-                  <span className="block text-[9px] text-white/40">Brand Partner</span>
-                  <span className="font-semibold text-white truncate max-w-[80px] inline-block">
+                  <span className="block text-[9px] text-ink-faint">Brand Partner</span>
+                  <span className="font-semibold text-ink truncate max-w-[80px] inline-block">
                     {c.partnerName}
                   </span>
                 </div>
@@ -395,17 +395,17 @@ export default function ProductOwnerCampaignsPage() {
 
               {/* Milestones timeline checkmarks */}
               <div className="space-y-2.5">
-                <h4 className="text-[10px] uppercase font-bold text-white/40">Milestones Track</h4>
+                <h4 className="text-[10px] uppercase font-bold text-ink-faint">Milestones Track</h4>
                 <div className="space-y-2">
                   {c.milestones?.map((mil, idx) => (
                     <div key={idx} className="flex justify-between items-center text-xs">
                       <div className="flex gap-2 items-center">
-                        <CheckCircle size={13} className={mil.completed ? "text-purple-400" : "text-white/20"} />
-                        <span className={mil.completed ? "text-white/45 line-through" : "text-white/80 font-medium"}>
+                        <CheckCircle size={13} className={mil.completed ? "text-purple" : "text-ink-faint"} />
+                        <span className={mil.completed ? "text-ink-faint line-through" : "text-ink font-medium"}>
                           {mil.title}
                         </span>
                       </div>
-                      <span className="text-[10px] text-white/40">{mil.date}</span>
+                      <span className="text-[10px] text-ink-faint">{mil.date}</span>
                     </div>
                   ))}
                 </div>

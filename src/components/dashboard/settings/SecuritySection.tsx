@@ -69,7 +69,7 @@ export default function SecuritySection() {
       {/* Active Sessions */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="bb-display text-lg font-medium text-white">Active Device Sessions</h2>
+          <h2 className="bb-display text-lg font-medium text-ink">Active Device Sessions</h2>
           {sessions.length > 1 && (
             <button onClick={logoutAllOther} disabled={sessionActionLoading === "all"} className="text-xs font-medium text-red-400 hover:text-red-300 transition flex items-center gap-1.5">
               {sessionActionLoading === "all" && <Loader2 size={12} className="animate-spin" />}
@@ -79,21 +79,21 @@ export default function SecuritySection() {
         </div>
 
         {loading ? (
-          <div className="flex justify-center py-6"><Loader2 className="animate-spin text-white/50" /></div>
+          <div className="flex justify-center py-6"><Loader2 className="animate-spin text-ink-faint" /></div>
         ) : (
           <div className="space-y-2">
             {sessions.map(s => (
-              <div key={s.id} className="flex items-center justify-between p-3 rounded-xl bg-white/3 border border-white/5">
+              <div key={s.id} className="flex items-center justify-between p-3 rounded-xl bg-[var(--surface-strong)] border border-[var(--border)]">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/60">
+                  <div className="w-10 h-10 rounded-full bg-[var(--surface-strong)] flex items-center justify-center text-ink-soft">
                     {renderDeviceIcon(s.device)}
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-white">{s.device} &middot; {s.browser}</span>
-                      {s.isCurrent && <span className="bg-purple-500/20 text-purple-300 text-[10px] px-1.5 py-0.5 rounded-md font-bold uppercase tracking-wider">Current</span>}
+                      <span className="text-sm font-medium text-ink">{s.device} &middot; {s.browser}</span>
+                      {s.isCurrent && <span className="bg-purple-500/20 text-purple text-[10px] px-1.5 py-0.5 rounded-md font-bold uppercase tracking-wider">Current</span>}
                     </div>
-                    <div className="text-xs text-white/40 mt-0.5 flex items-center gap-1.5">
+                    <div className="text-xs text-ink-faint mt-0.5 flex items-center gap-1.5">
                       <span>{s.location}</span>
                       <span>&bull;</span>
                       <span>Last active: {new Date(s.lastActive).toLocaleDateString()}</span>
@@ -101,7 +101,7 @@ export default function SecuritySection() {
                   </div>
                 </div>
                 {!s.isCurrent && (
-                  <button onClick={() => revokeSession(s.id)} disabled={sessionActionLoading === s.id} className="text-xs font-medium text-white/40 hover:text-red-400 p-2 transition">
+                  <button onClick={() => revokeSession(s.id)} disabled={sessionActionLoading === s.id} className="text-xs font-medium text-ink-faint hover:text-red-400 p-2 transition">
                     {sessionActionLoading === s.id ? <Loader2 size={14} className="animate-spin" /> : "Log out"}
                   </button>
                 )}

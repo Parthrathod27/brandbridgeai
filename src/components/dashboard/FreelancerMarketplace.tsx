@@ -153,16 +153,16 @@ function FreelancerMarketplaceContent({
       <PageHeader title={title} subtitle={subtitle} />
       
       {/* Tabs */}
-      <div className="mb-6 flex gap-2 border-b border-white/10 pb-4">
+      <div className="mb-6 flex gap-2 border-b border-[var(--border)] pb-4">
         <button
           onClick={() => setActiveTab("all")}
-          className={`px-4 py-2 rounded-xl text-sm transition-colors ${activeTab === "all" ? "bg-purple-500/20 text-purple-300" : "text-white/60 hover:text-white"}`}
+          className={`px-4 py-2 rounded-xl text-sm transition-colors ${activeTab === "all" ? "bg-purple-500/20 text-purple" : "text-ink-soft hover:text-ink"}`}
         >
           All Freelancers
         </button>
         <button
           onClick={() => setActiveTab("saved")}
-          className={`px-4 py-2 rounded-xl text-sm transition-colors ${activeTab === "saved" ? "bg-purple-500/20 text-purple-300" : "text-white/60 hover:text-white"}`}
+          className={`px-4 py-2 rounded-xl text-sm transition-colors ${activeTab === "saved" ? "bg-purple-500/20 text-purple" : "text-ink-soft hover:text-ink"}`}
         >
           Saved
         </button>
@@ -172,7 +172,7 @@ function FreelancerMarketplaceContent({
       <div className="mb-6 flex flex-col gap-4">
         <div className="flex flex-col sm:flex-row gap-3 items-center">
           <div className="relative flex-1 w-full">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" size={16} />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" size={16} />
             <input
               type="text"
               placeholder="Search by name, skill, or category..."
@@ -185,7 +185,7 @@ function FreelancerMarketplaceContent({
           <div className="flex gap-2 w-full sm:w-auto">
             <button 
               onClick={() => setShowFilters(!showFilters)}
-              className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/10 text-sm transition-colors ${showFilters ? 'bg-white/10 text-white' : 'text-white/70 hover:bg-white/5'}`}
+              className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-[var(--border)] text-sm transition-colors ${showFilters ? 'bg-[var(--surface-strong)] text-ink' : 'text-ink-soft hover:bg-[var(--surface-strong)]'}`}
             >
               <Filter size={16} /> Filters
             </button>
@@ -204,9 +204,9 @@ function FreelancerMarketplaceContent({
 
         {/* Extended Filters Panel */}
         {showFilters && (
-          <div className="bg-white/5 border border-white/10 p-4 rounded-xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-in slide-in-from-top-2 fade-in">
+          <div className="bg-[var(--surface-strong)] border border-[var(--border)] p-4 rounded-xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-in slide-in-from-top-2 fade-in">
             <div>
-              <label className="block text-xs text-white/40 uppercase mb-1.5">Category</label>
+              <label className="block text-xs text-ink-faint uppercase mb-1.5">Category</label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
@@ -220,7 +220,7 @@ function FreelancerMarketplaceContent({
             </div>
             
             <div>
-              <label className="block text-xs text-white/40 uppercase mb-1.5">Min Rating</label>
+              <label className="block text-xs text-ink-faint uppercase mb-1.5">Min Rating</label>
               <select
                 value={minRating}
                 onChange={(e) => setMinRating(e.target.value)}
@@ -234,7 +234,7 @@ function FreelancerMarketplaceContent({
             </div>
 
             <div>
-              <label className="block text-xs text-white/40 uppercase mb-1.5">Min Price ($/hr)</label>
+              <label className="block text-xs text-ink-faint uppercase mb-1.5">Min Price ($/hr)</label>
               <input
                 type="number"
                 placeholder="0"
@@ -245,7 +245,7 @@ function FreelancerMarketplaceContent({
             </div>
 
             <div>
-              <label className="block text-xs text-white/40 uppercase mb-1.5">Max Price ($/hr)</label>
+              <label className="block text-xs text-ink-faint uppercase mb-1.5">Max Price ($/hr)</label>
               <div className="flex gap-2 items-center">
                 <input
                   type="number"
@@ -257,7 +257,7 @@ function FreelancerMarketplaceContent({
                 {(query || category || minPrice || maxPrice || minRating) && (
                   <button 
                     onClick={clearFilters}
-                    className="p-2 shrink-0 text-white/40 hover:text-white bg-white/5 hover:bg-white/10 rounded-xl transition-colors"
+                    className="p-2 shrink-0 text-ink-faint hover:text-ink bg-[var(--surface-strong)] hover:bg-[var(--surface-strong)] rounded-xl transition-colors"
                     title="Clear filters"
                   >
                     <X size={16} />
@@ -270,7 +270,7 @@ function FreelancerMarketplaceContent({
       </div>
 
       {loading ? (
-        <div className="text-white/50 animate-pulse">Loading marketplace...</div>
+        <div className="text-ink-faint animate-pulse">Loading marketplace...</div>
       ) : filteredFreelancers.length === 0 ? (
         <EmptyState
           icon={UserPlus}
@@ -331,7 +331,7 @@ function FreelancerMarketplaceContent({
 
 export default function FreelancerMarketplace(props: FreelancerMarketplaceProps) {
   return (
-    <Suspense fallback={<div className="text-white/50 animate-pulse">Loading...</div>}>
+    <Suspense fallback={<div className="text-ink-faint animate-pulse">Loading...</div>}>
       <FreelancerMarketplaceContent {...props} />
     </Suspense>
   );

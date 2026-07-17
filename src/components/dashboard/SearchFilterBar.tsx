@@ -18,7 +18,7 @@ export default function SearchFilterBar({
   return (
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
       <div className="relative flex-1">
-        <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
+        <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" />
         <input
           type="text"
           value={query}

@@ -90,7 +90,7 @@ export default function AnalyticsPage() {
     window.print();
   }
 
-  if (loading) return <div className="text-white/50">Loading analytics...</div>;
+  if (loading) return <div className="text-ink-faint">Loading analytics...</div>;
 
   const categories = Array.from(new Set(products.map((p) => p.category).filter(Boolean)));
 
@@ -110,19 +110,19 @@ export default function AnalyticsPage() {
         <div className="flex flex-wrap items-center gap-2.5">
           <button
             onClick={() => handleExport("csv")}
-            className="flex items-center gap-1.5 rounded-xl bg-white/5 border border-white/10 px-3.5 py-2 text-xs text-white/80 hover:bg-white/10 cursor-pointer"
+            className="flex items-center gap-1.5 rounded-xl bg-[var(--surface-strong)] border border-[var(--border)] px-3.5 py-2 text-xs text-ink hover:bg-[var(--surface-strong)] cursor-pointer"
           >
             <Download size={13} /> CSV
           </button>
           <button
             onClick={() => handleExport("excel")}
-            className="flex items-center gap-1.5 rounded-xl bg-white/5 border border-white/10 px-3.5 py-2 text-xs text-white/80 hover:bg-white/10 cursor-pointer"
+            className="flex items-center gap-1.5 rounded-xl bg-[var(--surface-strong)] border border-[var(--border)] px-3.5 py-2 text-xs text-ink hover:bg-[var(--surface-strong)] cursor-pointer"
           >
             <Download size={13} /> Excel
           </button>
           <button
             onClick={handlePrintPDF}
-            className="flex items-center gap-1.5 rounded-xl bg-purple-500/10 border border-purple-500/20 px-3.5 py-2 text-xs text-purple-300 hover:bg-purple-500/20 cursor-pointer"
+            className="flex items-center gap-1.5 rounded-xl bg-purple-500/10 border border-purple-500/20 px-3.5 py-2 text-xs text-purple hover:bg-purple-500/20 cursor-pointer"
           >
             <Download size={13} /> PDF Report
           </button>
@@ -131,16 +131,16 @@ export default function AnalyticsPage() {
 
       {/* Interactive Filter Panel */}
       <div className="bb-glass rounded-2xl p-5 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
-        <div className="flex items-center gap-2 text-sm text-white/70">
-          <Filter size={15} className="text-purple-400" />
+        <div className="flex items-center gap-2 text-sm text-ink-soft">
+          <Filter size={15} className="text-purple" />
           <span className="font-medium">Filter Dashboard</span>
         </div>
         <div className="flex flex-wrap gap-3 w-full sm:w-auto">
           {/* Time range */}
-          <div className="flex items-center gap-1 bg-white/3 border border-white/5 rounded-xl px-2.5 py-1">
-            <Calendar size={13} className="text-white/40" />
+          <div className="flex items-center gap-1 bg-[var(--surface-strong)] border border-[var(--border)] rounded-xl px-2.5 py-1">
+            <Calendar size={13} className="text-ink-faint" />
             <select
-              className="bg-transparent text-xs text-white/85 outline-none border-none pr-1"
+              className="bg-transparent text-xs text-ink outline-none border-none pr-1"
               value={timeRange}
               onChange={(e) => setTimeRange(e.target.value)}
             >
@@ -152,9 +152,9 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Category */}
-          <div className="flex items-center gap-1 bg-white/3 border border-white/5 rounded-xl px-2.5 py-1">
+          <div className="flex items-center gap-1 bg-[var(--surface-strong)] border border-[var(--border)] rounded-xl px-2.5 py-1">
             <select
-              className="bg-transparent text-xs text-white/85 outline-none border-none pr-1"
+              className="bg-transparent text-xs text-ink outline-none border-none pr-1"
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
             >
@@ -205,8 +205,8 @@ export default function AnalyticsPage() {
         {/* Conversion Funnel Widget */}
         <div className="bb-glass rounded-2xl p-6 flex flex-col justify-between">
           <div>
-            <h3 className="bb-display mb-4 text-base font-semibold text-white flex items-center gap-2">
-              <TrendingUp size={16} className="text-purple-400" />
+            <h3 className="bb-display mb-4 text-base font-semibold text-ink flex items-center gap-2">
+              <TrendingUp size={16} className="text-purple" />
               Conversion Funnel
             </h3>
             <div className="space-y-4">
@@ -216,13 +216,13 @@ export default function AnalyticsPage() {
                 { stage: "Signed Collaborations", count: summary?.signedCollaborations ?? 0, rate: `${summary?.totalViews ? ((summary.signedCollaborations / summary.totalViews) * 100).toFixed(1) : 0}%`, color: "from-pink-500 to-rose-500" },
               ].map((fun, i) => (
                 <div key={fun.stage} className="space-y-1.5">
-                  <div className="flex items-center justify-between text-xs text-white/60">
+                  <div className="flex items-center justify-between text-xs text-ink-soft">
                     <span>{fun.stage}</span>
-                    <span className="font-semibold text-white/95">
+                    <span className="font-semibold text-ink">
                       {fun.count.toLocaleString()} ({fun.rate})
                     </span>
                   </div>
-                  <div className="h-4 w-full bg-white/5 rounded relative overflow-hidden">
+                  <div className="h-4 w-full bg-[var(--surface-strong)] rounded relative overflow-hidden">
                     <div
                       className={`h-full bg-gradient-to-r ${fun.color}`}
                       style={{ width: `${100 - i * 30}%` }}
@@ -232,7 +232,7 @@ export default function AnalyticsPage() {
               ))}
             </div>
           </div>
-          <div className="mt-4 text-[10px] text-white/40 flex justify-between border-t border-white/5 pt-3">
+          <div className="mt-4 text-[10px] text-ink-faint flex justify-between border-t border-[var(--border)] pt-3">
             <span>Overall Funnel Success: {summary?.totalViews ? ((summary.signedCollaborations / summary.totalViews) * 100).toFixed(1) : 0}%</span>
             <span>Target: 5.0%</span>
           </div>
@@ -241,14 +241,14 @@ export default function AnalyticsPage() {
 
       {/* Breakdown Table */}
       <div className="bb-glass rounded-2xl p-6">
-        <h2 className="bb-display mb-4 text-base font-semibold text-white">Product Performance Breakdown</h2>
+        <h2 className="bb-display mb-4 text-base font-semibold text-ink">Product Performance Breakdown</h2>
         {filteredProducts.length === 0 ? (
-          <p className="text-sm text-white/45">No products to analyze yet.</p>
+          <p className="text-sm text-ink-faint">No products to analyze yet.</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full min-w-[560px] text-left text-sm">
               <thead>
-                <tr className="border-b border-white/10 text-xs text-white/40">
+                <tr className="border-b border-[var(--border)] text-xs text-ink-faint">
                   <th className="pb-3 pr-4 font-medium">Product</th>
                   <th className="pb-3 pr-4 font-medium">Status</th>
                   <th className="pb-3 pr-4 font-medium">Category</th>
@@ -265,11 +265,11 @@ export default function AnalyticsPage() {
                   const cr = views ? ((reqs / views) * 100).toFixed(1) + "%" : "0.0%";
 
                   return (
-                    <tr key={p._id} className="border-b border-white/5 text-xs text-white/75 hover:bg-white/1">
+                    <tr key={p._id} className="border-b border-[var(--border)] text-xs text-ink-soft hover:bg-white/1">
                       <td className="py-3 pr-4">
                         <Link
                           href={`/dashboard/product_owner/products/${p._id}`}
-                          className="font-semibold text-purple-300 hover:text-purple-200"
+                          className="font-semibold text-purple hover:text-purple"
                         >
                           {p.name}
                         </Link>
@@ -277,10 +277,10 @@ export default function AnalyticsPage() {
                       <td className="py-3 pr-4">
                         <ProductStatusBadge status={p.status} />
                       </td>
-                      <td className="py-3 pr-4 text-white/50">{p.category ?? "—"}</td>
+                      <td className="py-3 pr-4 text-ink-faint">{p.category ?? "—"}</td>
                       <td className="py-3 pr-4 text-right font-medium">{views.toLocaleString()}</td>
                       <td className="py-3 pr-4 text-right font-medium">{reqs.toLocaleString()}</td>
-                      <td className="py-3 pr-4 text-right font-semibold text-purple-200">{cr}</td>
+                      <td className="py-3 pr-4 text-right font-semibold text-purple">{cr}</td>
                       <td className="py-3 text-right font-medium">
                         {p.marketingBudget != null ? `$${p.marketingBudget.toLocaleString()}` : "—"}
                       </td>

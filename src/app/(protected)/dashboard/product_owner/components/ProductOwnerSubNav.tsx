@@ -34,8 +34,8 @@ export default function ProductOwnerSubNav() {
             href={href}
             className={`flex shrink-0 items-center gap-2 rounded-xl px-4 py-2 text-sm transition-colors ${
               active
-                ? "bg-purple-500/20 text-purple-200"
-                : "bg-white/5 text-white/55 hover:bg-white/8 hover:text-white/80"
+                ? "bg-purple-500/20 text-purple"
+                : "bg-[var(--surface-strong)] text-ink-soft hover:bg-white/8 hover:text-ink"
             }`}
           >
             <Icon size={16} />

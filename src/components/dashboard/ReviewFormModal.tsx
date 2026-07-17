@@ -52,15 +52,15 @@ export default function ReviewFormModal({ hire, onClose, onSuccess }: ReviewForm
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-0">
-      <div className="bg-[#1a1a24] border border-white/10 w-full max-w-md rounded-2xl shadow-2xl flex flex-col">
+      <div className="bg-[#1a1a24] border border-[var(--border)] w-full max-w-md rounded-2xl shadow-2xl flex flex-col">
         
-        <div className="flex items-center justify-between p-5 border-b border-white/10">
+        <div className="flex items-center justify-between p-5 border-b border-[var(--border)]">
           <div>
             <h2 className="bb-display text-lg font-semibold">Leave a Review</h2>
-            <p className="text-xs text-white/50 mt-1">For {hire.freelancerId?.name}</p>
+            <p className="text-xs text-ink-faint mt-1">For {hire.freelancerId?.name}</p>
           </div>
-          <button onClick={onClose} className="p-2 rounded-full hover:bg-white/10 transition-colors">
-            <X size={18} className="text-white/70" />
+          <button onClick={onClose} className="p-2 rounded-full hover:bg-[var(--surface-strong)] transition-colors">
+            <X size={18} className="text-ink-soft" />
           </button>
         </div>
 
@@ -86,7 +86,7 @@ export default function ReviewFormModal({ hire, onClose, onSuccess }: ReviewForm
                     <Star 
                       size={32} 
                       fill={(hoverRating || rating) >= star ? "currentColor" : "none"} 
-                      className={`${(hoverRating || rating) >= star ? "text-yellow-400" : "text-white/20"} transition-colors`} 
+                      className={`${(hoverRating || rating) >= star ? "text-yellow-400" : "text-ink-faint"} transition-colors`} 
                     />
                   </button>
                 ))}
@@ -94,7 +94,7 @@ export default function ReviewFormModal({ hire, onClose, onSuccess }: ReviewForm
             </div>
 
             <div>
-              <label className="block text-xs text-white/60 mb-2 uppercase tracking-wider">Written Review (Optional)</label>
+              <label className="block text-xs text-ink-soft mb-2 uppercase tracking-wider">Written Review (Optional)</label>
               <textarea 
                 value={text}
                 onChange={(e) => setText(e.target.value)}
@@ -105,8 +105,8 @@ export default function ReviewFormModal({ hire, onClose, onSuccess }: ReviewForm
           </form>
         </div>
         
-        <div className="p-5 border-t border-white/10 flex justify-end gap-3">
-          <button onClick={onClose} className="px-4 py-2 rounded-xl text-sm hover:bg-white/5 transition-colors">
+        <div className="p-5 border-t border-[var(--border)] flex justify-end gap-3">
+          <button onClick={onClose} className="px-4 py-2 rounded-xl text-sm hover:bg-[var(--surface-strong)] transition-colors">
             Cancel
           </button>
           <button 

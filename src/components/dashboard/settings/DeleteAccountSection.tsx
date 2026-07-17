@@ -40,15 +40,15 @@ export default function DeleteAccountSection({ userEmail, isEmailProvider }: { u
         <AlertTriangle size={18} />
         Danger Zone
       </h2>
-      <p className="text-sm text-white/50 mt-1 mb-6">These actions are permanent or require admin assistance to reverse.</p>
+      <p className="text-sm text-ink-faint mt-1 mb-6">These actions are permanent or require admin assistance to reverse.</p>
       
       <div className="flex flex-col sm:flex-row gap-4">
         <button
           onClick={() => setMode("deactivate")}
-          className="flex-1 rounded-xl bg-white/5 hover:bg-white/10 px-4 py-3 text-sm font-medium transition text-left"
+          className="flex-1 rounded-xl bg-[var(--surface-strong)] hover:bg-[var(--surface-strong)] px-4 py-3 text-sm font-medium transition text-left"
         >
-          <span className="block text-white font-semibold mb-1">Deactivate Account</span>
-          <span className="block text-xs text-white/50 font-normal">Hides your profile and logs you out everywhere. You can reactivate by logging in.</span>
+          <span className="block text-ink font-semibold mb-1">Deactivate Account</span>
+          <span className="block text-xs text-ink-faint font-normal">Hides your profile and logs you out everywhere. You can reactivate by logging in.</span>
         </button>
         <button
           onClick={() => setMode("delete")}
@@ -61,13 +61,13 @@ export default function DeleteAccountSection({ userEmail, isEmailProvider }: { u
 
       {mode !== "none" && (
         <div className="mt-6 border-t border-red-500/20 pt-6">
-          <h3 className="text-base font-medium text-white mb-2">
+          <h3 className="text-base font-medium text-ink mb-2">
             Confirm {mode === "delete" ? "Deletion" : "Deactivation"}
           </h3>
           <form onSubmit={handleSubmit} className="space-y-4">
             {isEmailProvider && mode === "delete" && (
               <div>
-                <label className="mb-1 block text-xs text-white/50">Current Password</label>
+                <label className="mb-1 block text-xs text-ink-faint">Current Password</label>
                 <input
                   type="password"
                   required
@@ -80,7 +80,7 @@ export default function DeleteAccountSection({ userEmail, isEmailProvider }: { u
             
             {mode === "delete" && (
               <div>
-                <label className="mb-1 block text-xs text-white/50">Type <span className="font-mono text-red-400">DELETE</span> to confirm</label>
+                <label className="mb-1 block text-xs text-ink-faint">Type <span className="font-mono text-red-400">DELETE</span> to confirm</label>
                 <input
                   required
                   className="bb-input w-full rounded-xl px-4 py-2.5 text-sm font-mono"
@@ -97,14 +97,14 @@ export default function DeleteAccountSection({ userEmail, isEmailProvider }: { u
               <button
                 type="button"
                 onClick={() => { setMode("none"); setError(""); setPassword(""); setConfirmText(""); }}
-                className="flex-1 rounded-xl bg-white/5 px-4 py-2.5 text-sm font-medium hover:bg-white/10 transition"
+                className="flex-1 rounded-xl bg-[var(--surface-strong)] px-4 py-2.5 text-sm font-medium hover:bg-[var(--surface-strong)] transition"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading || (mode === "delete" && confirmText !== "DELETE")}
-                className="flex-1 bg-red-500 hover:bg-red-600 text-white rounded-xl px-4 py-2.5 text-sm font-medium transition flex items-center justify-center gap-2"
+                className="flex-1 bg-red-500 hover:bg-red-600 text-ink rounded-xl px-4 py-2.5 text-sm font-medium transition flex items-center justify-center gap-2"
               >
                 {loading && <Loader2 size={16} className="animate-spin" />}
                 Yes, {mode} my account

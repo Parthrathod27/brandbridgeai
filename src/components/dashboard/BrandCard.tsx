@@ -30,21 +30,21 @@ export default function BrandCard({
           {logo ? (
             <img src={logo} alt={companyName} className="h-full w-full object-cover" />
           ) : (
-            <span className="text-lg font-semibold text-purple-200">
+            <span className="text-lg font-semibold text-purple">
               {(companyName || "B").charAt(0)}
             </span>
           )}
         </div>
         <div className="min-w-0 flex-1">
           <h3 className="bb-display font-medium">{companyName || "Brand"}</h3>
-          {industry && <p className="mt-0.5 text-xs text-purple-300">{industry}</p>}
-          {location && <p className="text-xs text-white/40">{location}</p>}
+          {industry && <p className="mt-0.5 text-xs text-purple">{industry}</p>}
+          {location && <p className="text-xs text-ink-faint">{location}</p>}
           {targetAudience && (
-            <p className="mt-2 line-clamp-2 text-xs text-white/45">{targetAudience}</p>
+            <p className="mt-2 line-clamp-2 text-xs text-ink-faint">{targetAudience}</p>
           )}
         </div>
         {compatibilityScore != null && (
-          <div className="flex items-center gap-1 rounded-full bg-purple-500/15 px-2.5 py-1 text-xs text-purple-200">
+          <div className="flex items-center gap-1 rounded-full bg-purple-500/15 px-2.5 py-1 text-xs text-purple">
             <Sparkles size={12} />
             {compatibilityScore}%
           </div>
@@ -60,7 +60,7 @@ export default function BrandCard({
         {onView && (
           <button
             onClick={onView}
-            className="flex-1 rounded-xl border border-white/10 py-2 text-xs text-white/70 hover:bg-white/5"
+            className="flex-1 rounded-xl border border-[var(--border)] py-2 text-xs text-ink-soft hover:bg-[var(--surface-strong)]"
           >
             View Profile
           </button>

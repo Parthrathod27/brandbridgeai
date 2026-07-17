@@ -36,7 +36,7 @@ export default function AccountSection({ initialName, initialEmail, pendingEmail
       <h2 className="bb-display text-lg font-medium">Account</h2>
       
       <div>
-        <label className="mb-1.5 block text-xs text-white/50">Name</label>
+        <label className="mb-1.5 block text-xs text-ink-faint">Name</label>
         <input
           required
           className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
@@ -46,7 +46,7 @@ export default function AccountSection({ initialName, initialEmail, pendingEmail
       </div>
       
       <div>
-        <label className="mb-1.5 block text-xs text-white/50">Email</label>
+        <label className="mb-1.5 block text-xs text-ink-faint">Email</label>
         <input
           type="email"
           required

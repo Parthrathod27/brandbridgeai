@@ -20,12 +20,12 @@ export default function PortfolioHighlightsSection({ items }: PortfolioHighlight
     <div className="bb-glass rounded-2xl p-6">
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <FolderPlus size={18} className="text-purple-300" />
+          <FolderPlus size={18} className="text-purple" />
           <h2 className="bb-display text-lg font-medium">Portfolio Highlights</h2>
         </div>
         <Link
           href="/dashboard/freelancer/portfolio"
-          className="text-xs text-purple-300 hover:text-purple-200"
+          className="text-xs text-purple hover:text-purple"
         >
           Manage portfolio
         </Link>
@@ -51,9 +51,9 @@ export default function PortfolioHighlightsSection({ items }: PortfolioHighlight
             <Link
               key={item._id}
               href="/dashboard/freelancer/portfolio"
-              className="bb-card-interactive group overflow-hidden rounded-xl border border-white/10"
+              className="bb-card-interactive group overflow-hidden rounded-xl border border-[var(--border)]"
             >
-              <div className="aspect-square overflow-hidden bg-white/5">
+              <div className="aspect-square overflow-hidden bg-[var(--surface-strong)]">
                 <img
                   src={item.mediaUrl}
                   alt={item.title}
@@ -63,7 +63,7 @@ export default function PortfolioHighlightsSection({ items }: PortfolioHighlight
               <div className="p-2">
                 <p className="truncate text-xs font-medium">{item.title}</p>
                 {item.category && (
-                  <p className="truncate text-[10px] text-purple-300">{item.category}</p>
+                  <p className="truncate text-[10px] text-purple">{item.category}</p>
                 )}
               </div>
             </Link>

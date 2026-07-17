@@ -327,13 +327,13 @@ export default function BrandDashboard({ standaloneMatches = false }: BrandDashb
       {!standaloneMatches && (
         <>
           <div className="mb-6">
-            <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-purple-500/10 px-3 py-1 text-xs text-purple-300">
+            <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-purple-500/10 px-3 py-1 text-xs text-purple">
               {ROLE_LABELS.brand} Dashboard
             </div>
             <h1 className="bb-display text-2xl font-semibold sm:text-3xl">
               Welcome back{user ? `, ${user.name.split(" ")[0]}` : ""}
             </h1>
-            <p className="mt-1 text-sm text-white/55">
+            <p className="mt-1 text-sm text-ink-soft">
               Manage brand collaborations and AI-powered partner matching.
             </p>
           </div>
@@ -378,10 +378,10 @@ export default function BrandDashboard({ standaloneMatches = false }: BrandDashb
             </>
           )}
 
-          <div className="mt-8 border-b border-white/10">
+          <div className="mt-8 border-b border-[var(--border)]">
             <div className="flex gap-6">
               <button
-                className={`pb-4 text-sm font-medium transition-colors relative ${activeTab === 'registered' ? 'text-purple-300' : 'text-white/50 hover:text-white/80'}`}
+                className={`pb-4 text-sm font-medium transition-colors relative ${activeTab === 'registered' ? 'text-purple' : 'text-ink-faint hover:text-ink'}`}
                 onClick={() => setActiveTab('registered')}
               >
                 Registered Brands
@@ -390,11 +390,11 @@ export default function BrandDashboard({ standaloneMatches = false }: BrandDashb
                 )}
               </button>
               <button
-                className={`pb-4 text-sm font-medium transition-colors relative flex items-center gap-2 ${activeTab === 'external' ? 'text-purple-300' : 'text-white/50 hover:text-white/80'}`}
+                className={`pb-4 text-sm font-medium transition-colors relative flex items-center gap-2 ${activeTab === 'external' ? 'text-purple' : 'text-ink-faint hover:text-ink'}`}
                 onClick={() => setActiveTab('external')}
               >
                 Discover External Brands
-                <span className="rounded bg-white/10 px-1.5 py-0.5 text-[9px] uppercase tracking-wider text-white/70">AI</span>
+                <span className="rounded bg-[var(--surface-strong)] px-1.5 py-0.5 text-[9px] uppercase tracking-wider text-ink-soft">AI</span>
                 {activeTab === 'external' && (
                   <span className="absolute bottom-0 left-0 w-full h-[2px] bg-purple-500 rounded-t-full" />
                 )}
@@ -461,7 +461,7 @@ export default function BrandDashboard({ standaloneMatches = false }: BrandDashb
                     <button
                       onClick={() => loadRegisteredMatches(matchesPage + 1, true)}
                       disabled={matchesLoading}
-                      className="rounded-xl border border-white/10 bg-white/5 px-6 py-2.5 text-sm font-medium text-white/70 hover:bg-white/10 transition-colors disabled:opacity-50"
+                      className="rounded-xl border border-[var(--border)] bg-[var(--surface-strong)] px-6 py-2.5 text-sm font-medium text-ink-soft hover:bg-[var(--surface-strong)] transition-colors disabled:opacity-50"
                     >
                       {matchesLoading ? "Loading..." : "Load More"}
                     </button>
@@ -472,7 +472,7 @@ export default function BrandDashboard({ standaloneMatches = false }: BrandDashb
             ) : (
               // External Brands Content
               <div className="pt-2">
-                <p className="mb-4 text-sm text-white/50">
+                <p className="mb-4 text-sm text-ink-faint">
                   {externalSource === "ai"
                     ? "AI-generated suggestions for real-world brands that align with your profile. These brands are not yet on BrandBridge."
                     : externalSource === "curated"
@@ -480,7 +480,7 @@ export default function BrandDashboard({ standaloneMatches = false }: BrandDashb
                       : "AI-generated suggestions for real-world brands that align with your profile. These brands are not yet on BrandBridge."}
                 </p>
                 {externalQuotaBlocked && externalSource === "curated" && (
-                  <p className="mb-4 rounded-xl border border-amber-500/20 bg-amber-500/10 px-4 py-2 text-xs text-amber-200/90">
+                  <p className="mb-4 rounded-xl border border-amber-500/20 bg-[var(--bg)]mber-500/10 px-4 py-2 text-xs text-amber-200/90">
                     Gemini API quota reached — showing curated matches for your industry. Wait ~5 minutes, then click Retry for fresh AI suggestions.
                   </p>
                 )}
@@ -528,7 +528,7 @@ export default function BrandDashboard({ standaloneMatches = false }: BrandDashb
             <>
               <div className="mt-8">
                 <div className="mb-4 flex items-center gap-2">
-                  <Handshake size={18} className="text-purple-300" />
+                  <Handshake size={18} className="text-purple" />
                   <h2 className="bb-display text-lg font-medium">Pending Proposals</h2>
                 </div>
                 <div className="bb-glass rounded-2xl p-6">

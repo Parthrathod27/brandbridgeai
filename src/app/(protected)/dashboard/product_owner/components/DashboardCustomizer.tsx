@@ -46,10 +46,10 @@ export default function DashboardCustomizer({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-      <div className="bb-glass w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
-        <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
-          <h3 className="bb-display text-lg font-semibold text-white">Customize Workspace Dashboard</h3>
-          <button onClick={onClose} className="text-white/60 hover:text-white cursor-pointer">
+      <div className="bb-glass w-full max-w-lg overflow-hidden rounded-2xl border border-[var(--border)] shadow-2xl">
+        <div className="flex items-center justify-between border-b border-[var(--border)] px-6 py-4">
+          <h3 className="bb-display text-lg font-semibold text-ink">Customize Workspace Dashboard</h3>
+          <button onClick={onClose} className="text-ink-soft hover:text-ink cursor-pointer">
             <X size={18} />
           </button>
         </div>
@@ -57,29 +57,29 @@ export default function DashboardCustomizer({
           {widgets.map((widget, i) => (
             <div
               key={widget.id}
-              className="flex items-center justify-between rounded-xl bg-white/3 p-3.5 transition hover:bg-white/5 border border-white/5"
+              className="flex items-center justify-between rounded-xl bg-[var(--surface-strong)] p-3.5 transition hover:bg-[var(--surface-strong)] border border-[var(--border)]"
             >
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => toggleFavorite(widget.id)}
-                  className={`cursor-pointer ${widget.favorite ? "text-amber-400" : "text-white/35 hover:text-white/60"}`}
+                  className={`cursor-pointer ${widget.favorite ? "text-amber-400" : "text-ink-faint hover:text-ink-soft"}`}
                 >
                   <Star size={16} fill={widget.favorite ? "currentColor" : "none"} />
                 </button>
-                <span className="text-sm font-medium text-white">{widget.name}</span>
+                <span className="text-sm font-medium text-ink">{widget.name}</span>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   disabled={i === 0}
                   onClick={() => move(widget.id, -1)}
-                  className="rounded bg-white/5 p-1 text-white/50 hover:bg-white/10 disabled:opacity-30 cursor-pointer"
+                  className="rounded bg-[var(--surface-strong)] p-1 text-ink-faint hover:bg-[var(--surface-strong)] disabled:opacity-30 cursor-pointer"
                 >
                   <ArrowUp size={12} />
                 </button>
                 <button
                   disabled={i === widgets.length - 1}
                   onClick={() => move(widget.id, 1)}
-                  className="rounded bg-white/5 p-1 text-white/50 hover:bg-white/10 disabled:opacity-30 cursor-pointer"
+                  className="rounded bg-[var(--surface-strong)] p-1 text-ink-faint hover:bg-[var(--surface-strong)] disabled:opacity-30 cursor-pointer"
                 >
                   <ArrowDown size={12} />
                 </button>
@@ -87,8 +87,8 @@ export default function DashboardCustomizer({
                   onClick={() => toggleVisible(widget.id)}
                   className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold cursor-pointer transition ${
                     widget.visible
-                      ? "bg-purple-500/20 text-purple-200"
-                      : "bg-white/5 text-white/40 hover:bg-white/10"
+                      ? "bg-purple-500/20 text-purple"
+                      : "bg-[var(--surface-strong)] text-ink-faint hover:bg-[var(--surface-strong)]"
                   }`}
                 >
                   {widget.visible ? (
@@ -105,10 +105,10 @@ export default function DashboardCustomizer({
             </div>
           ))}
         </div>
-        <div className="flex items-center justify-between border-t border-white/10 px-6 py-4 bg-black/10">
+        <div className="flex items-center justify-between border-t border-[var(--border)] px-6 py-4 bg-[var(--bg)]/10">
           <button
             onClick={onReset}
-            className="text-xs font-medium text-white/45 hover:text-white/75 cursor-pointer"
+            className="text-xs font-medium text-ink-faint hover:text-ink-soft cursor-pointer"
           >
             Restore Defaults
           </button>

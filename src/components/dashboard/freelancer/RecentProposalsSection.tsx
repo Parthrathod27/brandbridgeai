@@ -20,7 +20,7 @@ const STATUS_COLORS: Record<string, string> = {
   pending: "text-yellow-400",
   accepted: "text-green-400",
   rejected: "text-red-400",
-  withdrawn: "text-white/40",
+  withdrawn: "text-ink-faint",
 };
 
 export default function RecentProposalsSection({ proposals }: RecentProposalsSectionProps) {
@@ -28,12 +28,12 @@ export default function RecentProposalsSection({ proposals }: RecentProposalsSec
     <div className="bb-glass rounded-2xl p-6">
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <FileText size={18} className="text-purple-300" />
+          <FileText size={18} className="text-purple" />
           <h2 className="bb-display text-lg font-medium">Recent Proposals</h2>
         </div>
         <Link
           href="/dashboard/freelancer/proposals"
-          className="text-xs text-purple-300 hover:text-purple-200"
+          className="text-xs text-purple hover:text-purple"
         >
           View all
         </Link>
@@ -58,15 +58,15 @@ export default function RecentProposalsSection({ proposals }: RecentProposalsSec
           {proposals.map((p) => (
             <div
               key={p._id}
-              className="flex items-center justify-between rounded-xl bg-white/3 px-4 py-3"
+              className="flex items-center justify-between rounded-xl bg-[var(--surface-strong)] px-4 py-3"
             >
               <div>
                 <p className="text-sm font-medium">{p.campaignTitle}</p>
                 {p.rate != null && (
-                  <p className="text-xs text-white/40">${p.rate}</p>
+                  <p className="text-xs text-ink-faint">${p.rate}</p>
                 )}
               </div>
-              <span className={`text-xs capitalize ${STATUS_COLORS[p.status] ?? "text-white/50"}`}>
+              <span className={`text-xs capitalize ${STATUS_COLORS[p.status] ?? "text-ink-faint"}`}>
                 {p.status}
               </span>
             </div>

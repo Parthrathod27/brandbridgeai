@@ -43,16 +43,16 @@ export default function CollaborationDetailModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-0">
-      <div className="bg-[#1a1a24] border border-white/10 w-full max-w-2xl rounded-2xl shadow-2xl flex flex-col max-h-[90vh]">
+      <div className="bg-[#1a1a24] border border-[var(--border)] w-full max-w-2xl rounded-2xl shadow-2xl flex flex-col max-h-[90vh]">
         
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-white/10">
+        <div className="flex items-center justify-between p-6 border-b border-[var(--border)]">
           <div>
             <h2 className="bb-display text-xl font-semibold">Collaboration Details</h2>
-            <p className="text-sm text-white/50 mt-1">Partnership with {collaboration.partnerName}</p>
+            <p className="text-sm text-ink-faint mt-1">Partnership with {collaboration.partnerName}</p>
           </div>
-          <button onClick={onClose} className="p-2 rounded-full hover:bg-white/10 transition-colors">
-            <X size={20} className="text-white/70" />
+          <button onClick={onClose} className="p-2 rounded-full hover:bg-[var(--surface-strong)] transition-colors">
+            <X size={20} className="text-ink-soft" />
           </button>
         </div>
 
@@ -60,10 +60,10 @@ export default function CollaborationDetailModal({
         <div className="p-6 overflow-y-auto flex-1 space-y-6">
           
           {/* Status & Actions */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white/5 rounded-xl p-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[var(--surface-strong)] rounded-xl p-4">
             <div>
-              <span className="text-xs text-white/50 uppercase tracking-wider">Current Status</span>
-              <p className="font-medium mt-1 capitalize text-purple-400">{collaboration.status}</p>
+              <span className="text-xs text-ink-faint uppercase tracking-wider">Current Status</span>
+              <p className="font-medium mt-1 capitalize text-purple">{collaboration.status}</p>
             </div>
             {collaboration.status === "accepted" && (
               <button 
@@ -78,21 +78,21 @@ export default function CollaborationDetailModal({
 
           {/* Proposal Details */}
           <div>
-            <h3 className="text-sm font-medium text-white mb-3 flex items-center gap-2">
-              <Activity size={16} className="text-purple-400" />
+            <h3 className="text-sm font-medium text-ink mb-3 flex items-center gap-2">
+              <Activity size={16} className="text-purple" />
               Proposal Summary
             </h3>
-            <div className="bg-white/5 rounded-xl p-4 space-y-4">
+            <div className="bg-[var(--surface-strong)] rounded-xl p-4 space-y-4">
               {collaboration.message && (
                 <div>
-                  <span className="text-xs text-white/40 mb-1 block">Introductory Message</span>
-                  <p className="text-sm text-white/80 whitespace-pre-wrap">{collaboration.message}</p>
+                  <span className="text-xs text-ink-faint mb-1 block">Introductory Message</span>
+                  <p className="text-sm text-ink whitespace-pre-wrap">{collaboration.message}</p>
                 </div>
               )}
               {collaboration.proposal && (
                 <div>
-                  <span className="text-xs text-white/40 mb-1 block">Full Proposal</span>
-                  <p className="text-sm text-white/80 whitespace-pre-wrap">{collaboration.proposal}</p>
+                  <span className="text-xs text-ink-faint mb-1 block">Full Proposal</span>
+                  <p className="text-sm text-ink whitespace-pre-wrap">{collaboration.proposal}</p>
                 </div>
               )}
             </div>
@@ -100,29 +100,29 @@ export default function CollaborationDetailModal({
 
           {/* Timeline */}
           <div>
-            <h3 className="text-sm font-medium text-white mb-3 flex items-center gap-2">
-              <Calendar size={16} className="text-purple-400" />
+            <h3 className="text-sm font-medium text-ink mb-3 flex items-center gap-2">
+              <Calendar size={16} className="text-purple" />
               Activity Timeline
             </h3>
             
-            <div className="bg-white/5 rounded-xl p-5">
+            <div className="bg-[var(--surface-strong)] rounded-xl p-5">
               {loadingLogs ? (
-                <div className="text-sm text-white/50 animate-pulse">Loading timeline...</div>
+                <div className="text-sm text-ink-faint animate-pulse">Loading timeline...</div>
               ) : logs.length === 0 ? (
-                <div className="text-sm text-white/50">No activity recorded yet.</div>
+                <div className="text-sm text-ink-faint">No activity recorded yet.</div>
               ) : (
                 <div className="space-y-6 relative before:absolute before:inset-0 before:ml-2.5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-white/10 before:to-transparent">
                   {logs.map((log, i) => (
                     <div key={log._id} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                      <div className="flex items-center justify-center w-5 h-5 rounded-full border border-purple-500 bg-[#1a1a24] text-purple-400 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow">
+                      <div className="flex items-center justify-center w-5 h-5 rounded-full border border-purple-500 bg-[#1a1a24] text-purple shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow">
                         <div className="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
                       </div>
-                      <div className="w-[calc(100%-2rem)] md:w-[calc(50%-1.5rem)] p-3 rounded-xl bg-white/5 border border-white/10 shadow">
+                      <div className="w-[calc(100%-2rem)] md:w-[calc(50%-1.5rem)] p-3 rounded-xl bg-[var(--surface-strong)] border border-[var(--border)] shadow">
                         <div className="flex items-center justify-between mb-1">
-                          <span className="font-medium text-sm text-purple-300">{log.action}</span>
-                          <span className="text-[10px] text-white/40">{new Date(log.createdAt).toLocaleDateString()}</span>
+                          <span className="font-medium text-sm text-purple">{log.action}</span>
+                          <span className="text-[10px] text-ink-faint">{new Date(log.createdAt).toLocaleDateString()}</span>
                         </div>
-                        <p className="text-xs text-white/70">{log.details}</p>
+                        <p className="text-xs text-ink-soft">{log.details}</p>
                       </div>
                     </div>
                   ))}

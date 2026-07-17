@@ -41,7 +41,7 @@ export default function MyHiresPage({ role }: { role?: UserRole }) {
       <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
           <h1 className="bb-display text-2xl font-semibold sm:text-3xl">My Hires</h1>
-          <p className="mt-1 text-sm text-white/55">Manage your active and past freelancer contracts.</p>
+          <p className="mt-1 text-sm text-ink-soft">Manage your active and past freelancer contracts.</p>
         </div>
         <Link
           href={`/dashboard/${role}/freelancers`}
@@ -60,8 +60,8 @@ export default function MyHiresPage({ role }: { role?: UserRole }) {
               onClick={() => setStatusFilter(tab)}
               className={`whitespace-nowrap px-4 py-2 text-sm font-medium transition-colors ${
                 statusFilter === tab
-                  ? "border-b-2 border-purple-500 text-purple-300"
-                  : "text-white/50 hover:text-white/80"
+                  ? "border-b-2 border-purple-500 text-purple"
+                  : "text-ink-faint hover:text-ink"
               }`}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1).replace("_", " ")}
@@ -102,37 +102,37 @@ export default function MyHiresPage({ role }: { role?: UserRole }) {
                   {hire.freelancerAvatar ? (
                     <Image src={hire.freelancerAvatar} alt={hire.freelancerName} width={48} height={48} className="rounded-full object-cover w-12 h-12" />
                   ) : (
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-purple-500/20 text-lg font-bold text-purple-300">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-purple-500/20 text-lg font-bold text-purple">
                       {hire.freelancerName?.charAt(0) || "F"}
                     </div>
                   )}
                   <div>
-                    <h3 className="text-base font-semibold text-white">{hire.freelancerName}</h3>
-                    <p className="text-sm text-white/50">{hire.projectTitle}</p>
+                    <h3 className="text-base font-semibold text-ink">{hire.freelancerName}</h3>
+                    <p className="text-sm text-ink-faint">{hire.projectTitle}</p>
                   </div>
                 </div>
                 <span className={`rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider ${
                   hire.status === "active" ? "bg-green-500/10 text-green-400" :
                   hire.status === "completed" ? "bg-blue-500/10 text-blue-400" :
                   hire.status === "declined" ? "bg-red-500/10 text-red-400" :
-                  "bg-white/10 text-white/50"
+                  "bg-[var(--surface-strong)] text-ink-faint"
                 }`}>
                   {hire.status}
                 </span>
               </div>
 
-              <div className="mb-6 grid grid-cols-2 gap-4 rounded-xl bg-white/5 p-4 text-sm">
+              <div className="mb-6 grid grid-cols-2 gap-4 rounded-xl bg-[var(--surface-strong)] p-4 text-sm">
                 <div>
-                  <p className="text-xs text-white/40 mb-1">Budget</p>
-                  <p className="font-medium text-white">${hire.budgetAmount} {hire.budgetType === "hourly" ? "/hr" : "Fixed"}</p>
+                  <p className="text-xs text-ink-faint mb-1">Budget</p>
+                  <p className="font-medium text-ink">${hire.budgetAmount} {hire.budgetType === "hourly" ? "/hr" : "Fixed"}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-white/40 mb-1">Start Date</p>
-                  <p className="font-medium text-white">{new Date(hire.createdAt).toLocaleDateString()}</p>
+                  <p className="text-xs text-ink-faint mb-1">Start Date</p>
+                  <p className="font-medium text-ink">{new Date(hire.createdAt).toLocaleDateString()}</p>
                 </div>
               </div>
 
-              <div className="mt-auto flex items-center gap-3 pt-4 border-t border-white/10">
+              <div className="mt-auto flex items-center gap-3 pt-4 border-t border-[var(--border)]">
                 <Link
                   href={`/dashboard/${role}/messages?hire=${hire._id}`}
                   className="bb-btn-primary flex-1 flex justify-center items-center gap-2 rounded-xl py-2.5 text-sm font-medium"
@@ -141,7 +141,7 @@ export default function MyHiresPage({ role }: { role?: UserRole }) {
                   Manage Contract
                 </Link>
                 {hire.status === "active" && (
-                  <button className="flex-1 flex justify-center items-center gap-2 rounded-xl border border-white/10 bg-white/5 py-2.5 text-sm font-medium text-white hover:bg-white/10 transition">
+                  <button className="flex-1 flex justify-center items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface-strong)] py-2.5 text-sm font-medium text-ink hover:bg-[var(--surface-strong)] transition">
                     <CheckCircle size={16} className="text-green-400" />
                     Complete
                   </button>

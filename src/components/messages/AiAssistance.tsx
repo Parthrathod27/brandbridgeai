@@ -136,8 +136,8 @@ export default function AiAssistance({ messages, role, currentUserId, currentInp
         <div className="flex flex-wrap gap-2 mt-1">
           {isGeneratingReplies ? (
             <>
-              <div className="h-8 w-24 bg-white/10 animate-pulse rounded-lg" />
-              <div className="h-8 w-32 bg-white/10 animate-pulse rounded-lg" />
+              <div className="h-8 w-24 bg-[var(--surface-strong)] animate-pulse rounded-lg" />
+              <div className="h-8 w-32 bg-[var(--surface-strong)] animate-pulse rounded-lg" />
             </>
           ) : (
             <>
@@ -147,12 +147,12 @@ export default function AiAssistance({ messages, role, currentUserId, currentInp
                   onClick={() => {
                     onSend(reply);
                   }}
-                  className="px-3 py-1.5 bg-[#6C5CE7]/10 hover:bg-[#6C5CE7]/20 border border-[#6C5CE7]/30 rounded-lg text-sm text-left transition-colors"
+                  className="px-3 py-1.5 bg-purple/10 hover:bg-purple/20 border border-purple/30 rounded-lg text-sm text-left transition-colors"
                 >
                   {reply}
                 </button>
               ))}
-              <button onClick={() => setSmartReplies([])} className="p-1.5 text-gray-500 hover:text-white">
+              <button onClick={() => setSmartReplies([])} className="p-1.5 text-ink hover:text-ink">
                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -167,7 +167,7 @@ export default function AiAssistance({ messages, role, currentUserId, currentInp
         <button 
           onClick={handleDraftProfessional}
           disabled={isDrafting}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs font-medium whitespace-nowrap transition-all disabled:opacity-50"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--surface-strong)] hover:bg-[var(--surface-strong)] border border-[var(--border)] rounded-full text-xs font-medium whitespace-nowrap transition-all disabled:opacity-50"
         >
           {isDrafting ? (
             <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -181,7 +181,7 @@ export default function AiAssistance({ messages, role, currentUserId, currentInp
         <button 
           onClick={handleSummarize}
           disabled={isSummarizing}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs font-medium whitespace-nowrap transition-all disabled:opacity-50"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--surface-strong)] hover:bg-[var(--surface-strong)] border border-[var(--border)] rounded-full text-xs font-medium whitespace-nowrap transition-all disabled:opacity-50"
         >
           {isSummarizing ? (
             <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

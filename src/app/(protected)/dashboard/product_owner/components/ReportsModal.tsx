@@ -79,16 +79,16 @@ export default function ReportsModal({ onClose }: ReportsModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-      <div className="bb-glass w-full max-w-md overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
-        <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
-          <h3 className="bb-display text-base font-semibold text-white">Export & Download Reports</h3>
-          <button onClick={onClose} className="text-white/60 hover:text-white cursor-pointer">
+      <div className="bb-glass w-full max-w-md overflow-hidden rounded-2xl border border-[var(--border)] shadow-2xl">
+        <div className="flex items-center justify-between border-b border-[var(--border)] px-6 py-4">
+          <h3 className="bb-display text-base font-semibold text-ink">Export & Download Reports</h3>
+          <button onClick={onClose} className="text-ink-soft hover:text-ink cursor-pointer">
             <X size={18} />
           </button>
         </div>
         <div className="p-6 space-y-4">
           <div className="space-y-1.5">
-            <label className="text-xs text-white/50">Select Report Type</label>
+            <label className="text-xs text-ink-faint">Select Report Type</label>
             <select
               className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
               value={reportType}
@@ -103,7 +103,7 @@ export default function ReportsModal({ onClose }: ReportsModalProps) {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs text-white/50">Select Format</label>
+            <label className="text-xs text-ink-faint">Select Format</label>
             <div className="grid grid-cols-3 gap-3">
               {["csv", "excel", "pdf"].map((f) => (
                 <button
@@ -111,8 +111,8 @@ export default function ReportsModal({ onClose }: ReportsModalProps) {
                   onClick={() => setFormat(f)}
                   className={`rounded-xl py-2.5 text-xs font-semibold uppercase cursor-pointer transition ${
                     format === f
-                      ? "bg-purple-500/20 text-purple-200 border border-purple-500/35"
-                      : "bg-white/3 text-white/50 hover:bg-white/5 border border-white/5"
+                      ? "bg-purple-500/20 text-purple border border-purple-500/35"
+                      : "bg-[var(--surface-strong)] text-ink-faint hover:bg-[var(--surface-strong)] border border-[var(--border)]"
                   }`}
                 >
                   {f}
@@ -121,15 +121,15 @@ export default function ReportsModal({ onClose }: ReportsModalProps) {
             </div>
           </div>
 
-          <div className="rounded-xl bg-purple-500/5 border border-purple-500/10 p-3 flex gap-2.5 text-xs text-purple-200">
-            <AlertCircle size={16} className="shrink-0 text-purple-400" />
+          <div className="rounded-xl bg-purple-500/5 border border-purple-500/10 p-3 flex gap-2.5 text-xs text-purple">
+            <AlertCircle size={16} className="shrink-0 text-purple" />
             <p>Export contains up-to-date data synced from active campaigns, collaborations, and product details.</p>
           </div>
         </div>
-        <div className="flex justify-end gap-3 border-t border-white/10 px-6 py-4 bg-black/10">
+        <div className="flex justify-end gap-3 border-t border-[var(--border)] px-6 py-4 bg-[var(--bg)]/10">
           <button
             onClick={onClose}
-            className="rounded-xl px-4 py-2 text-sm text-white/50 hover:text-white cursor-pointer"
+            className="rounded-xl px-4 py-2 text-sm text-ink-faint hover:text-ink cursor-pointer"
           >
             Close
           </button>

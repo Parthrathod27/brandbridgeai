@@ -23,16 +23,16 @@ export default function CollaborationRequestCard({
         <div>
           <h3 className="bb-display font-medium">{partnerName}</h3>
           {productName && (
-            <p className="mt-0.5 text-xs text-purple-300">Product: {productName}</p>
+            <p className="mt-0.5 text-xs text-purple">Product: {productName}</p>
           )}
         </div>
         <ProductStatusBadge status={item.status} />
       </div>
       {item.message && (
-        <p className="mt-3 text-sm text-white/55">{item.message}</p>
+        <p className="mt-3 text-sm text-ink-soft">{item.message}</p>
       )}
       {item.compatibilityScore != null && (
-        <p className="mt-2 text-xs text-white/45">
+        <p className="mt-2 text-xs text-ink-faint">
           Compatibility: {item.compatibilityScore}%
         </p>
       )}
@@ -51,7 +51,7 @@ export default function CollaborationRequestCard({
             <button
               type="button"
               onClick={onDecline}
-              className="flex-1 rounded-xl border border-white/10 py-2 text-xs text-white/60 hover:bg-white/5"
+              className="flex-1 rounded-xl border border-[var(--border)] py-2 text-xs text-ink-soft hover:bg-[var(--surface-strong)]"
             >
               Decline
             </button>

@@ -85,7 +85,7 @@ export default function BrandCollaborationsPage() {
     { id: "completed", label: "Completed" },
   ] as const;
 
-  if (loading) return <div className="text-white/50 animate-pulse">Loading collaborations...</div>;
+  if (loading) return <div className="text-ink-faint animate-pulse">Loading collaborations...</div>;
 
   return (
     <div>
@@ -101,8 +101,8 @@ export default function BrandCollaborationsPage() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`whitespace-nowrap rounded-xl px-4 py-2 text-sm transition-colors ${activeTab === tab.id
-                  ? "bg-purple-500/20 text-purple-300"
-                  : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white"
+                  ? "bg-purple-500/20 text-purple"
+                  : "bg-[var(--surface-strong)] text-ink-soft hover:bg-[var(--surface-strong)] hover:text-ink"
                 }`}
             >
               {tab.label}
@@ -113,7 +113,7 @@ export default function BrandCollaborationsPage() {
         {/* Search & Sort */}
         <div className="flex gap-2">
           <div className="relative flex-1 sm:w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" size={16} />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" size={16} />
             <input
               type="text"
               placeholder="Search brand..."

@@ -188,7 +188,7 @@ export default function FindBrandsPage() {
       <PageHeader title="Find Brand Partners" subtitle="Discover verified brands and compare analytics to promote your products." />
 
       {/* Tabs Row */}
-      <div className="flex border-b border-white/10 pb-1 gap-4">
+      <div className="flex border-b border-[var(--border)] pb-1 gap-4">
         {[
           { id: "browse", label: "Browse Brands" },
           { id: "saved", label: "Saved Favorites" },
@@ -199,8 +199,8 @@ export default function FindBrandsPage() {
             onClick={() => setActiveTab(tab.id as any)}
             className={`pb-2 text-sm font-semibold cursor-pointer border-b-2 transition ${
               activeTab === tab.id
-                ? "border-purple-500 text-purple-200"
-                : "border-transparent text-white/50 hover:text-white/80"
+                ? "border-purple-500 text-purple"
+                : "border-transparent text-ink-faint hover:text-ink"
             }`}
           >
             {tab.label} {tab.id === "compare" && compareList.length > 0 && `(${compareList.length})`}
@@ -214,7 +214,7 @@ export default function FindBrandsPage() {
           <div className="bb-glass rounded-2xl p-5 space-y-4">
             <div className="flex gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3.5 top-3 text-white/45" size={16} />
+                <Search className="absolute left-3.5 top-3 text-ink-faint" size={16} />
                 <input
                   className="bb-input w-full rounded-xl pl-10 pr-4 py-2.5 text-sm"
                   placeholder="Search brands by company name, bio, or industry keywords..."
@@ -227,7 +227,7 @@ export default function FindBrandsPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
               {/* Category selector */}
               <div className="space-y-1">
-                <label className="text-white/45 text-[10px] uppercase font-semibold">Industry</label>
+                <label className="text-ink-faint text-[10px] uppercase font-semibold">Industry</label>
                 <select
                   className="bb-input w-full rounded-xl px-3 py-2 text-xs"
                   value={industry}
@@ -242,7 +242,7 @@ export default function FindBrandsPage() {
 
               {/* Platform */}
               <div className="space-y-1">
-                <label className="text-white/45 text-[10px] uppercase font-semibold">Platform</label>
+                <label className="text-ink-faint text-[10px] uppercase font-semibold">Platform</label>
                 <select
                   className="bb-input w-full rounded-xl px-3 py-2 text-xs"
                   value={platform}
@@ -257,7 +257,7 @@ export default function FindBrandsPage() {
 
               {/* Followers */}
               <div className="space-y-1">
-                <label className="text-white/45 text-[10px] uppercase font-semibold">Min Followers</label>
+                <label className="text-ink-faint text-[10px] uppercase font-semibold">Min Followers</label>
                 <select
                   className="bb-input w-full rounded-xl px-3 py-2 text-xs"
                   value={followers}
@@ -271,7 +271,7 @@ export default function FindBrandsPage() {
 
               {/* Verification status */}
               <div className="space-y-1">
-                <label className="text-white/45 text-[10px] uppercase font-semibold">Verification</label>
+                <label className="text-ink-faint text-[10px] uppercase font-semibold">Verification</label>
                 <select
                   className="bb-input w-full rounded-xl px-3 py-2 text-xs"
                   value={isVerified === null ? "all" : String(isVerified)}
@@ -290,7 +290,7 @@ export default function FindBrandsPage() {
           {/* Linked product request segment */}
           {products.length > 0 && (
             <div className="bb-glass rounded-2xl p-5 space-y-2">
-              <label className="block text-xs font-semibold text-purple-300">Link outreach request to product</label>
+              <label className="block text-xs font-semibold text-purple">Link outreach request to product</label>
               <div className="flex flex-col sm:flex-row gap-3">
                 <select
                   className="bb-input rounded-xl px-4 py-2.5 text-xs sm:max-w-md flex-1"
@@ -309,7 +309,7 @@ export default function FindBrandsPage() {
 
           {/* Results Grid */}
           {loading ? (
-            <div className="text-white/50">Loading brands...</div>
+            <div className="text-ink-faint">Loading brands...</div>
           ) : filtered.length === 0 ? (
             <EmptyState icon={Search} title="No brands found" description="Try adjusting your filters or query." />
           ) : (
@@ -319,11 +319,11 @@ export default function FindBrandsPage() {
                 const isCompared = compareList.some((c) => c.profile.userId === b.profile.userId);
 
                 return (
-                  <div key={b.profile.userId} className="bb-glass rounded-2xl p-6 space-y-4 border border-white/5 flex flex-col justify-between">
+                  <div key={b.profile.userId} className="bb-glass rounded-2xl p-6 space-y-4 border border-[var(--border)] flex flex-col justify-between">
                     <div>
                       <div className="flex items-start justify-between">
                         <div className="flex gap-3 items-center">
-                          <div className="h-12 w-12 rounded-xl bg-purple-500/10 flex items-center justify-center font-bold text-purple-300 text-lg border border-purple-500/15 overflow-hidden">
+                          <div className="h-12 w-12 rounded-xl bg-purple-500/10 flex items-center justify-center font-bold text-purple text-lg border border-purple-500/15 overflow-hidden">
                             {b.profile.logo ? (
                               <img src={b.profile.logo} alt="" className="h-full w-full object-cover" />
                             ) : (
@@ -332,25 +332,25 @@ export default function FindBrandsPage() {
                           </div>
                           <div>
                             <div className="flex items-center gap-1.5">
-                              <h3 className="font-semibold text-base text-white">{b.profile.companyName}</h3>
+                              <h3 className="font-semibold text-base text-ink">{b.profile.companyName}</h3>
                               {b.profile.isVerified && (
-                                <ShieldCheck size={16} className="text-purple-400 fill-purple-400/20" />
+                                <ShieldCheck size={16} className="text-purple fill-purple-400/20" />
                               )}
                             </div>
-                            <span className="text-xs text-white/40">{b.profile.industry ?? "Brand Partner"}</span>
+                            <span className="text-xs text-ink-faint">{b.profile.industry ?? "Brand Partner"}</span>
                           </div>
                         </div>
                         <div className="flex items-center gap-1.5">
                           <button
                             onClick={() => handleSaveFavorite(b.profile.userId)}
-                            className="p-1.5 rounded-lg bg-white/3 text-white/50 hover:text-white cursor-pointer"
+                            className="p-1.5 rounded-lg bg-[var(--surface-strong)] text-ink-faint hover:text-ink cursor-pointer"
                           >
                             <Star size={14} className={isFav ? "text-amber-400 fill-amber-400" : ""} />
                           </button>
                           <button
                             onClick={() => handleAddToCompare(b)}
                             className={`px-2 py-1.5 rounded-lg text-[10px] font-bold cursor-pointer transition ${
-                              isCompared ? "bg-purple-500/20 text-purple-200" : "bg-white/3 text-white/50 hover:bg-white/5"
+                              isCompared ? "bg-purple-500/20 text-purple" : "bg-[var(--surface-strong)] text-ink-faint hover:bg-[var(--surface-strong)]"
                             }`}
                           >
                             {isCompared ? "Added" : "+ Compare"}
@@ -358,29 +358,29 @@ export default function FindBrandsPage() {
                         </div>
                       </div>
 
-                      <p className="text-xs text-white/60 mt-3 line-clamp-2">{b.profile.bio ?? "Premium brand collaboration partner."}</p>
+                      <p className="text-xs text-ink-soft mt-3 line-clamp-2">{b.profile.bio ?? "Premium brand collaboration partner."}</p>
 
                       {/* Brand Stats Badge Grid */}
                       <div className="grid grid-cols-3 gap-2 mt-4 text-center">
                         <div className="rounded-xl bg-white/2 p-2">
-                          <span className="block text-[10px] text-white/40">Followers</span>
-                          <span className="text-xs font-bold text-white">
+                          <span className="block text-[10px] text-ink-faint">Followers</span>
+                          <span className="text-xs font-bold text-ink">
                             {b.profile.followersCount ? `${(b.profile.followersCount / 1000).toFixed(0)}k` : "—"}
                           </span>
                         </div>
                         <div className="rounded-xl bg-white/2 p-2">
-                          <span className="block text-[10px] text-white/40">Success Rate</span>
-                          <span className="text-xs font-bold text-white">{b.profile.successRate}%</span>
+                          <span className="block text-[10px] text-ink-faint">Success Rate</span>
+                          <span className="text-xs font-bold text-ink">{b.profile.successRate}%</span>
                         </div>
                         <div className="rounded-xl bg-white/2 p-2">
-                          <span className="block text-[10px] text-white/40">Brand Score</span>
-                          <span className="text-xs font-bold text-white">{b.profile.brandScore}/100</span>
+                          <span className="block text-[10px] text-ink-faint">Brand Score</span>
+                          <span className="text-xs font-bold text-ink">{b.profile.brandScore}/100</span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between border-t border-white/5 pt-4 mt-4">
-                      <div className="flex items-center gap-1.5 text-xs font-semibold text-purple-300">
+                    <div className="flex items-center justify-between border-t border-[var(--border)] pt-4 mt-4">
+                      <div className="flex items-center gap-1.5 text-xs font-semibold text-purple">
                         <Sparkles size={13} />
                         <span>{b.profile.compatibilityScore}% compatibility</span>
                       </div>
@@ -406,7 +406,7 @@ export default function FindBrandsPage() {
             .map((b) => (
               <div key={b.profile.userId} className="bb-glass rounded-2xl p-6 space-y-3">
                 <div className="flex justify-between items-center">
-                  <h3 className="font-semibold text-base text-white">{b.profile.companyName}</h3>
+                  <h3 className="font-semibold text-base text-ink">{b.profile.companyName}</h3>
                   <button
                     onClick={() => handleSaveFavorite(b.profile.userId)}
                     className="text-amber-400 cursor-pointer"
@@ -414,7 +414,7 @@ export default function FindBrandsPage() {
                     <Star size={16} className="fill-amber-400" />
                   </button>
                 </div>
-                <p className="text-xs text-white/60">{b.profile.bio}</p>
+                <p className="text-xs text-ink-soft">{b.profile.bio}</p>
                 <div className="flex justify-end pt-2">
                   <button
                     onClick={() => generateOutreach(b)}
@@ -426,65 +426,65 @@ export default function FindBrandsPage() {
               </div>
             ))}
           {brands.filter((b) => favorites.includes(b.profile.userId)).length === 0 && (
-            <p className="text-sm text-white/45 col-span-2">No saved favorites yet.</p>
+            <p className="text-sm text-ink-faint col-span-2">No saved favorites yet.</p>
           )}
         </div>
       )}
 
       {activeTab === "compare" && (
         <div className="bb-glass rounded-2xl p-6 overflow-x-auto">
-          <h3 className="bb-display text-base font-semibold text-white mb-4">Comparison Matrix</h3>
+          <h3 className="bb-display text-base font-semibold text-ink mb-4">Comparison Matrix</h3>
           {compareList.length === 0 ? (
-            <p className="text-sm text-white/45">Select brands from browse tab to compare them side-by-side.</p>
+            <p className="text-sm text-ink-faint">Select brands from browse tab to compare them side-by-side.</p>
           ) : (
             <table className="w-full text-left text-xs min-w-[500px]">
               <thead>
-                <tr className="border-b border-white/10 text-white/40">
+                <tr className="border-b border-[var(--border)] text-ink-faint">
                   <th className="pb-3">Metrics</th>
                   {compareList.map((c) => (
-                    <th key={c.profile.userId} className="pb-3 font-semibold text-white/80">
+                    <th key={c.profile.userId} className="pb-3 font-semibold text-ink">
                       {c.profile.companyName}
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b border-white/5">
-                  <td className="py-3 text-white/50">Followers</td>
+                <tr className="border-b border-[var(--border)]">
+                  <td className="py-3 text-ink-faint">Followers</td>
                   {compareList.map((c) => (
-                    <td key={c.profile.userId} className="py-3 font-bold text-white">
+                    <td key={c.profile.userId} className="py-3 font-bold text-ink">
                       {c.profile.followersCount?.toLocaleString() ?? "—"}
                     </td>
                   ))}
                 </tr>
-                <tr className="border-b border-white/5">
-                  <td className="py-3 text-white/50">Success Rate</td>
+                <tr className="border-b border-[var(--border)]">
+                  <td className="py-3 text-ink-faint">Success Rate</td>
                   {compareList.map((c) => (
                     <td key={c.profile.userId} className="py-3 font-bold text-green-400">
                       {c.profile.successRate}%
                     </td>
                   ))}
                 </tr>
-                <tr className="border-b border-white/5">
-                  <td className="py-3 text-white/50">Brand Score</td>
+                <tr className="border-b border-[var(--border)]">
+                  <td className="py-3 text-ink-faint">Brand Score</td>
                   {compareList.map((c) => (
-                    <td key={c.profile.userId} className="py-3 font-bold text-purple-300">
+                    <td key={c.profile.userId} className="py-3 font-bold text-purple">
                       {c.profile.brandScore}/100
                     </td>
                   ))}
                 </tr>
-                <tr className="border-b border-white/5">
-                  <td className="py-3 text-white/50">AI Match Score</td>
+                <tr className="border-b border-[var(--border)]">
+                  <td className="py-3 text-ink-faint">AI Match Score</td>
                   {compareList.map((c) => (
-                    <td key={c.profile.userId} className="py-3 font-bold text-purple-200">
+                    <td key={c.profile.userId} className="py-3 font-bold text-purple">
                       {c.profile.compatibilityScore}%
                     </td>
                   ))}
                 </tr>
                 <tr>
-                  <td className="py-3 text-white/50">Platforms</td>
+                  <td className="py-3 text-ink-faint">Platforms</td>
                   {compareList.map((c) => (
-                    <td key={c.profile.userId} className="py-3 text-white/85">
+                    <td key={c.profile.userId} className="py-3 text-ink">
                       {c.profile.platforms?.join(", ") ?? "Instagram"}
                     </td>
                   ))}
@@ -498,28 +498,28 @@ export default function FindBrandsPage() {
       {/* Outreach pitch generation overlay dialog */}
       {activeOutreachPartner && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-          <div className="bb-glass w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
-              <h3 className="bb-display text-base font-semibold text-white flex items-center gap-1.5">
-                <Sparkles size={16} className="text-purple-400" />
+          <div className="bb-glass w-full max-w-lg overflow-hidden rounded-2xl border border-[var(--border)] shadow-2xl">
+            <div className="flex items-center justify-between border-b border-[var(--border)] px-6 py-4">
+              <h3 className="bb-display text-base font-semibold text-ink flex items-center gap-1.5">
+                <Sparkles size={16} className="text-purple" />
                 AI Outreach Pitch Suggestion
               </h3>
               <button
                 onClick={() => setActiveOutreachPartner(null)}
-                className="text-white/60 hover:text-white cursor-pointer"
+                className="text-ink-soft hover:text-ink cursor-pointer"
               >
                 <X size={18} />
               </button>
             </div>
             <div className="p-6 space-y-4">
               <div className="space-y-1.5">
-                <label className="text-xs text-white/45">Recipient:</label>
-                <p className="text-sm font-semibold text-white">{activeOutreachPartner.profile.companyName}</p>
+                <label className="text-xs text-ink-faint">Recipient:</label>
+                <p className="text-sm font-semibold text-ink">{activeOutreachPartner.profile.companyName}</p>
               </div>
               <div className="space-y-1.5">
-                <label className="text-xs text-white/45">Outreach Proposal Text:</label>
+                <label className="text-xs text-ink-faint">Outreach Proposal Text:</label>
                 {outreachProposal === "" ? (
-                  <p className="text-xs text-white/40 py-8 text-center animate-pulse">AI is writing your customized pitch...</p>
+                  <p className="text-xs text-ink-faint py-8 text-center animate-pulse">AI is writing your customized pitch...</p>
                 ) : (
                   <textarea
                     className="bb-input w-full rounded-xl px-4 py-2.5 text-xs"
@@ -530,10 +530,10 @@ export default function FindBrandsPage() {
                 )}
               </div>
             </div>
-            <div className="flex justify-end gap-3 border-t border-white/10 px-6 py-4 bg-black/10">
+            <div className="flex justify-end gap-3 border-t border-[var(--border)] px-6 py-4 bg-[var(--bg)]/10">
               <button
                 onClick={() => setActiveOutreachPartner(null)}
-                className="rounded-xl px-4 py-2 text-sm text-white/50 hover:text-white cursor-pointer"
+                className="rounded-xl px-4 py-2 text-sm text-ink-faint hover:text-ink cursor-pointer"
               >
                 Cancel
               </button>

@@ -34,7 +34,7 @@ export default function FreelancerCard({
   return (
     <div className="bb-glass bb-card rounded-2xl p-5 cursor-pointer hover:border-purple-500/30 transition-colors" onClick={onViewProfile}>
       <div className="flex items-start gap-4">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-purple-500/20 text-lg font-semibold text-purple-200">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-purple-500/20 text-lg font-semibold text-purple">
           {avatar ? (
             <img src={avatar} alt={name} className="h-full w-full object-cover" />
           ) : (
@@ -45,8 +45,8 @@ export default function FreelancerCard({
           <div className="flex items-center justify-between gap-2">
             <h3 className="bb-display truncate font-medium">{name}</h3>
             {onSave && (
-              <button onClick={(e) => { e.stopPropagation(); onSave(); }} className="text-white/40 hover:text-purple-300">
-                <Heart size={16} fill={saved ? "currentColor" : "none"} className={saved ? "text-purple-400" : ""} />
+              <button onClick={(e) => { e.stopPropagation(); onSave(); }} className="text-ink-faint hover:text-purple">
+                <Heart size={16} fill={saved ? "currentColor" : "none"} className={saved ? "text-purple" : ""} />
               </button>
             )}
           </div>
@@ -57,12 +57,12 @@ export default function FreelancerCard({
                 <span>{rating.toFixed(1)}</span>
               </div>
             ) : (
-              <span className="rounded-full bg-purple-500/20 px-2 py-0.5 text-[10px] text-purple-300 font-medium tracking-wider uppercase">
+              <span className="rounded-full bg-purple-500/20 px-2 py-0.5 text-[10px] text-purple font-medium tracking-wider uppercase">
                 New Freelancer
               </span>
             )}
             {hourlyRate != null && (
-              <span className="text-white/45 before:content-['•'] before:mr-2 before:text-white/20">${hourlyRate}/hr</span>
+              <span className="text-ink-faint before:content-['•'] before:mr-2 before:text-ink-faint">${hourlyRate}/hr</span>
             )}
           </div>
           <div className="mt-2 flex flex-wrap gap-1">
@@ -70,7 +70,7 @@ export default function FreelancerCard({
               <button 
                 key={tag} 
                 onClick={(e) => { e.stopPropagation(); onTagClick?.(tag); }}
-                className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] text-white/50 hover:bg-purple-500/20 hover:text-purple-300 transition-colors"
+                className="rounded-full bg-[var(--surface-strong)] px-2 py-0.5 text-[10px] text-ink-faint hover:bg-purple-500/20 hover:text-purple transition-colors"
               >
                 {tag}
               </button>
@@ -81,7 +81,7 @@ export default function FreelancerCard({
       {portfolio.length > 0 && (
         <div className="mt-4 grid grid-cols-3 gap-2">
           {portfolio.slice(0, 3).map((p) => (
-            <div key={p.title} className="aspect-video overflow-hidden rounded-lg bg-white/5">
+            <div key={p.title} className="aspect-video overflow-hidden rounded-lg bg-[var(--surface-strong)]">
               <img src={p.mediaUrl} alt={p.title} className="h-full w-full object-cover" />
             </div>
           ))}
@@ -97,7 +97,7 @@ export default function FreelancerCard({
         {onMessage && (
           <button
             onClick={(e) => { e.stopPropagation(); onMessage(); }}
-            className="flex-1 rounded-xl border border-white/10 py-2 text-xs text-white/70 hover:bg-white/5"
+            className="flex-1 rounded-xl border border-[var(--border)] py-2 text-xs text-ink-soft hover:bg-[var(--surface-strong)]"
           >
             Message
           </button>

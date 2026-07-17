@@ -15,7 +15,7 @@ export default function ChangePasswordSection({ isEmailProvider }: { isEmailProv
     return (
       <div className="bb-glass rounded-2xl p-6 space-y-4">
         <h2 className="bb-display text-lg font-medium">Change Password</h2>
-        <p className="text-sm text-white/50">You are logged in with Google. Password changes are not applicable.</p>
+        <p className="text-sm text-ink-faint">You are logged in with Google. Password changes are not applicable.</p>
       </div>
     );
   }
@@ -31,7 +31,7 @@ export default function ChangePasswordSection({ isEmailProvider }: { isEmailProv
   };
   const strength = getStrength(newPassword);
   const strengthLabels = ["Weak", "Weak", "Fair", "Good", "Strong"];
-  const strengthColors = ["bg-red-500", "bg-red-500", "bg-amber-400", "bg-blue-400", "bg-green-500"];
+  const strengthColors = ["bg-red-500", "bg-red-500", "bg-[var(--bg)]mber-400", "bg-blue-400", "bg-green-500"];
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
@@ -76,7 +76,7 @@ export default function ChangePasswordSection({ isEmailProvider }: { isEmailProv
       <h2 className="bb-display text-lg font-medium">Change Password</h2>
       
       <div>
-        <label className="mb-1.5 block text-xs text-white/50">Current Password</label>
+        <label className="mb-1.5 block text-xs text-ink-faint">Current Password</label>
         <input
           type="password"
           required
@@ -87,7 +87,7 @@ export default function ChangePasswordSection({ isEmailProvider }: { isEmailProv
       </div>
       
       <div>
-        <label className="mb-1.5 block text-xs text-white/50">New Password</label>
+        <label className="mb-1.5 block text-xs text-ink-faint">New Password</label>
         <input
           type="password"
           required
@@ -99,10 +99,10 @@ export default function ChangePasswordSection({ isEmailProvider }: { isEmailProv
           <div className="mt-2 flex items-center gap-2">
             <div className="flex-1 flex gap-1 h-1.5">
               {[1, 2, 3, 4].map(level => (
-                <div key={level} className={`h-full flex-1 rounded-full ${strength >= level ? strengthColors[strength] : "bg-white/10"}`} />
+                <div key={level} className={`h-full flex-1 rounded-full ${strength >= level ? strengthColors[strength] : "bg-[var(--surface-strong)]"}`} />
               ))}
             </div>
-            <span className={`text-[10px] font-medium uppercase ${strength > 2 ? 'text-green-400' : 'text-white/50'}`}>
+            <span className={`text-[10px] font-medium uppercase ${strength > 2 ? 'text-green-400' : 'text-ink-faint'}`}>
               {strengthLabels[strength]}
             </span>
           </div>
@@ -110,7 +110,7 @@ export default function ChangePasswordSection({ isEmailProvider }: { isEmailProv
       </div>
 
       <div>
-        <label className="mb-1.5 block text-xs text-white/50">Confirm New Password</label>
+        <label className="mb-1.5 block text-xs text-ink-faint">Confirm New Password</label>
         <input
           type="password"
           required

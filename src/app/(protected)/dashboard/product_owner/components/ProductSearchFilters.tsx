@@ -33,7 +33,7 @@ export default function ProductSearchFilters({
     <div className="bb-glass mb-6 space-y-4 rounded-2xl p-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="relative flex-1">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/35" />
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" />
           <input
             className="bb-input w-full rounded-xl py-2.5 pl-10 pr-4 text-sm"
             placeholder="Search products by name, description, category..."
@@ -42,13 +42,13 @@ export default function ProductSearchFilters({
           />
         </div>
         {resultCount != null && (
-          <span className="shrink-0 text-xs text-white/45">
+          <span className="shrink-0 text-xs text-ink-faint">
             {resultCount} product{resultCount !== 1 ? "s" : ""} found
           </span>
         )}
       </div>
 
-      <div className="flex items-center gap-2 text-xs text-white/45">
+      <div className="flex items-center gap-2 text-xs text-ink-faint">
         <SlidersHorizontal size={14} />
         Advanced filters
       </div>

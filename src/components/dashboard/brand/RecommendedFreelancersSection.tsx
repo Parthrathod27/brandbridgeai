@@ -24,7 +24,7 @@ export default function RecommendedFreelancersSection({
   return (
     <div className="bb-glass rounded-2xl p-6">
       <div className="flex items-center gap-2">
-        <Users size={18} className="text-purple-300" />
+        <Users size={18} className="text-purple" />
         <h2 className="bb-display text-lg font-medium">Recommended Freelancers</h2>
       </div>
 
@@ -50,7 +50,7 @@ export default function RecommendedFreelancersSection({
               className="bb-glass bb-card-interactive rounded-2xl p-4 transition-all duration-200"
             >
               <div className="flex items-start gap-3">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-purple-500/20 text-sm font-semibold text-purple-200">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-purple-500/20 text-sm font-semibold text-purple">
                   {f.avatar ? (
                     <img src={f.avatar} alt={f.name} className="h-full w-full object-cover" />
                   ) : (
@@ -59,16 +59,16 @@ export default function RecommendedFreelancersSection({
                 </div>
                 <div className="min-w-0 flex-1">
                   <h3 className="truncate text-sm font-medium">{f.name}</h3>
-                  <span className="text-xs text-purple-300">{f.skill}</span>
+                  <span className="text-xs text-purple">{f.skill}</span>
                   <div className="mt-1 flex items-center gap-2 text-xs">
                     <Star size={12} className="text-yellow-400" fill="currentColor" />
                     <span>{f.rating.toFixed(1)}</span>
-                    <span className="text-white/40">from ${f.hourlyRate}/hr</span>
+                    <span className="text-ink-faint">from ${f.hourlyRate}/hr</span>
                   </div>
                 </div>
               </div>
               {f.portfolioThumb && (
-                <div className="mt-3 aspect-video overflow-hidden rounded-lg bg-white/5">
+                <div className="mt-3 aspect-video overflow-hidden rounded-lg bg-[var(--surface-strong)]">
                   <img
                     src={f.portfolioThumb}
                     alt="Portfolio"
@@ -79,7 +79,7 @@ export default function RecommendedFreelancersSection({
               <div className="mt-3 flex gap-2">
                 <Link
                   href={`/dashboard/brand/marketplace?freelancer=${f.userId}`}
-                  className="flex-1 rounded-xl border border-white/10 py-2 text-center text-xs text-white/70 hover:bg-white/5"
+                  className="flex-1 rounded-xl border border-[var(--border)] py-2 text-center text-xs text-ink-soft hover:bg-[var(--surface-strong)]"
                 >
                   View Profile
                 </Link>

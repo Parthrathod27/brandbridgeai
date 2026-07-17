@@ -17,15 +17,15 @@ export default function ProfileCompletenessWidget({
   return (
     <div className="bb-glass bb-card-interactive rounded-2xl p-5 transition-all duration-200">
       <div className="flex items-center gap-2">
-        <UserCircle size={18} className="text-purple-300" />
+        <UserCircle size={18} className="text-purple" />
         <h3 className="bb-display text-sm font-medium">Profile Completeness</h3>
       </div>
       <div className="mt-4">
         <div className="flex items-center justify-between text-xs">
-          <span className="text-white/55">Profile {percent}% complete</span>
-          <span className="text-purple-300">{percent}%</span>
+          <span className="text-ink-soft">Profile {percent}% complete</span>
+          <span className="text-purple">{percent}%</span>
         </div>
-        <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+        <div className="mt-2 h-2 overflow-hidden rounded-full bg-[var(--surface-strong)]">
           <div
             className="h-full rounded-full transition-all duration-500 ease-out"
             style={{
@@ -38,7 +38,7 @@ export default function ProfileCompletenessWidget({
       {missing.length > 0 && percent < 100 && (
         <ul className="mt-3 space-y-1">
           {missing.slice(0, 3).map((item) => (
-            <li key={item} className="text-xs text-white/40">
+            <li key={item} className="text-xs text-ink-faint">
               • {item}
             </li>
           ))}

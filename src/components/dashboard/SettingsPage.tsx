@@ -38,22 +38,22 @@ export default function SettingsPage({ role }: SettingsPageProps) {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="animate-spin text-white/50" />
+        <Loader2 className="animate-spin text-ink-faint" />
       </div>
     );
   }
 
   if (!user) {
     return (
-      <div className="text-center text-white/50 py-12">Failed to load settings</div>
+      <div className="text-center text-ink-faint py-12">Failed to load settings</div>
     );
   }
 
   return (
     <div className="max-w-3xl mx-auto space-y-8 pb-12">
       <div className="mb-8">
-        <h1 className="bb-display text-3xl font-bold text-white mb-2">Settings</h1>
-        <p className="text-white/60">Manage your account preferences, security, and automations.</p>
+        <h1 className="bb-display text-3xl font-bold text-ink mb-2">Settings</h1>
+        <p className="text-ink-soft">Manage your account preferences, security, and automations.</p>
       </div>
 
       <AccountSection initialName={user.name} initialEmail={user.email} pendingEmail={user.pendingEmail} />

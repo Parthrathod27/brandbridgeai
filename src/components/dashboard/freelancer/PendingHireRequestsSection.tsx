@@ -27,12 +27,12 @@ export default function PendingHireRequestsSection({
     <div className="bb-glass rounded-2xl p-6">
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <Handshake size={18} className="text-purple-300" />
+          <Handshake size={18} className="text-purple" />
           <h2 className="bb-display text-lg font-medium">Pending Hire Requests</h2>
         </div>
         <Link
           href="/dashboard/freelancer/earnings"
-          className="text-xs text-purple-300 hover:text-purple-200"
+          className="text-xs text-purple hover:text-purple"
         >
           Manage all
         </Link>
@@ -49,15 +49,15 @@ export default function PendingHireRequestsSection({
           {requests.map((r) => (
             <div
               key={r._id}
-              className="flex flex-col gap-3 rounded-xl bg-white/3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
+              className="flex flex-col gap-3 rounded-xl bg-[var(--surface-strong)] px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
             >
               <div>
                 <p className="text-sm font-medium">{r.hirerName}</p>
                 {r.campaignTitle && (
-                  <p className="text-xs text-white/40">{r.campaignTitle}</p>
+                  <p className="text-xs text-ink-faint">{r.campaignTitle}</p>
                 )}
                 {r.rate != null && (
-                  <p className="mt-0.5 text-xs text-purple-300">${r.rate}</p>
+                  <p className="mt-0.5 text-xs text-purple">${r.rate}</p>
                 )}
               </div>
               <div className="flex gap-2">
@@ -70,7 +70,7 @@ export default function PendingHireRequestsSection({
                 </button>
                 <button
                   onClick={() => onDecline?.(r._id)}
-                  className="flex items-center gap-1 rounded-xl border border-white/10 px-3 py-1.5 text-xs text-white/70 hover:bg-white/5"
+                  className="flex items-center gap-1 rounded-xl border border-[var(--border)] px-3 py-1.5 text-xs text-ink-soft hover:bg-[var(--surface-strong)]"
                 >
                   <X size={12} />
                   Decline

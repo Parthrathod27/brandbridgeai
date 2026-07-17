@@ -22,6 +22,8 @@ import {
   Moon,
   Sun
 } from "lucide-react";
+import { useTheme } from "@/components/ThemeProvider";
+import { div } from "framer-motion/client";
 
 const Linkedin = ({ size = 24, className }: { size?: number, className?: string }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -309,7 +311,8 @@ const testimonials = [
 ];
 
 export default function BrandBridgeLanding() {
-  const [dark, setDark] = useState(true);
+  const { theme, toggleTheme } = useTheme();
+  const dark = theme === "dark";
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -320,7 +323,7 @@ export default function BrandBridgeLanding() {
   }, []);
 
   return (
-    <div className={`bb-root ${dark ? "bb-dark" : "bb-light"}`}>
+    <div>
 
       {/* Navbar Wrapper */}
       <div style={{ position: "sticky", top: 0, zIndex: 50, padding: scrolled ? "10px 16px 0" : "18px 16px 0", transition: "padding .35s ease" }}>
@@ -338,7 +341,7 @@ export default function BrandBridgeLanding() {
           </div>
 
           <div className="hidden md:flex" style={{ alignItems: "center", gap: 14 }}>
-            <button onClick={() => setDark(!dark)} className="bb-glass bb-focus" style={{ width: 34, height: 34, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "var(--ink)" }}>
+            <button onClick={toggleTheme} className="bb-glass bb-focus" style={{ width: 34, height: 34, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "var(--ink)" }}>
               {dark ? <Sun size={15} /> : <Moon size={15} />}
             </button>
             <a href="/login" style={{ fontSize: 14, color: "var(--ink-soft)", textDecoration: "none" }} className="hover:text-[var(--ink)] transition">Login</a>
@@ -346,7 +349,7 @@ export default function BrandBridgeLanding() {
           </div>
 
           <div className="md:hidden flex items-center gap-2">
-            <button onClick={() => setDark(!dark)} className="bb-glass bb-focus" style={{ width: 34, height: 34, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "var(--ink)" }}>
+            <button onClick={toggleTheme} className="bb-glass bb-focus" style={{ width: 34, height: 34, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "var(--ink)" }}>
               {dark ? <Sun size={15} /> : <Moon size={15} />}
             </button>
             <button className="bb-focus bg-transparent border-none text-[var(--ink)]" onClick={() => setMenuOpen(!menuOpen)}>
@@ -380,8 +383,8 @@ export default function BrandBridgeLanding() {
         <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 20px", position: "relative", zIndex: 1 }}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="bb-glass-intense" style={{ display: "inline-flex", alignItems: "center", gap: 8, borderRadius: 999, padding: "7px 14px", fontSize: 12.5, color: "var(--ink-soft)", marginBottom: 22, border: "1px solid rgba(0,0,0,0.05)" }}>
-                <Sparkles size={13} style={{ color: "var(--purple)" }} />
+              <div className="bb-glass-intense" style={{ display: "inline-flex", alignItems: "center", gap: 8, borderRadius: 999, padding: "7px 14px", fontSize: 13, color: "var(--ink-soft)", marginBottom: 22, border: "2px solid rgba(0,0,0,0.05)" }}>
+                {/* <Sparkles size={13} style={{ color: "var(--purple)" }} /> */}
                 Built for brands that collaborate smarter
               </div>
               <h1 className="bb-display tracking-tight" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, lineHeight: 1.1, color: "var(--ink)" }}>
@@ -404,33 +407,6 @@ export default function BrandBridgeLanding() {
           </div>
         </div>
       </section>
-
-      {/* Logos & Stats */}
-      {/* <div className="w-full border-b border-[var(--border)] pt-16 pb-16 relative">
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
-          <p className="text-center text-xs font-bold tracking-[0.2em] uppercase mb-12" style={{ color: "var(--ink-faint)" }}>Trusted by Innovative Brands</p>
-          <div className="flex flex-wrap items-center justify-center gap-10 sm:gap-20 opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500">
-            <div className="text-xl sm:text-2xl font-bold font-sans">Acme Corp</div>
-            <div className="text-xl sm:text-2xl font-bold font-serif">Aura</div>
-            <div className="text-xl sm:text-2xl font-bold font-mono">Quantum</div>
-            <div className="text-xl sm:text-2xl font-bold bb-display">NexGen</div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center mt-20 pt-16 border-t border-[var(--border)]/30">
-            <div>
-              <div className="text-3xl font-bold bb-display mb-2 text-[#6C63FF]">10,000+</div>
-              <div className="text-sm font-medium" style={{ color: "var(--ink-soft)" }}>AI Matches Successfully Paired</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold bb-display mb-2 text-[#FF6B4A]">₹25M+</div>
-              <div className="text-sm font-medium" style={{ color: "var(--ink-soft)" }}>Marketing Costs Saved Together</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold bb-display mb-2 text-[#8B5CF6]">98%</div>
-              <div className="text-sm font-medium" style={{ color: "var(--ink-soft)" }}>Successful Collaborative Partnerships</div>
-            </div>
-          </div>
-        </div>
-      </div> */}
 
       {/* Value Band */}
       <ValueBand />

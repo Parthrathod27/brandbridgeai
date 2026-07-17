@@ -21,14 +21,14 @@ export default function ProductOwnerProductCard({
   return (
     <div className="bb-glass bb-card flex flex-col overflow-hidden rounded-2xl">
       <Link href={`/dashboard/product_owner/products/${product._id}`} className="block">
-        <div className="relative aspect-video bg-white/5">
+        <div className="relative aspect-video bg-[var(--surface-strong)]">
           {cover ? (
             <img src={cover} alt={product.name} className="h-full w-full object-cover" />
           ) : (
-            <div className="flex h-full items-center justify-center text-white/20">No image</div>
+            <div className="flex h-full items-center justify-center text-ink-faint">No image</div>
           )}
           {product.images && product.images.length > 1 && (
-            <span className="absolute bottom-2 right-2 rounded-full bg-black/60 px-2 py-0.5 text-[10px] text-white/80">
+            <span className="absolute bottom-2 right-2 rounded-full bg-black/60 px-2 py-0.5 text-[10px] text-ink">
               +{product.images.length - 1} more
             </span>
           )}
@@ -39,29 +39,29 @@ export default function ProductOwnerProductCard({
           <div>
             <Link
               href={`/dashboard/product_owner/products/${product._id}`}
-              className="bb-display font-medium hover:text-purple-200"
+              className="bb-display font-medium hover:text-purple"
             >
               {product.name}
             </Link>
             {product.category && (
-              <p className="mt-0.5 text-xs text-purple-300">{product.category}</p>
+              <p className="mt-0.5 text-xs text-purple">{product.category}</p>
             )}
           </div>
           <ProductStatusBadge status={product.status} />
         </div>
         {product.description && (
-          <p className="mt-2 line-clamp-2 text-xs text-white/45">{product.description}</p>
+          <p className="mt-2 line-clamp-2 text-xs text-ink-faint">{product.description}</p>
         )}
         {product.tags && product.tags.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-1.5">
             {product.tags.slice(0, 4).map((tag) => (
-              <span key={tag} className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] text-white/50">
+              <span key={tag} className="rounded-full bg-[var(--surface-strong)] px-2 py-0.5 text-[10px] text-ink-faint">
                 {tag}
               </span>
             ))}
           </div>
         )}
-        <div className="mt-4 flex items-center gap-4 text-xs text-white/45">
+        <div className="mt-4 flex items-center gap-4 text-xs text-ink-faint">
           <span className="flex items-center gap-1">
             <Eye size={12} /> {product.analytics?.views ?? 0}
           </span>
@@ -83,7 +83,7 @@ export default function ProductOwnerProductCard({
             <button
               type="button"
               onClick={onEdit}
-              className="rounded-xl border border-white/10 p-2 text-white/60 hover:bg-white/5"
+              className="rounded-xl border border-[var(--border)] p-2 text-ink-soft hover:bg-[var(--surface-strong)]"
               aria-label="Edit product"
             >
               <Pencil size={14} />
@@ -93,7 +93,7 @@ export default function ProductOwnerProductCard({
             <button
               type="button"
               onClick={onDelete}
-              className="rounded-xl border border-white/10 p-2 text-red-400/70 hover:bg-white/5"
+              className="rounded-xl border border-[var(--border)] p-2 text-red-400/70 hover:bg-[var(--surface-strong)]"
               aria-label="Delete product"
             >
               <Trash2 size={14} />

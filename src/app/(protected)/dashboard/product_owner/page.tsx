@@ -114,7 +114,7 @@ export default function ProductOwnerHomePage() {
   }
 
   if (loading) {
-    return <div className="text-white/50">Loading dashboard...</div>;
+    return <div className="text-ink-faint">Loading dashboard...</div>;
   }
 
   const activeWidgets = widgets.filter((w) => w.visible);
@@ -124,13 +124,13 @@ export default function ProductOwnerHomePage() {
       {/* Top Welcome / Header section */}
       <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-purple-500/10 px-3 py-1 text-xs text-purple-300">
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-purple-500/10 px-3 py-1 text-xs text-purple">
             Product Owner Dashboard
           </div>
           <h1 className="bb-display text-2xl font-semibold sm:text-3xl">
             Welcome back{userName ? `, ${userName}` : ""}
           </h1>
-          <p className="mt-1 text-sm text-white/55">
+          <p className="mt-1 text-sm text-ink-soft">
             Promote your products through brand partnerships. Track performance and manage collaborations.
           </p>
         </div>
@@ -139,7 +139,7 @@ export default function ProductOwnerHomePage() {
         <div className="flex items-center gap-2.5">
           <button
             onClick={() => setShowNotifications(true)}
-            className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-white/60 hover:bg-white/10 hover:text-white cursor-pointer relative"
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--surface-strong)] text-ink-soft hover:bg-[var(--surface-strong)] hover:text-ink cursor-pointer relative"
             title="Notifications"
           >
             <Bell size={18} />
@@ -149,14 +149,14 @@ export default function ProductOwnerHomePage() {
           </button>
           <button
             onClick={() => setShowTasks(true)}
-            className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-white/60 hover:bg-white/10 hover:text-white cursor-pointer"
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--surface-strong)] text-ink-soft hover:bg-[var(--surface-strong)] hover:text-ink cursor-pointer"
             title="Tasks Board"
           >
             <CheckSquare size={18} />
           </button>
           <button
             onClick={() => setShowCustomizer(true)}
-            className="flex items-center gap-2 rounded-xl bg-purple-500/10 border border-purple-500/20 px-4 py-2 text-sm text-purple-300 hover:bg-purple-500/20 cursor-pointer"
+            className="flex items-center gap-2 rounded-xl bg-purple-500/10 border border-purple-500/20 px-4 py-2 text-sm text-purple hover:bg-purple-500/20 cursor-pointer"
           >
             <Settings size={16} />
             <span>Customize</span>
@@ -205,7 +205,7 @@ export default function ProductOwnerHomePage() {
           <Link
             key={href}
             href={href}
-            className="bb-glass flex items-center gap-2 rounded-xl px-4 py-3 text-sm text-white/70 hover:text-purple-200"
+            className="bb-glass flex items-center gap-2 rounded-xl px-4 py-3 text-sm text-ink-soft hover:text-purple"
           >
             <Icon size={16} />
             {label}
@@ -249,25 +249,25 @@ export default function ProductOwnerHomePage() {
                   <h2 className="bb-display text-base font-semibold">{panel.title}</h2>
                   <Link
                     href="/dashboard/product_owner/products"
-                    className="flex items-center gap-1 text-xs text-purple-300 hover:text-purple-200"
+                    className="flex items-center gap-1 text-xs text-purple hover:text-purple"
                   >
                     View all <ArrowRight size={12} />
                   </Link>
                 </div>
                 {panel.items.length === 0 ? (
-                  <p className="text-sm text-white/45">No products yet.</p>
+                  <p className="text-sm text-ink-faint">No products yet.</p>
                 ) : (
                   <div className="space-y-3">
                     {panel.items.map((item: any, i: number) => (
                       <Link
                         key={String(item._id ?? i)}
                         href={`/dashboard/product_owner/products/${item._id}`}
-                        className="flex items-center justify-between rounded-xl bg-white/3 px-4 py-3 text-sm hover:bg-white/5"
+                        className="flex items-center justify-between rounded-xl bg-[var(--surface-strong)] px-4 py-3 text-sm hover:bg-[var(--surface-strong)]"
                       >
                         <div>
                           <span className="font-medium">{String(item.name ?? "Product")}</span>
                           {!!item.category && (
-                            <span className="ml-2 text-xs text-white/40">{String(item.category)}</span>
+                            <span className="ml-2 text-xs text-ink-faint">{String(item.category)}</span>
                           )}
                         </div>
                         <ProductStatusBadge status={String(item.status ?? "draft")} />
@@ -288,26 +288,26 @@ export default function ProductOwnerHomePage() {
                   <h2 className="bb-display text-base font-semibold">{panel.title}</h2>
                   <Link
                     href="/dashboard/product_owner/collaborations"
-                    className="flex items-center gap-1 text-xs text-purple-300 hover:text-purple-200"
+                    className="flex items-center gap-1 text-xs text-purple hover:text-purple"
                   >
                     View all <ArrowRight size={12} />
                   </Link>
                 </div>
                 {panel.items.length === 0 ? (
-                  <p className="text-sm text-white/45">No collaborations request yet.</p>
+                  <p className="text-sm text-ink-faint">No collaborations request yet.</p>
                 ) : (
                   <div className="space-y-3">
                     {panel.items.map((item: any, i: number) => {
                       const partner = item.partnerId as { name?: string } | undefined;
                       const product = item.productId as { name?: string } | undefined;
                       return (
-                        <div key={String(item._id ?? i)} className="rounded-xl bg-white/3 px-4 py-3 text-sm">
+                        <div key={String(item._id ?? i)} className="rounded-xl bg-[var(--surface-strong)] px-4 py-3 text-sm">
                           <div className="flex items-center justify-between">
                             <span>{partner?.name ?? "Brand partner"}</span>
                             <ProductStatusBadge status={String(item.status ?? "pending")} />
                           </div>
                           {product?.name && (
-                            <p className="mt-1 text-xs text-white/40">Re: {product.name}</p>
+                            <p className="mt-1 text-xs text-ink-faint">Re: {product.name}</p>
                           )}
                         </div>
                       );
@@ -327,7 +327,7 @@ export default function ProductOwnerHomePage() {
                   <h2 className="bb-display text-base font-semibold">{panel.title}</h2>
                 </div>
                 {panel.items.length === 0 ? (
-                  <p className="text-sm text-white/45">No recommendations found.</p>
+                  <p className="text-sm text-ink-faint">No recommendations found.</p>
                 ) : (
                   <div className="space-y-3">
                     {panel.items.map((item: any, i: number) => {
@@ -336,14 +336,14 @@ export default function ProductOwnerHomePage() {
                         ((item.userId as { name?: string })?.name) ??
                         "Brand";
                       return (
-                        <div key={i} className="rounded-xl bg-white/3 px-4 py-3 text-sm flex justify-between items-center">
+                        <div key={i} className="rounded-xl bg-[var(--surface-strong)] px-4 py-3 text-sm flex justify-between items-center">
                           <div>
                             <span className="font-medium">{company}</span>
                             {!!item.industry && (
-                              <span className="ml-2 text-xs text-white/40">{String(item.industry)}</span>
+                              <span className="ml-2 text-xs text-ink-faint">{String(item.industry)}</span>
                             )}
                           </div>
-                          <span className="text-[10px] bg-purple-500/10 text-purple-300 font-semibold px-2 py-0.5 rounded">
+                          <span className="text-[10px] bg-purple-500/10 text-purple font-semibold px-2 py-0.5 rounded">
                             {90 - i * 3}% Match
                           </span>
                         </div>

@@ -173,9 +173,9 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
         <div className="w-full sm:w-1/3">
           <div className="mb-2 flex items-center justify-between text-sm font-medium">
             <span>Profile Completeness</span>
-            <span className="text-purple-300">{completenessPercent}%</span>
+            <span className="text-purple">{completenessPercent}%</span>
           </div>
-          <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
+          <div className="h-2 w-full overflow-hidden rounded-full bg-[var(--surface-strong)]">
             <div
               className="h-full rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 transition-all duration-500"
               style={{ width: `\${completenessPercent}%` }}
@@ -184,10 +184,10 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
         </div>
         <div className="flex-1">
           {missingFields.length > 0 ? (
-            <div className="text-xs text-white/50">
+            <div className="text-xs text-ink-faint">
               <span className="mr-2">Missing:</span>
               {missingFields.slice(0, 3).map((f) => (
-                <span key={f} className="mr-2 rounded-full bg-white/5 px-2 py-1 text-white/70">
+                <span key={f} className="mr-2 rounded-full bg-[var(--surface-strong)] px-2 py-1 text-ink-soft">
                   {formatFieldName(f)}
                 </span>
               ))}
@@ -205,7 +205,7 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
         {/* Main Form Content */}
         <div className="flex-1">
           {/* Desktop Tabs */}
-          <div className="hidden sm:flex border-b border-white/10 mb-6 overflow-x-auto no-scrollbar">
+          <div className="hidden sm:flex border-b border-[var(--border)] mb-6 overflow-x-auto no-scrollbar">
             {[
               { id: "basic", label: "Basic Info", icon: User },
               { id: "industry", label: "Industry & Audience", icon: Target },
@@ -217,8 +217,8 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center gap-2 whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors border-b-2 \${
                   activeTab === tab.id
-                    ? "border-purple-500 text-purple-300"
-                    : "border-transparent text-white/50 hover:text-white/80"
+                    ? "border-purple-500 text-purple"
+                    : "border-transparent text-ink-faint hover:text-ink"
                 }`}
               >
                 <tab.icon size={16} />
@@ -231,73 +231,73 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
             
             {/* SECTION 1: Basic Info */}
             <div className={`bb-glass rounded-2xl overflow-hidden transition-all duration-300 \${activeTab === 'basic' ? 'block' : 'hidden sm:hidden'}`}>
-              <div className="sm:hidden bg-white/5 px-6 py-4 border-b border-white/5 cursor-pointer" onClick={() => setActiveTab('basic')}>
+              <div className="sm:hidden bg-[var(--surface-strong)] px-6 py-4 border-b border-[var(--border)] cursor-pointer" onClick={() => setActiveTab('basic')}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-base font-medium">
-                    <User size={16} className="text-purple-400" /> Basic Info
+                    <User size={16} className="text-purple" /> Basic Info
                   </div>
                   <ChevronDown size={16} className={`transition-transform \${activeTab === 'basic' ? 'rotate-180' : ''}`} />
                 </div>
               </div>
               <div className="p-6 space-y-6">
-                <div className="flex items-start gap-4 pb-4 border-b border-white/5">
-                  <label className="flex cursor-pointer flex-col items-center justify-center gap-1 h-20 w-20 rounded-2xl border border-dashed border-white/20 bg-white/5 text-[10px] text-white/60 hover:bg-white/10 transition overflow-hidden">
+                <div className="flex items-start gap-4 pb-4 border-b border-[var(--border)]">
+                  <label className="flex cursor-pointer flex-col items-center justify-center gap-1 h-20 w-20 rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-strong)] text-[10px] text-ink-soft hover:bg-[var(--surface-strong)] transition overflow-hidden">
                     {form.logo ? <img src={form.logo} alt="Logo" className="w-full h-full object-cover" /> : <><Upload size={14} /> Logo</>}
                     <input type="file" accept="image/*" className="hidden" onChange={(e) => handleUpload(e, "logo")} />
                   </label>
-                  <label className="flex cursor-pointer flex-col items-center justify-center gap-1 h-20 w-20 rounded-2xl border border-dashed border-white/20 bg-white/5 text-[10px] text-white/60 hover:bg-white/10 transition overflow-hidden">
+                  <label className="flex cursor-pointer flex-col items-center justify-center gap-1 h-20 w-20 rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-strong)] text-[10px] text-ink-soft hover:bg-[var(--surface-strong)] transition overflow-hidden">
                     {form.avatar ? <img src={form.avatar} alt="Avatar" className="w-full h-full object-cover" /> : <><Upload size={14} /> Avatar</>}
                     <input type="file" accept="image/*" className="hidden" onChange={(e) => handleUpload(e, "avatar")} />
                   </label>
-                  <div className="flex-1 text-xs text-white/40 pt-2">
+                  <div className="flex-1 text-xs text-ink-faint pt-2">
                     Upload a square company logo and a personal avatar.
-                    {uploading && <div className="mt-1 flex items-center gap-1 text-purple-300"><Loader2 size={12} className="animate-spin" /> Uploading...</div>}
+                    {uploading && <div className="mt-1 flex items-center gap-1 text-purple"><Loader2 size={12} className="animate-spin" /> Uploading...</div>}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="mb-1.5 block text-xs text-white/50">Company Name *</label>
+                    <label className="mb-1.5 block text-xs text-ink-faint">Company Name *</label>
                     <input className="bb-input w-full rounded-xl px-4 py-2.5 text-sm" value={form.companyName ?? ""} onChange={(e) => update("companyName", e.target.value)} required />
                   </div>
                   <div>
-                    <label className="mb-1.5 block text-xs text-white/50">Location</label>
+                    <label className="mb-1.5 block text-xs text-ink-faint">Location</label>
                     <input className="bb-input w-full rounded-xl px-4 py-2.5 text-sm" value={form.location ?? ""} onChange={(e) => update("location", e.target.value)} />
                   </div>
                   <div className="sm:col-span-2">
-                    <label className="mb-1.5 block text-xs text-white/50">Bio / Company Description</label>
+                    <label className="mb-1.5 block text-xs text-ink-faint">Bio / Company Description</label>
                     <textarea className="bb-input w-full rounded-xl px-4 py-2.5 text-sm" rows={3} value={form.bio ?? ""} onChange={(e) => update("bio", e.target.value)} />
                   </div>
                   <div>
-                    <label className="mb-1.5 block text-xs text-white/50">Company Size</label>
+                    <label className="mb-1.5 block text-xs text-ink-faint">Company Size</label>
                     <div className="relative">
                       <select className="bb-input w-full rounded-xl px-4 py-2.5 text-sm appearance-none" value={form.companySize ?? ""} onChange={(e) => update("companySize", e.target.value)}>
                         <option value="">Select size</option>
                         {COMPANY_SIZES.map(s => <option key={s} value={s}>{s}</option>)}
                       </select>
-                      <ChevronDown size={14} className="absolute right-4 top-3 text-white/40 pointer-events-none" />
+                      <ChevronDown size={14} className="absolute right-4 top-3 text-ink-faint pointer-events-none" />
                     </div>
                   </div>
                   <div>
-                    <label className="mb-1.5 block text-xs text-white/50">Founded Year</label>
+                    <label className="mb-1.5 block text-xs text-ink-faint">Founded Year</label>
                     <input type="number" min="1900" max="2026" className="bb-input w-full rounded-xl px-4 py-2.5 text-sm" value={form.foundedYear ?? ""} onChange={(e) => update("foundedYear", parseInt(e.target.value) || undefined)} />
                   </div>
                   <div>
-                    <label className="mb-1.5 block text-xs text-white/50">Business Type</label>
+                    <label className="mb-1.5 block text-xs text-ink-faint">Business Type</label>
                     <div className="relative">
                       <select className="bb-input w-full rounded-xl px-4 py-2.5 text-sm appearance-none" value={form.businessType ?? ""} onChange={(e) => update("businessType", e.target.value)}>
                         <option value="">Select type</option>
                         {BUSINESS_TYPES.map(s => <option key={s} value={s}>{s}</option>)}
                       </select>
-                      <ChevronDown size={14} className="absolute right-4 top-3 text-white/40 pointer-events-none" />
+                      <ChevronDown size={14} className="absolute right-4 top-3 text-ink-faint pointer-events-none" />
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <label className="text-sm text-white/80 flex-1">Registered Business?</label>
+                    <label className="text-sm text-ink flex-1">Registered Business?</label>
                     <button
                       type="button"
                       onClick={() => update("isRegisteredBusiness", !form.isRegisteredBusiness)}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors \${form.isRegisteredBusiness ? "bg-purple-500" : "bg-white/10"}`}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors \${form.isRegisteredBusiness ? "bg-purple-500" : "bg-[var(--surface-strong)]"}`}
                     >
                       <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform \${form.isRegisteredBusiness ? "translate-x-6" : "translate-x-1"}`} />
                     </button>
@@ -308,10 +308,10 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
 
             {/* SECTION 2: Industry & Audience */}
             <div className={`bb-glass rounded-2xl overflow-hidden transition-all duration-300 \${activeTab === 'industry' ? 'block' : 'hidden sm:hidden'}`}>
-              <div className="sm:hidden bg-white/5 px-6 py-4 border-b border-white/5 cursor-pointer" onClick={() => setActiveTab('industry')}>
+              <div className="sm:hidden bg-[var(--surface-strong)] px-6 py-4 border-b border-[var(--border)] cursor-pointer" onClick={() => setActiveTab('industry')}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-base font-medium">
-                    <Target size={16} className="text-purple-400" /> Industry & Audience
+                    <Target size={16} className="text-purple" /> Industry & Audience
                   </div>
                   <ChevronDown size={16} className={`transition-transform \${activeTab === 'industry' ? 'rotate-180' : ''}`} />
                 </div>
@@ -319,35 +319,35 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
               <div className="p-6 space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="mb-1.5 block text-xs text-white/50">Primary Industry</label>
+                    <label className="mb-1.5 block text-xs text-ink-faint">Primary Industry</label>
                     <div className="relative">
                       <select className="bb-input w-full rounded-xl px-4 py-2.5 text-sm appearance-none" value={form.industry ?? ""} onChange={(e) => update("industry", e.target.value)}>
                         <option value="">Select industry</option>
                         {Object.keys(INDUSTRIES_CONFIG).map(s => <option key={s} value={s}>{s}</option>)}
                       </select>
-                      <ChevronDown size={14} className="absolute right-4 top-3 text-white/40 pointer-events-none" />
+                      <ChevronDown size={14} className="absolute right-4 top-3 text-ink-faint pointer-events-none" />
                     </div>
                   </div>
                   <div>
-                    <label className="mb-1.5 block text-xs text-white/50">Sub-category</label>
+                    <label className="mb-1.5 block text-xs text-ink-faint">Sub-category</label>
                     <div className="relative">
                       <select disabled={!form.industry} className="bb-input w-full rounded-xl px-4 py-2.5 text-sm appearance-none disabled:opacity-50" value={form.subCategory ?? ""} onChange={(e) => update("subCategory", e.target.value)}>
                         <option value="">Select sub-category</option>
                         {(form.industry && INDUSTRIES_CONFIG[form.industry] ? INDUSTRIES_CONFIG[form.industry] : []).map(s => <option key={s} value={s}>{s}</option>)}
                       </select>
-                      <ChevronDown size={14} className="absolute right-4 top-3 text-white/40 pointer-events-none" />
+                      <ChevronDown size={14} className="absolute right-4 top-3 text-ink-faint pointer-events-none" />
                     </div>
                   </div>
                   
                   <div className="sm:col-span-2">
-                    <label className="mb-1.5 block text-xs text-white/50">Target Age Group</label>
+                    <label className="mb-1.5 block text-xs text-ink-faint">Target Age Group</label>
                     <div className="flex flex-wrap gap-2">
                       {TARGET_AGE_GROUPS.map((age) => (
                         <button
                           key={age}
                           type="button"
                           onClick={() => toggleArray("targetAgeGroups", age)}
-                          className={`rounded-full px-3 py-1.5 text-xs transition \${(form.targetAgeGroups ?? []).includes(age) ? "bg-purple-500/25 text-purple-200 border border-purple-500/50" : "bg-white/5 text-white/50 border border-transparent hover:bg-white/10"}`}
+                          className={`rounded-full px-3 py-1.5 text-xs transition \${(form.targetAgeGroups ?? []).includes(age) ? "bg-purple-500/25 text-purple border border-purple-500/50" : "bg-[var(--surface-strong)] text-ink-faint border border-transparent hover:bg-[var(--surface-strong)]"}`}
                         >
                           {age}
                         </button>
@@ -356,50 +356,50 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
                   </div>
 
                   <div>
-                    <label className="mb-1.5 block text-xs text-white/50">Target Gender</label>
+                    <label className="mb-1.5 block text-xs text-ink-faint">Target Gender</label>
                     <div className="relative">
                       <select className="bb-input w-full rounded-xl px-4 py-2.5 text-sm appearance-none" value={form.targetGender ?? ""} onChange={(e) => update("targetGender", e.target.value)}>
                         <option value="">Select gender focus</option>
                         {TARGET_GENDERS.map(s => <option key={s} value={s}>{s}</option>)}
                       </select>
-                      <ChevronDown size={14} className="absolute right-4 top-3 text-white/40 pointer-events-none" />
+                      <ChevronDown size={14} className="absolute right-4 top-3 text-ink-faint pointer-events-none" />
                     </div>
                   </div>
                   
                   <div>
-                    <label className="mb-1.5 block text-xs text-white/50">Primary Market</label>
+                    <label className="mb-1.5 block text-xs text-ink-faint">Primary Market</label>
                     <div className="relative">
                       <select className="bb-input w-full rounded-xl px-4 py-2.5 text-sm appearance-none" value={form.primaryMarket ?? ""} onChange={(e) => update("primaryMarket", e.target.value)}>
                         <option value="">Select market</option>
                         {PRIMARY_MARKETS.map(s => <option key={s} value={s}>{s}</option>)}
                       </select>
-                      <ChevronDown size={14} className="absolute right-4 top-3 text-white/40 pointer-events-none" />
+                      <ChevronDown size={14} className="absolute right-4 top-3 text-ink-faint pointer-events-none" />
                     </div>
                   </div>
                   
                   <div className="sm:col-span-2">
-                    <label className="mb-1.5 block text-xs text-white/50">Audience Description</label>
+                    <label className="mb-1.5 block text-xs text-ink-faint">Audience Description</label>
                     <textarea className="bb-input w-full rounded-xl px-4 py-2.5 text-sm" rows={2} value={form.targetAudience ?? ""} onChange={(e) => update("targetAudience", e.target.value)} placeholder="Describe your ideal customer..." />
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-white/5">
-                  <label className="mb-3 block text-sm font-medium text-white/80">Social Media Reach (Optional)</label>
+                <div className="pt-4 border-t border-[var(--border)]">
+                  <label className="mb-3 block text-sm font-medium text-ink">Social Media Reach (Optional)</label>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     <div>
-                      <div className="flex items-center gap-1.5 text-xs text-white/50 mb-1.5"><Camera size={12}/> Instagram</div>
+                      <div className="flex items-center gap-1.5 text-xs text-ink-faint mb-1.5"><Camera size={12}/> Instagram</div>
                       <input type="number" className="bb-input w-full rounded-lg px-3 py-2 text-sm" placeholder="Followers" value={form.socialMediaReach?.instagram ?? ""} onChange={(e) => updateNested("socialMediaReach", "instagram", parseInt(e.target.value) || undefined)} />
                     </div>
                     <div>
-                      <div className="flex items-center gap-1.5 text-xs text-white/50 mb-1.5"><Tv size={12}/> YouTube</div>
+                      <div className="flex items-center gap-1.5 text-xs text-ink-faint mb-1.5"><Tv size={12}/> YouTube</div>
                       <input type="number" className="bb-input w-full rounded-lg px-3 py-2 text-sm" placeholder="Subscribers" value={form.socialMediaReach?.youtube ?? ""} onChange={(e) => updateNested("socialMediaReach", "youtube", parseInt(e.target.value) || undefined)} />
                     </div>
                     <div>
-                      <div className="flex items-center gap-1.5 text-xs text-white/50 mb-1.5"><Users size={12}/> Facebook</div>
+                      <div className="flex items-center gap-1.5 text-xs text-ink-faint mb-1.5"><Users size={12}/> Facebook</div>
                       <input type="number" className="bb-input w-full rounded-lg px-3 py-2 text-sm" placeholder="Followers" value={form.socialMediaReach?.facebook ?? ""} onChange={(e) => updateNested("socialMediaReach", "facebook", parseInt(e.target.value) || undefined)} />
                     </div>
                     <div>
-                      <div className="flex items-center gap-1.5 text-xs text-white/50 mb-1.5"><Smartphone size={12}/> TikTok</div>
+                      <div className="flex items-center gap-1.5 text-xs text-ink-faint mb-1.5"><Smartphone size={12}/> TikTok</div>
                       <input type="number" className="bb-input w-full rounded-lg px-3 py-2 text-sm" placeholder="Followers" value={form.socialMediaReach?.tiktok ?? ""} onChange={(e) => updateNested("socialMediaReach", "tiktok", parseInt(e.target.value) || undefined)} />
                     </div>
                   </div>
@@ -409,24 +409,24 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
 
             {/* SECTION 3: Collaboration Preferences */}
             <div className={`bb-glass rounded-2xl overflow-hidden transition-all duration-300 \${activeTab === 'collab' ? 'block' : 'hidden sm:hidden'}`}>
-              <div className="sm:hidden bg-white/5 px-6 py-4 border-b border-white/5 cursor-pointer" onClick={() => setActiveTab('collab')}>
+              <div className="sm:hidden bg-[var(--surface-strong)] px-6 py-4 border-b border-[var(--border)] cursor-pointer" onClick={() => setActiveTab('collab')}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-base font-medium">
-                    <Handshake size={16} className="text-purple-400" /> Collaboration Preferences
+                    <Handshake size={16} className="text-purple" /> Collaboration Preferences
                   </div>
                   <ChevronDown size={16} className={`transition-transform \${activeTab === 'collab' ? 'rotate-180' : ''}`} />
                 </div>
               </div>
               <div className="p-6 space-y-6">
                 <div>
-                  <label className="mb-1.5 block text-xs text-white/50">Looking For</label>
+                  <label className="mb-1.5 block text-xs text-ink-faint">Looking For</label>
                   <div className="flex flex-wrap gap-2">
                     {LOOKING_FOR.map((item) => (
                       <button
                         key={item}
                         type="button"
                         onClick={() => toggleArray("collaborationLookingFor", item)}
-                        className={`rounded-full px-3 py-1.5 text-xs transition \${(form.collaborationLookingFor ?? []).includes(item) ? "bg-purple-500/25 text-purple-200 border border-purple-500/50" : "bg-white/5 text-white/50 border border-transparent hover:bg-white/10"}`}
+                        className={`rounded-full px-3 py-1.5 text-xs transition \${(form.collaborationLookingFor ?? []).includes(item) ? "bg-purple-500/25 text-purple border border-purple-500/50" : "bg-[var(--surface-strong)] text-ink-faint border border-transparent hover:bg-[var(--surface-strong)]"}`}
                       >
                         {item}
                       </button>
@@ -436,33 +436,33 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="mb-1.5 block text-xs text-white/50">Preferred Collaboration Type</label>
+                    <label className="mb-1.5 block text-xs text-ink-faint">Preferred Collaboration Type</label>
                     <div className="relative">
                       <select className="bb-input w-full rounded-xl px-4 py-2.5 text-sm appearance-none" value={form.preferredCollaborationType ?? ""} onChange={(e) => update("preferredCollaborationType", e.target.value)}>
                         <option value="">Select type</option>
                         {COLLAB_TYPES.map(s => <option key={s} value={s}>{s}</option>)}
                       </select>
-                      <ChevronDown size={14} className="absolute right-4 top-3 text-white/40 pointer-events-none" />
+                      <ChevronDown size={14} className="absolute right-4 top-3 text-ink-faint pointer-events-none" />
                     </div>
                   </div>
                   <div>
-                    <label className="mb-1.5 block text-xs text-white/50">Budget Range</label>
+                    <label className="mb-1.5 block text-xs text-ink-faint">Budget Range</label>
                     <div className="relative">
                       <select className="bb-input w-full rounded-xl px-4 py-2.5 text-sm appearance-none" value={form.budgetRange ?? ""} onChange={(e) => update("budgetRange", e.target.value)}>
                         <option value="">Select budget range</option>
                         {BUDGET_RANGES.map(s => <option key={s} value={s}>{s}</option>)}
                       </select>
-                      <ChevronDown size={14} className="absolute right-4 top-3 text-white/40 pointer-events-none" />
+                      <ChevronDown size={14} className="absolute right-4 top-3 text-ink-faint pointer-events-none" />
                     </div>
                   </div>
                   <div className="sm:col-span-2">
-                    <label className="mb-1.5 block text-xs text-white/50">Availability Status</label>
+                    <label className="mb-1.5 block text-xs text-ink-faint">Availability Status</label>
                     <div className="relative">
                       <select className="bb-input w-full rounded-xl px-4 py-2.5 text-sm appearance-none" value={form.availabilityStatus ?? ""} onChange={(e) => update("availabilityStatus", e.target.value)}>
                         <option value="">Select status</option>
                         {AVAILABILITY_STATUSES.map(s => <option key={s} value={s}>{s}</option>)}
                       </select>
-                      <ChevronDown size={14} className="absolute right-4 top-3 text-white/40 pointer-events-none" />
+                      <ChevronDown size={14} className="absolute right-4 top-3 text-ink-faint pointer-events-none" />
                     </div>
                   </div>
                 </div>
@@ -471,44 +471,44 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
 
             {/* SECTION 4: Verification & Social Proof */}
             <div className={`bb-glass rounded-2xl overflow-hidden transition-all duration-300 \${activeTab === 'verification' ? 'block' : 'hidden sm:hidden'}`}>
-              <div className="sm:hidden bg-white/5 px-6 py-4 border-b border-white/5 cursor-pointer" onClick={() => setActiveTab('verification')}>
+              <div className="sm:hidden bg-[var(--surface-strong)] px-6 py-4 border-b border-[var(--border)] cursor-pointer" onClick={() => setActiveTab('verification')}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-base font-medium">
-                    <ShieldCheck size={16} className="text-purple-400" /> Verification & Social
+                    <ShieldCheck size={16} className="text-purple" /> Verification & Social
                   </div>
                   <ChevronDown size={16} className={`transition-transform \${activeTab === 'verification' ? 'rotate-180' : ''}`} />
                 </div>
               </div>
               <div className="p-6 space-y-6">
-                <p className="text-xs text-white/50 italic mb-2">Verified info helps your profile rank higher in AI matching and builds trust with other brands.</p>
+                <p className="text-xs text-ink-faint italic mb-2">Verified info helps your profile rank higher in AI matching and builds trust with other brands.</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="mb-1.5 block text-xs text-white/50">Business Registration Number (Optional)</label>
+                    <label className="mb-1.5 block text-xs text-ink-faint">Business Registration Number (Optional)</label>
                     <input className="bb-input w-full rounded-xl px-4 py-2.5 text-sm" value={form.businessRegistrationNumber ?? ""} onChange={(e) => update("businessRegistrationNumber", e.target.value)} />
                   </div>
                   <div>
-                    <label className="mb-1.5 block text-xs text-white/50">GST / Tax ID (Optional)</label>
+                    <label className="mb-1.5 block text-xs text-ink-faint">GST / Tax ID (Optional)</label>
                     <input className="bb-input w-full rounded-xl px-4 py-2.5 text-sm" value={form.taxId ?? ""} onChange={(e) => update("taxId", e.target.value)} />
                   </div>
                 </div>
                 
-                <div className="pt-4 border-t border-white/5 space-y-4">
-                  <h3 className="text-sm font-medium text-white/80">Web & Social Links</h3>
+                <div className="pt-4 border-t border-[var(--border)] space-y-4">
+                  <h3 className="text-sm font-medium text-ink">Web & Social Links</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="relative">
-                      <div className="absolute left-3 top-3 text-white/40"><Globe size={16} /></div>
+                      <div className="absolute left-3 top-3 text-ink-faint"><Globe size={16} /></div>
                       <input className="bb-input w-full rounded-xl pl-10 pr-4 py-2.5 text-sm" placeholder="Website URL" value={form.website ?? ""} onChange={(e) => update("website", e.target.value)} />
                     </div>
                     <div className="relative">
-                      <div className="absolute left-3 top-3 text-white/40"><Camera size={16} /></div>
+                      <div className="absolute left-3 top-3 text-ink-faint"><Camera size={16} /></div>
                       <input className="bb-input w-full rounded-xl pl-10 pr-4 py-2.5 text-sm" placeholder="Instagram Profile" value={form.socialLinks?.instagram ?? ""} onChange={(e) => updateNested("socialLinks", "instagram", e.target.value)} />
                     </div>
                     <div className="relative">
-                      <div className="absolute left-3 top-3 text-white/40 text-xs font-bold pt-0.5">LI</div>
+                      <div className="absolute left-3 top-3 text-ink-faint text-xs font-bold pt-0.5">LI</div>
                       <input className="bb-input w-full rounded-xl pl-10 pr-4 py-2.5 text-sm" placeholder="LinkedIn Company Page" value={form.socialLinks?.linkedin ?? ""} onChange={(e) => updateNested("socialLinks", "linkedin", e.target.value)} />
                     </div>
                     <div className="relative">
-                      <div className="absolute left-3 top-3 text-white/40"><Users size={16} /></div>
+                      <div className="absolute left-3 top-3 text-ink-faint"><Users size={16} /></div>
                       <input className="bb-input w-full rounded-xl pl-10 pr-4 py-2.5 text-sm" placeholder="Facebook Page" value={form.socialLinks?.facebook ?? ""} onChange={(e) => updateNested("socialLinks", "facebook", e.target.value)} />
                     </div>
                   </div>
@@ -522,35 +522,35 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
         {/* Live Preview Column */}
         <div className="hidden lg:block w-72 shrink-0">
           <div className="sticky top-24">
-            <h3 className="text-xs font-medium text-white/40 uppercase tracking-wider mb-4">Live Preview</h3>
-            <div className="bb-glass bb-card-interactive rounded-2xl p-5 border border-white/5 shadow-xl">
+            <h3 className="text-xs font-medium text-ink-faint uppercase tracking-wider mb-4">Live Preview</h3>
+            <div className="bb-glass bb-card-interactive rounded-2xl p-5 border border-[var(--border)] shadow-xl">
               <div className="flex items-start gap-4">
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-purple-500/20">
                   {form.logo ? (
                     <img src={form.logo} alt="Logo" className="h-full w-full object-cover" />
                   ) : (
-                    <span className="text-xl font-semibold text-purple-200">
+                    <span className="text-xl font-semibold text-purple">
                       {form.companyName ? form.companyName.charAt(0) : "?"}
                     </span>
                   )}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="bb-display font-medium text-white line-clamp-1">{form.companyName || "Your Brand Name"}</h3>
-                  <p className="text-xs text-purple-300 line-clamp-1">{form.industry || "Industry"}</p>
+                  <h3 className="bb-display font-medium text-ink line-clamp-1">{form.companyName || "Your Brand Name"}</h3>
+                  <p className="text-xs text-purple line-clamp-1">{form.industry || "Industry"}</p>
                 </div>
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
-                <div className="inline-flex items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-1 text-[10px] text-white/60">
+                <div className="inline-flex items-center gap-1.5 rounded-full bg-[var(--surface-strong)] px-2.5 py-1 text-[10px] text-ink-soft">
                   <span className={`h-1.5 w-1.5 rounded-full \${form.availabilityStatus === 'Actively looking' ? 'bg-green-400' : form.availabilityStatus === 'Open to offers' ? 'bg-yellow-400' : 'bg-gray-400'}`}></span>
                   {form.availabilityStatus || "Open to offers"}
                 </div>
                 {form.businessType && (
-                  <div className="inline-flex items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-1 text-[10px] text-white/60 border border-white/5">
+                  <div className="inline-flex items-center gap-1.5 rounded-full bg-[var(--surface-strong)] px-2.5 py-1 text-[10px] text-ink-soft border border-[var(--border)]">
                     {form.businessType}
                   </div>
                 )}
               </div>
-              <p className="mt-3 text-xs text-white/50 line-clamp-3 leading-relaxed">
+              <p className="mt-3 text-xs text-ink-faint line-clamp-3 leading-relaxed">
                 {form.bio || "Add a bio to see how it looks to potential partners. This gives them a quick overview of what you do."}
               </p>
             </div>
@@ -559,10 +559,10 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
       </div>
 
       {/* Floating Save Bar */}
-      <div className={`fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between border-t border-white/10 bg-[#0a0a0a]/90 px-6 py-4 backdrop-blur-md transition-transform duration-300 \${isDirty ? "translate-y-0" : "translate-y-full"} md:pl-[17rem]`}>
-        <div className="text-sm text-white/70 hidden sm:block">You have unsaved changes.</div>
+      <div className={`fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between border-t border-[var(--border)] bg-[#0a0a0a]/90 px-6 py-4 backdrop-blur-md transition-transform duration-300 \${isDirty ? "translate-y-0" : "translate-y-full"} md:pl-[17rem]`}>
+        <div className="text-sm text-ink-soft hidden sm:block">You have unsaved changes.</div>
         <div className="flex w-full sm:w-auto items-center justify-between sm:justify-start gap-4">
-          <button onClick={() => { setForm(initial ?? {}); setIsDirty(false); }} className="text-sm text-white/50 hover:text-white transition flex-1 sm:flex-none">
+          <button onClick={() => { setForm(initial ?? {}); setIsDirty(false); }} className="text-sm text-ink-faint hover:text-ink transition flex-1 sm:flex-none">
             Discard
           </button>
           <button

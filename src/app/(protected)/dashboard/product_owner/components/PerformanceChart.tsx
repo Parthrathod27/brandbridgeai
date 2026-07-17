@@ -12,7 +12,7 @@ export default function PerformanceChart({ data, title }: PerformanceChartProps)
     return (
       <div className="bb-glass rounded-2xl p-6">
         {title && <h3 className="bb-display mb-4 text-base font-medium">{title}</h3>}
-        <p className="text-sm text-white/45">No performance data yet. Views and requests will appear here over time.</p>
+        <p className="text-sm text-ink-faint">No performance data yet. Views and requests will appear here over time.</p>
       </div>
     );
   }
@@ -23,7 +23,7 @@ export default function PerformanceChart({ data, title }: PerformanceChartProps)
   return (
     <div className="bb-glass rounded-2xl p-6">
       {title && <h3 className="bb-display mb-4 text-base font-medium">{title}</h3>}
-      <div className="mb-4 flex flex-wrap gap-4 text-xs text-white/50">
+      <div className="mb-4 flex flex-wrap gap-4 text-xs text-ink-faint">
         <span className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-purple-400" /> Views
         </span>
@@ -50,7 +50,7 @@ export default function PerformanceChart({ data, title }: PerformanceChartProps)
                   title={`${day.collaborationRequests} requests`}
                 />
               </div>
-              <span className="text-[10px] text-white/40">
+              <span className="text-[10px] text-ink-faint">
                 {day.date.slice(5)}
               </span>
             </div>

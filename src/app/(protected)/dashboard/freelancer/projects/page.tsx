@@ -26,7 +26,7 @@ export default function FreelancerProjectsPage() {
     alert("Proposal sent!");
   }
 
-  if (loading) return <div className="text-white/50">Loading...</div>;
+  if (loading) return <div className="text-ink-faint">Loading...</div>;
 
   return (
     <div>
@@ -38,9 +38,9 @@ export default function FreelancerProjectsPage() {
           {campaigns.map((c) => (
             <div key={c._id} className="bb-glass rounded-2xl p-5">
               <h3 className="bb-display font-medium">{c.title}</h3>
-              <p className="mt-1 text-xs text-purple-300">by {c.ownerId?.name ?? "Brand"}</p>
-              {c.description && <p className="mt-2 text-sm text-white/45">{c.description}</p>}
-              {c.budget != null && <p className="mt-2 text-xs text-white/40">Budget: ${c.budget}</p>}
+              <p className="mt-1 text-xs text-purple">by {c.ownerId?.name ?? "Brand"}</p>
+              {c.description && <p className="mt-2 text-sm text-ink-faint">{c.description}</p>}
+              {c.budget != null && <p className="mt-2 text-xs text-ink-faint">Budget: ${c.budget}</p>}
               <button onClick={() => handlePropose(c._id)} className="bb-btn-primary mt-4 rounded-xl px-4 py-2 text-xs">Send Proposal</button>
             </div>
           ))}

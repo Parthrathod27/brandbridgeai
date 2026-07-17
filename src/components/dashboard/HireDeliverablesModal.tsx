@@ -44,15 +44,15 @@ export default function HireDeliverablesModal({ hire, role, onClose, onUpdate }:
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-0">
-      <div className="bg-[#1a1a24] border border-white/10 w-full max-w-lg rounded-2xl shadow-2xl flex flex-col max-h-[90vh]">
+      <div className="bg-[#1a1a24] border border-[var(--border)] w-full max-w-lg rounded-2xl shadow-2xl flex flex-col max-h-[90vh]">
         
-        <div className="flex items-center justify-between p-5 border-b border-white/10">
+        <div className="flex items-center justify-between p-5 border-b border-[var(--border)]">
           <div>
             <h2 className="bb-display text-lg font-semibold">Deliverables</h2>
-            <p className="text-xs text-white/50 mt-1">Project files and assets</p>
+            <p className="text-xs text-ink-faint mt-1">Project files and assets</p>
           </div>
-          <button onClick={onClose} className="p-2 rounded-full hover:bg-white/10 transition-colors">
-            <X size={18} className="text-white/70" />
+          <button onClick={onClose} className="p-2 rounded-full hover:bg-[var(--surface-strong)] transition-colors">
+            <X size={18} className="text-ink-soft" />
           </button>
         </div>
 
@@ -61,25 +61,25 @@ export default function HireDeliverablesModal({ hire, role, onClose, onUpdate }:
           <div className="space-y-3">
             {hire.deliverables && hire.deliverables.length > 0 ? (
               hire.deliverables.map((d, i) => (
-                <div key={i} className="flex items-center justify-between bg-white/5 p-3 rounded-xl border border-white/10">
+                <div key={i} className="flex items-center justify-between bg-[var(--surface-strong)] p-3 rounded-xl border border-[var(--border)]">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-purple-500/20 text-purple-300 rounded-lg">
+                    <div className="p-2 bg-purple-500/20 text-purple rounded-lg">
                       <FileText size={16} />
                     </div>
                     <span className="text-sm font-medium">{d.name}</span>
                   </div>
-                  <a href={d.fileUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-purple-300 hover:text-purple-200 hover:underline">
+                  <a href={d.fileUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-purple hover:text-purple hover:underline">
                     View File
                   </a>
                 </div>
               ))
             ) : (
-              <p className="text-sm text-white/40 text-center py-6">No deliverables uploaded yet.</p>
+              <p className="text-sm text-ink-faint text-center py-6">No deliverables uploaded yet.</p>
             )}
           </div>
 
           {role === "freelancer" && hire.status === "active" && (
-            <div className="pt-4 border-t border-white/10">
+            <div className="pt-4 border-t border-[var(--border)]">
               <h3 className="text-sm font-medium mb-3">Add Deliverable</h3>
               <div className="space-y-3">
                 <input 

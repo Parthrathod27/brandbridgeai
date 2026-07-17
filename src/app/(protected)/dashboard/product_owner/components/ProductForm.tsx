@@ -153,7 +153,7 @@ export default function ProductForm({
       </div>
 
       <div>
-        <label className="mb-2 block text-xs text-white/50">Product images</label>
+        <label className="mb-2 block text-xs text-ink-faint">Product images</label>
         <div className="flex flex-wrap gap-3">
           {form.images.map((img, i) => (
             <div key={img + i} className="relative h-20 w-20 overflow-hidden rounded-xl">
@@ -161,13 +161,13 @@ export default function ProductForm({
               <button
                 type="button"
                 onClick={() => removeImage(i)}
-                className="absolute right-1 top-1 rounded-full bg-black/60 p-0.5 text-white/80"
+                className="absolute right-1 top-1 rounded-full bg-black/60 p-0.5 text-ink"
               >
                 <X size={12} />
               </button>
             </div>
           ))}
-          <label className="flex h-20 w-20 cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-white/15 text-white/40 hover:border-purple-400/50 hover:text-purple-300">
+          <label className="flex h-20 w-20 cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-white/15 text-ink-faint hover:border-purple-400/50 hover:text-purple">
             {uploading ? <Loader2 size={18} className="animate-spin" /> : <Upload size={18} />}
             <span className="mt-1 text-[10px]">Upload</span>
             <input type="file" accept="image/*" multiple className="hidden" onChange={handleUpload} />
@@ -182,7 +182,7 @@ export default function ProductForm({
         <button
           type="button"
           onClick={onCancel}
-          className="rounded-xl border border-white/10 px-4 py-2 text-sm text-white/60 hover:bg-white/5"
+          className="rounded-xl border border-[var(--border)] px-4 py-2 text-sm text-ink-soft hover:bg-[var(--surface-strong)]"
         >
           Cancel
         </button>

@@ -26,12 +26,12 @@ export default function ProjectOpportunitiesSection({
     <div className="bb-glass rounded-2xl p-6">
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <Briefcase size={18} className="text-purple-300" />
+          <Briefcase size={18} className="text-purple" />
           <h2 className="bb-display text-lg font-medium">Project Opportunities</h2>
         </div>
         <Link
           href="/dashboard/freelancer/projects"
-          className="text-xs text-purple-300 hover:text-purple-200"
+          className="text-xs text-purple hover:text-purple"
         >
           View all
         </Link>
@@ -59,12 +59,12 @@ export default function ProjectOpportunitiesSection({
               className="bb-glass bb-card-interactive rounded-2xl p-4 transition-all duration-200"
             >
               <h3 className="truncate text-sm font-medium">{p.title}</h3>
-              <p className="mt-0.5 text-xs text-purple-300">by {p.brandName}</p>
+              <p className="mt-0.5 text-xs text-purple">by {p.brandName}</p>
               {p.description && (
-                <p className="mt-2 line-clamp-2 text-xs text-white/45">{p.description}</p>
+                <p className="mt-2 line-clamp-2 text-xs text-ink-faint">{p.description}</p>
               )}
               {p.budget != null && (
-                <p className="mt-2 text-xs text-white/40">Budget: ${p.budget}</p>
+                <p className="mt-2 text-xs text-ink-faint">Budget: ${p.budget}</p>
               )}
               <button
                 onClick={() => onPropose?.(p._id)}

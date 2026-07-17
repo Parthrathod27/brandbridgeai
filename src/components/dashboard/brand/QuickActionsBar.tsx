@@ -39,9 +39,9 @@ export default function QuickActionsBar() {
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
             style={{ background: "rgba(139,92,246,0.18)" }}
           >
-            <Icon size={16} className="text-purple-200" />
+            <Icon size={16} className="text-purple" />
           </div>
-          <span className="text-xs font-medium text-white/80 sm:text-sm">{label}</span>
+          <span className="text-xs font-medium text-ink sm:text-sm">{label}</span>
         </Link>
       ))}
     </div>

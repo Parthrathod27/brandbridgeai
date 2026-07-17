@@ -20,12 +20,12 @@ export default function ActiveProjectsSection({ projects }: ActiveProjectsSectio
     <div className="bb-glass rounded-2xl p-6">
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <Rocket size={18} className="text-purple-300" />
+          <Rocket size={18} className="text-purple" />
           <h2 className="bb-display text-lg font-medium">Active Projects</h2>
         </div>
         <Link
           href="/dashboard/freelancer/earnings"
-          className="text-xs text-purple-300 hover:text-purple-200"
+          className="text-xs text-purple hover:text-purple"
         >
           View all
         </Link>
@@ -50,17 +50,17 @@ export default function ActiveProjectsSection({ projects }: ActiveProjectsSectio
           {projects.map((p) => (
             <div
               key={p._id}
-              className="flex flex-col gap-2 rounded-xl bg-white/3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
+              className="flex flex-col gap-2 rounded-xl bg-[var(--surface-strong)] px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
             >
               <div>
                 <p className="text-sm font-medium">{p.clientName}</p>
                 {p.campaignTitle && (
-                  <p className="text-xs text-white/40">{p.campaignTitle}</p>
+                  <p className="text-xs text-ink-faint">{p.campaignTitle}</p>
                 )}
               </div>
               <div className="flex items-center gap-3">
                 {p.rate != null && (
-                  <span className="text-xs font-medium text-purple-300">
+                  <span className="text-xs font-medium text-purple">
                     ${p.rate}
                   </span>
                 )}

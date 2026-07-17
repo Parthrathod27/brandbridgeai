@@ -47,13 +47,13 @@ export default function MatchesToolbar({ filters, onFilterChange, industries }: 
       {/* Top Row: Search & Mobile Toggle */}
       <div className="flex items-center gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" size={18} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" size={18} />
           <input
             type="text"
             placeholder="Search brands..."
             value={filters.search}
             onChange={(e) => update("search", e.target.value)}
-            className="w-full rounded-xl border border-white/10 bg-[#1A1A1D] py-2.5 pl-10 pr-4 text-sm text-white placeholder-white/40 focus:border-[#6C5CE7] focus:outline-none focus:ring-1 focus:ring-[#6C5CE7]"
+            className="w-full rounded-xl border border-[var(--border)] bg-surface-strong py-2.5 pl-10 pr-4 text-sm text-ink placeholder-white/40 focus:border-purple focus:outline-none focus:ring-1 focus:ring-[#6C5CE7]"
           />
         </div>
         
@@ -61,14 +61,14 @@ export default function MatchesToolbar({ filters, onFilterChange, industries }: 
           onClick={() => setIsMobileOpen(!isMobileOpen)}
           className={`flex items-center gap-2 rounded-xl border py-2.5 px-4 text-sm transition-colors md:hidden ${
             hasActiveFilters || isMobileOpen
-              ? "border-[#6C5CE7] bg-[#6C5CE7]/10 text-[#6C5CE7]"
-              : "border-white/10 bg-[#1A1A1D] text-white/70 hover:bg-white/5"
+              ? "border-purple bg-purple/10 text-purple"
+              : "border-[var(--border)] bg-surface-strong text-ink-soft hover:bg-[var(--surface-strong)]"
           }`}
         >
           <Filter size={16} />
           <span>Filters</span>
           {hasActiveFilters && (
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#6C5CE7] text-[10px] text-white">
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-purple text-[10px] text-ink">
               !
             </span>
           )}
@@ -80,7 +80,7 @@ export default function MatchesToolbar({ filters, onFilterChange, industries }: 
         <select
           value={filters.sort}
           onChange={(e) => update("sort", e.target.value)}
-          className="rounded-xl border border-white/10 bg-[#1A1A1D] py-2 px-3 text-sm text-white/80 focus:border-[#6C5CE7] focus:outline-none"
+          className="rounded-xl border border-[var(--border)] bg-surface-strong py-2 px-3 text-sm text-ink focus:border-purple focus:outline-none"
         >
           <option value="score">Sort by: Compatibility Score</option>
           <option value="newest">Sort by: Newest Match</option>
@@ -90,7 +90,7 @@ export default function MatchesToolbar({ filters, onFilterChange, industries }: 
         <select
           value={filters.industry}
           onChange={(e) => update("industry", e.target.value)}
-          className="rounded-xl border border-white/10 bg-[#1A1A1D] py-2 px-3 text-sm text-white/80 focus:border-[#6C5CE7] focus:outline-none"
+          className="rounded-xl border border-[var(--border)] bg-surface-strong py-2 px-3 text-sm text-ink focus:border-purple focus:outline-none"
         >
           <option value="">All Industries</option>
           {industries.map((ind) => (
@@ -103,13 +103,13 @@ export default function MatchesToolbar({ filters, onFilterChange, industries }: 
           placeholder="Location..."
           value={filters.location}
           onChange={(e) => update("location", e.target.value)}
-          className="w-32 rounded-xl border border-white/10 bg-[#1A1A1D] py-2 px-3 text-sm text-white/80 placeholder-white/40 focus:border-[#6C5CE7] focus:outline-none flex-1 md:flex-none"
+          className="w-32 rounded-xl border border-[var(--border)] bg-surface-strong py-2 px-3 text-sm text-ink placeholder-white/40 focus:border-purple focus:outline-none flex-1 md:flex-none"
         />
 
         <select
           value={filters.availability}
           onChange={(e) => update("availability", e.target.value)}
-          className="rounded-xl border border-white/10 bg-[#1A1A1D] py-2 px-3 text-sm text-white/80 focus:border-[#6C5CE7] focus:outline-none"
+          className="rounded-xl border border-[var(--border)] bg-surface-strong py-2 px-3 text-sm text-ink focus:border-purple focus:outline-none"
         >
           <option value="">Any Availability</option>
           <option value="Actively looking">Actively looking</option>
@@ -120,7 +120,7 @@ export default function MatchesToolbar({ filters, onFilterChange, industries }: 
         <select
           value={filters.collabType}
           onChange={(e) => update("collabType", e.target.value)}
-          className="rounded-xl border border-white/10 bg-[#1A1A1D] py-2 px-3 text-sm text-white/80 focus:border-[#6C5CE7] focus:outline-none"
+          className="rounded-xl border border-[var(--border)] bg-surface-strong py-2 px-3 text-sm text-ink focus:border-purple focus:outline-none"
         >
           <option value="">Any Collab Type</option>
           <option value="Barter">Barter</option>
@@ -134,8 +134,8 @@ export default function MatchesToolbar({ filters, onFilterChange, industries }: 
           onClick={() => update("savedOnly", !filters.savedOnly)}
           className={`flex items-center gap-2 rounded-xl border py-2 px-4 text-sm transition-colors ${
             filters.savedOnly
-              ? "border-[#6C5CE7] bg-[#6C5CE7]/10 text-[#6C5CE7]"
-              : "border-white/10 bg-[#1A1A1D] text-white/70 hover:bg-white/5"
+              ? "border-purple bg-purple/10 text-purple"
+              : "border-[var(--border)] bg-surface-strong text-ink-soft hover:bg-[var(--surface-strong)]"
           }`}
         >
           <svg className="w-4 h-4" fill={filters.savedOnly ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">

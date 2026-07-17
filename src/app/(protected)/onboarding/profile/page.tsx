@@ -51,7 +51,7 @@ export default function OnboardingProfilePage() {
   if (loading || !role) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <div className="text-white/50">Loading...</div>
+        <div className="text-ink-faint">Loading...</div>
       </div>
     );
   }
@@ -60,10 +60,10 @@ export default function OnboardingProfilePage() {
     <div className="mx-auto max-w-2xl px-5 py-12">
       <div className="mb-8 text-center">
         <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl" style={{ background: "linear-gradient(135deg,#8b5cf6,#4f8cff)" }}>
-          <Sparkles size={22} className="text-white" />
+          <Sparkles size={22} className="text-ink" />
         </div>
         <h1 className="bb-display text-2xl font-semibold">Complete Your Profile</h1>
-        <p className="mt-2 text-sm text-white/55">
+        <p className="mt-2 text-sm text-ink-soft">
           Set up your {ROLE_LABELS[role]} profile to start using BrandBridge AI
         </p>
       </div>

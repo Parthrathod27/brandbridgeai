@@ -76,15 +76,15 @@ export default function HireFormModal({ freelancer, onClose, onSuccess }: HireFo
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-0">
-      <div className="bg-[#1a1a24] border border-white/10 w-full max-w-xl rounded-2xl shadow-2xl flex flex-col max-h-[90vh]">
+      <div className="bg-[#1a1a24] border border-[var(--border)] w-full max-w-xl rounded-2xl shadow-2xl flex flex-col max-h-[90vh]">
         
-        <div className="flex items-center justify-between p-6 border-b border-white/10 shrink-0">
+        <div className="flex items-center justify-between p-6 border-b border-[var(--border)] shrink-0">
           <div>
             <h2 className="bb-display text-xl font-semibold">Hire Freelancer</h2>
-            <p className="text-sm text-white/50 mt-1">Send a project request to {freelancer.user?.name}</p>
+            <p className="text-sm text-ink-faint mt-1">Send a project request to {freelancer.user?.name}</p>
           </div>
-          <button onClick={onClose} className="p-2 rounded-full hover:bg-white/10 transition-colors">
-            <X size={20} className="text-white/70" />
+          <button onClick={onClose} className="p-2 rounded-full hover:bg-[var(--surface-strong)] transition-colors">
+            <X size={20} className="text-ink-soft" />
           </button>
         </div>
 
@@ -98,9 +98,9 @@ export default function HireFormModal({ freelancer, onClose, onSuccess }: HireFo
           <form id="hire-form" onSubmit={handleSubmit} className="space-y-5">
             
             <div>
-              <label className="block text-xs text-white/60 mb-2 uppercase tracking-wider">Linked Campaign (Optional)</label>
+              <label className="block text-xs text-ink-soft mb-2 uppercase tracking-wider">Linked Campaign (Optional)</label>
               <div className="relative">
-                <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" size={16} />
+                <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" size={16} />
                 <select 
                   name="campaignId"
                   value={formData.campaignId}
@@ -118,9 +118,9 @@ export default function HireFormModal({ freelancer, onClose, onSuccess }: HireFo
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs text-white/60 mb-2 uppercase tracking-wider">Agreed Rate ($/hr)</label>
+                <label className="block text-xs text-ink-soft mb-2 uppercase tracking-wider">Agreed Rate ($/hr)</label>
                 <div className="relative">
-                  <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" size={16} />
+                  <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" size={16} />
                   <input 
                     type="number"
                     name="rate"
@@ -132,9 +132,9 @@ export default function HireFormModal({ freelancer, onClose, onSuccess }: HireFo
               </div>
 
               <div>
-                <label className="block text-xs text-white/60 mb-2 uppercase tracking-wider">Expected Deadline</label>
+                <label className="block text-xs text-ink-soft mb-2 uppercase tracking-wider">Expected Deadline</label>
                 <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" size={16} />
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" size={16} />
                   <input 
                     type="date"
                     name="endDate"
@@ -147,7 +147,7 @@ export default function HireFormModal({ freelancer, onClose, onSuccess }: HireFo
             </div>
 
             <div>
-              <label className="block text-xs text-white/60 mb-2 uppercase tracking-wider">Project Scope / Brief</label>
+              <label className="block text-xs text-ink-soft mb-2 uppercase tracking-wider">Project Scope / Brief</label>
               <textarea 
                 name="notes"
                 value={formData.notes}
@@ -160,8 +160,8 @@ export default function HireFormModal({ freelancer, onClose, onSuccess }: HireFo
           </form>
         </div>
         
-        <div className="p-6 border-t border-white/10 shrink-0 flex justify-end gap-3">
-          <button onClick={onClose} className="px-5 py-2.5 rounded-xl text-sm hover:bg-white/5 transition-colors">
+        <div className="p-6 border-t border-[var(--border)] shrink-0 flex justify-end gap-3">
+          <button onClick={onClose} className="px-5 py-2.5 rounded-xl text-sm hover:bg-[var(--surface-strong)] transition-colors">
             Cancel
           </button>
           <button 

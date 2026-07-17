@@ -40,7 +40,7 @@ export default function ProjectsPage() {
       <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
           <h1 className="bb-display text-2xl font-semibold sm:text-3xl">Projects</h1>
-          <p className="mt-1 text-sm text-white/55">Post and manage your creative projects.</p>
+          <p className="mt-1 text-sm text-ink-soft">Post and manage your creative projects.</p>
         </div>
         <button
           onClick={() => setIsNewProjectModalOpen(true)}
@@ -52,15 +52,15 @@ export default function ProjectsPage() {
       </div>
 
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex gap-2 border-b border-white/10 pb-1 w-full sm:w-auto overflow-x-auto">
+        <div className="flex gap-2 border-b border-[var(--border)] pb-1 w-full sm:w-auto overflow-x-auto">
           {["all", "open", "in_progress", "completed", "closed"].map((tab) => (
             <button
               key={tab}
               onClick={() => setStatusFilter(tab)}
               className={`whitespace-nowrap px-4 py-2 text-sm font-medium transition-colors ${
                 statusFilter === tab
-                  ? "border-b-2 border-purple-500 text-purple-300"
-                  : "text-white/50 hover:text-white/80"
+                  ? "border-b-2 border-purple-500 text-purple"
+                  : "text-ink-faint hover:text-ink"
               }`}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1).replace("_", " ")}
@@ -68,7 +68,7 @@ export default function ProjectsPage() {
           ))}
         </div>
         <div className="relative w-full sm:w-64">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" />
           <input
             className="bb-input w-full rounded-xl py-2 pl-10 pr-4 text-sm"
             placeholder="Search projects..."
@@ -116,45 +116,45 @@ export default function ProjectsPage() {
       ) : (
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {projects.map((project) => (
-            <div key={project._id} className="bb-glass rounded-2xl p-5 hover:bg-white/5 transition cursor-pointer">
+            <div key={project._id} className="bb-glass rounded-2xl p-5 hover:bg-[var(--surface-strong)] transition cursor-pointer">
               <div className="mb-3 flex items-start justify-between">
                 <div>
-                  <h3 className="text-base font-semibold text-white">{project.title}</h3>
-                  <p className="text-xs text-white/50 mt-1">{project.category}</p>
+                  <h3 className="text-base font-semibold text-ink">{project.title}</h3>
+                  <p className="text-xs text-ink-faint mt-1">{project.category}</p>
                 </div>
                 <span className={`rounded-full px-2 py-1 text-[10px] font-medium uppercase tracking-wider ${
                   project.status === "open" ? "bg-green-500/10 text-green-400" :
                   project.status === "in_progress" ? "bg-blue-500/10 text-blue-400" :
-                  project.status === "completed" ? "bg-purple-500/10 text-purple-400" :
-                  "bg-white/10 text-white/50"
+                  project.status === "completed" ? "bg-purple-500/10 text-purple" :
+                  "bg-[var(--surface-strong)] text-ink-faint"
                 }`}>
                   {project.status.replace("_", " ")}
                 </span>
               </div>
               
-              <div className="mb-4 flex flex-wrap gap-4 text-xs text-white/70">
+              <div className="mb-4 flex flex-wrap gap-4 text-xs text-ink-soft">
                 <div className="flex items-center gap-1.5">
-                  <DollarSign size={14} className="text-white/40" />
+                  <DollarSign size={14} className="text-ink-faint" />
                   {project.budgetType === "fixed" ? `$${project.budgetAmount} Fixed` : `$${project.budgetAmount}/hr`}
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <Calendar size={14} className="text-white/40" />
+                  <Calendar size={14} className="text-ink-faint" />
                   Due {new Date(project.deadline).toLocaleDateString()}
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <FileText size={14} className="text-white/40" />
+                  <FileText size={14} className="text-ink-faint" />
                   {project.applicantCount} proposals
                 </div>
               </div>
               
               <div className="flex gap-2 flex-wrap">
                 {(project.requiredSkills || []).slice(0, 3).map((skill: string) => (
-                  <span key={skill} className="rounded bg-white/5 px-2 py-1 text-[10px] text-white/60">
+                  <span key={skill} className="rounded bg-[var(--surface-strong)] px-2 py-1 text-[10px] text-ink-soft">
                     {skill}
                   </span>
                 ))}
                 {(project.requiredSkills?.length || 0) > 3 && (
-                  <span className="rounded bg-white/5 px-2 py-1 text-[10px] text-white/60">
+                  <span className="rounded bg-[var(--surface-strong)] px-2 py-1 text-[10px] text-ink-soft">
                     +{(project.requiredSkills?.length || 0) - 3} more
                   </span>
                 )}
@@ -222,18 +222,18 @@ function NewProjectModal({ onClose, onSuccess }: { onClose: () => void; onSucces
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-      <div className="w-full max-w-2xl rounded-2xl bg-[#0F0F12] border border-white/10 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
-        <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
-          <h2 className="bb-display text-lg font-medium text-white">Post a Project</h2>
-          <button onClick={onClose} className="rounded-full p-2 hover:bg-white/5 transition-colors">
-            <X size={18} className="text-white/50" />
+      <div className="w-full max-w-2xl rounded-2xl bg-surface border border-[var(--border)] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+        <div className="flex items-center justify-between border-b border-[var(--border)] px-6 py-4">
+          <h2 className="bb-display text-lg font-medium text-ink">Post a Project</h2>
+          <button onClick={onClose} className="rounded-full p-2 hover:bg-[var(--surface-strong)] transition-colors">
+            <X size={18} className="text-ink-faint" />
           </button>
         </div>
         
         <div className="overflow-y-auto p-6">
           <form id="new-project-form" onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="mb-1.5 block text-xs text-white/50">Project Title</label>
+              <label className="mb-1.5 block text-xs text-ink-faint">Project Title</label>
               <input
                 required
                 className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
@@ -244,7 +244,7 @@ function NewProjectModal({ onClose, onSuccess }: { onClose: () => void; onSucces
             </div>
             
             <div>
-              <label className="mb-1.5 block text-xs text-white/50">Description</label>
+              <label className="mb-1.5 block text-xs text-ink-faint">Description</label>
               <textarea
                 required
                 rows={4}
@@ -257,7 +257,7 @@ function NewProjectModal({ onClose, onSuccess }: { onClose: () => void; onSucces
             
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div>
-                <label className="mb-1.5 block text-xs text-white/50">Category</label>
+                <label className="mb-1.5 block text-xs text-ink-faint">Category</label>
                 <select
                   required
                   className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
@@ -274,7 +274,7 @@ function NewProjectModal({ onClose, onSuccess }: { onClose: () => void; onSucces
               </div>
               
               <div>
-                <label className="mb-1.5 block text-xs text-white/50">Deadline</label>
+                <label className="mb-1.5 block text-xs text-ink-faint">Deadline</label>
                 <input
                   required
                   type="date"
@@ -287,7 +287,7 @@ function NewProjectModal({ onClose, onSuccess }: { onClose: () => void; onSucces
 
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div>
-                <label className="mb-1.5 block text-xs text-white/50">Budget Type</label>
+                <label className="mb-1.5 block text-xs text-ink-faint">Budget Type</label>
                 <select
                   className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
                   value={form.budgetType}
@@ -299,7 +299,7 @@ function NewProjectModal({ onClose, onSuccess }: { onClose: () => void; onSucces
               </div>
               
               <div>
-                <label className="mb-1.5 block text-xs text-white/50">Budget Amount ($)</label>
+                <label className="mb-1.5 block text-xs text-ink-faint">Budget Amount ($)</label>
                 <input
                   required
                   type="number"
@@ -313,7 +313,7 @@ function NewProjectModal({ onClose, onSuccess }: { onClose: () => void; onSucces
             </div>
 
             <div>
-              <label className="mb-1.5 block text-xs text-white/50">Required Skills (comma separated)</label>
+              <label className="mb-1.5 block text-xs text-ink-faint">Required Skills (comma separated)</label>
               <input
                 className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
                 value={form.skillsStr}
@@ -326,11 +326,11 @@ function NewProjectModal({ onClose, onSuccess }: { onClose: () => void; onSucces
           </form>
         </div>
         
-        <div className="border-t border-white/10 px-6 py-4 flex justify-end gap-3 bg-[#131317]">
+        <div className="border-t border-[var(--border)] px-6 py-4 flex justify-end gap-3 bg-[#131317]">
           <button
             type="button"
             onClick={onClose}
-            className="rounded-xl px-4 py-2 text-sm font-medium text-white/70 hover:bg-white/5 transition-colors"
+            className="rounded-xl px-4 py-2 text-sm font-medium text-ink-soft hover:bg-[var(--surface-strong)] transition-colors"
           >
             Cancel
           </button>

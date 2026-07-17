@@ -23,7 +23,7 @@ export default function EarningsPage() {
   const pending = hires.filter((h) => h.status === "pending");
   const totalEarnings = completed.reduce((sum, h) => sum + (h.rate ?? 0), 0);
 
-  if (loading) return <div className="text-white/50">Loading...</div>;
+  if (loading) return <div className="text-ink-faint">Loading...</div>;
 
   return (
     <div>

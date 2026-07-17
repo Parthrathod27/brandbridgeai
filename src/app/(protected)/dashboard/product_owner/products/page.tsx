@@ -135,7 +135,7 @@ export default function ProductsPage() {
       )}
 
       {loading ? (
-        <div className="text-white/50">Loading products...</div>
+        <div className="text-ink-faint">Loading products...</div>
       ) : products.length === 0 ? (
         <EmptyState
           icon={Package}

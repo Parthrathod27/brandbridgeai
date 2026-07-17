@@ -36,7 +36,7 @@ export default function CollaborationCard({
       : status === "declined"
         ? "text-red-400"
         : status === "completed"
-          ? "text-purple-400"
+          ? "text-purple"
           : "text-yellow-400";
 
   const getStepIndex = () => {
@@ -55,7 +55,7 @@ export default function CollaborationCard({
           <h3 className="bb-display font-medium">{partnerName}</h3>
           <span className={`mt-1 inline-block text-xs capitalize ${statusColor}`}>{status}</span>
           {compatibilityScore != null && (
-            <span className="ml-2 text-xs text-purple-300">{compatibilityScore}% match</span>
+            <span className="ml-2 text-xs text-purple">{compatibilityScore}% match</span>
           )}
         </div>
       </div>
@@ -67,11 +67,11 @@ export default function CollaborationCard({
             {[1, 2, 3, 4].map((step) => (
               <div 
                 key={step} 
-                className={`h-1.5 flex-1 rounded-full ${step <= stepIndex ? "bg-purple-500" : "bg-white/10"}`} 
+                className={`h-1.5 flex-1 rounded-full ${step <= stepIndex ? "bg-purple-500" : "bg-[var(--surface-strong)]"}`} 
               />
             ))}
           </div>
-          <div className="mt-1 flex justify-between text-[10px] text-white/40">
+          <div className="mt-1 flex justify-between text-[10px] text-ink-faint">
             <span>Sent</span>
             <span>Accepted</span>
             <span>Active</span>
@@ -80,16 +80,16 @@ export default function CollaborationCard({
         </div>
       )}
 
-      {message && <p className="mt-4 text-sm text-white/60">{message}</p>}
+      {message && <p className="mt-4 text-sm text-ink-soft">{message}</p>}
       
       {proposal && (
-        <div className="mt-3 rounded-xl bg-white/3 p-3 flex-1">
-          <p className={`text-xs text-white/50 ${!isExpanded && "line-clamp-3"}`}>
+        <div className="mt-3 rounded-xl bg-[var(--surface-strong)] p-3 flex-1">
+          <p className={`text-xs text-ink-faint ${!isExpanded && "line-clamp-3"}`}>
             {proposal}
           </p>
           <button 
             onClick={() => setIsExpanded(!isExpanded)} 
-            className="mt-2 flex items-center gap-1 text-[11px] text-purple-300 hover:text-purple-200"
+            className="mt-2 flex items-center gap-1 text-[11px] text-purple hover:text-purple"
           >
             {isExpanded ? (
               <><ChevronUp size={12} /> Show less</>
@@ -111,7 +111,7 @@ export default function CollaborationCard({
           </button>
           <button
             onClick={onDecline}
-            className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-white/10 py-2 text-xs text-white/70 hover:bg-white/5"
+            className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-[var(--border)] py-2 text-xs text-ink-soft hover:bg-[var(--surface-strong)]"
           >
             <X size={14} />
             Decline
@@ -124,7 +124,7 @@ export default function CollaborationCard({
           {onOpenChat && (
              <button
               onClick={onOpenChat}
-              className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-white/5 py-2 text-xs text-white hover:bg-white/10 transition-colors"
+              className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-[var(--surface-strong)] py-2 text-xs text-ink hover:bg-[var(--surface-strong)] transition-colors"
             >
               <MessageSquare size={14} />
               Open Chat
@@ -133,7 +133,7 @@ export default function CollaborationCard({
           {onViewDetails && (
             <button
               onClick={onViewDetails}
-              className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-purple-500/10 text-purple-300 hover:bg-purple-500/20 py-2 text-xs transition-colors"
+              className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-purple-500/10 text-purple hover:bg-purple-500/20 py-2 text-xs transition-colors"
             >
               <Info size={14} />
               Details

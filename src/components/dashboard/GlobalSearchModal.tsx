@@ -113,19 +113,19 @@ export default function GlobalSearchModal({ onClose }: GlobalSearchModalProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center bg-black/65 p-4 pt-[10vh] backdrop-blur-sm">
-      <div className="bb-glass w-full max-w-xl overflow-hidden rounded-2xl border border-white/10 shadow-2xl flex flex-col max-h-[60vh]">
+    <div className="fixed inset-0 z-[100] flex items-start justify-center bg-[var(--bg)]/65 p-4 pt-[10vh] backdrop-blur-sm">
+      <div className="bb-glass w-full max-w-xl overflow-hidden rounded-2xl border border-[var(--border)] shadow-2xl flex flex-col max-h-[60vh]">
         {/* Search bar */}
-        <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3 bg-white/2">
-          <Search size={18} className="text-purple-400 shrink-0" />
+        <div className="flex items-center gap-3 border-b border-[var(--border)] px-4 py-3 bg-white/2">
+          <Search size={18} className="text-purple shrink-0" />
           <input
-            className="bg-transparent text-sm text-white placeholder-white/40 outline-none border-none flex-1 py-1"
+            className="bg-transparent text-sm text-ink placeholder-white/40 outline-none border-none flex-1 py-1"
             placeholder="Global search products, brands, campaigns, documents..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoFocus
           />
-          <button onClick={onClose} className="text-white/40 hover:text-white cursor-pointer p-1">
+          <button onClick={onClose} className="text-ink-faint hover:text-ink cursor-pointer p-1">
             <X size={16} />
           </button>
         </div>
@@ -133,9 +133,9 @@ export default function GlobalSearchModal({ onClose }: GlobalSearchModalProps) {
         {/* Results Body */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {loading ? (
-            <p className="text-xs text-white/40 animate-pulse py-6 text-center">Searching database...</p>
+            <p className="text-xs text-ink-faint animate-pulse py-6 text-center">Searching database...</p>
           ) : results.length === 0 ? (
-            <p className="text-xs text-white/35 py-6 text-center">
+            <p className="text-xs text-ink-faint py-6 text-center">
               {query ? "No matches found." : "Type above to search globally."}
             </p>
           ) : (
@@ -144,10 +144,10 @@ export default function GlobalSearchModal({ onClose }: GlobalSearchModalProps) {
                 <button
                   key={res.id}
                   onClick={() => handleSelect(res.url)}
-                  className="w-full text-left rounded-xl bg-white/3 hover:bg-purple-500/10 border border-white/5 hover:border-purple-500/20 p-3.5 transition flex items-center justify-between cursor-pointer group"
+                  className="w-full text-left rounded-xl bg-[var(--surface-strong)] hover:bg-purple-500/10 border border-[var(--border)] hover:border-purple-500/20 p-3.5 transition flex items-center justify-between cursor-pointer group"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="rounded bg-white/5 p-1.5 text-white/50 group-hover:text-purple-300">
+                    <span className="rounded bg-[var(--surface-strong)] p-1.5 text-ink-faint group-hover:text-purple">
                       {res.type === "product" ? (
                         <Package size={14} />
                       ) : res.type === "campaign" ? (
@@ -159,11 +159,11 @@ export default function GlobalSearchModal({ onClose }: GlobalSearchModalProps) {
                       )}
                     </span>
                     <div>
-                      <h4 className="text-xs font-semibold text-white/90 group-hover:text-purple-200">{res.title}</h4>
-                      {res.subtitle && <span className="text-[10px] text-white/40 mt-0.5 block">{res.subtitle}</span>}
+                      <h4 className="text-xs font-semibold text-ink group-hover:text-purple">{res.title}</h4>
+                      {res.subtitle && <span className="text-[10px] text-ink-faint mt-0.5 block">{res.subtitle}</span>}
                     </div>
                   </div>
-                  <ArrowRight size={12} className="text-white/20 group-hover:text-purple-300" />
+                  <ArrowRight size={12} className="text-ink-faint group-hover:text-purple" />
                 </button>
               ))}
             </div>

@@ -209,11 +209,11 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
   if (!conversation) return null;
 
   return (
-    <div className="flex flex-col h-full bg-[#0A0A0B]">
+    <div className="flex flex-col h-full bg-bg">
       {/* Header */}
-      <div className="p-4 border-b border-white/10 flex items-center justify-between shrink-0 bg-[#0F0F12]">
+      <div className="p-4 border-b border-[var(--border)] flex items-center justify-between shrink-0 bg-surface">
         <div className="flex items-center gap-3">
-          <button onClick={onBack} className="md:hidden text-gray-400 hover:text-white p-1">
+          <button onClick={onBack} className="md:hidden text-ink-soft hover:text-ink p-1">
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
@@ -229,7 +229,7 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
                 className="rounded-full object-cover w-10 h-10"
               />
             ) : (
-              <div className="w-10 h-10 bg-[#2D2D35] rounded-full flex items-center justify-center text-lg font-medium">
+              <div className="w-10 h-10 bg-surface-strong rounded-full flex items-center justify-center text-lg font-medium">
                 {conversation.otherUser?.name?.charAt(0) || "?"}
               </div>
             )}
@@ -238,7 +238,7 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
 
           <div>
             <h3 className="font-semibold text-lg leading-tight">{conversation.otherUser?.name || "User"}</h3>
-            <div className="flex items-center gap-1 text-xs text-[#6C5CE7]">
+            <div className="flex items-center gap-1 text-xs text-purple">
               <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
               </svg>
@@ -251,7 +251,7 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
           {/* Info toggle for mobile/tablet */}
           <button
             onClick={onToggleContext}
-            className="p-2 text-gray-400 hover:text-white rounded-full hover:bg-white/5 transition-colors"
+            className="p-2 text-ink-soft hover:text-ink rounded-full hover:bg-[var(--surface-strong)] transition-colors"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -260,13 +260,13 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
 
           {/* Overflow Menu */}
           <div className="relative group">
-            <button className="p-2 text-gray-400 hover:text-white rounded-full hover:bg-white/5 transition-colors">
+            <button className="p-2 text-ink-soft hover:text-ink rounded-full hover:bg-[var(--surface-strong)] transition-colors">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
               </svg>
             </button>
-            <div className="absolute right-0 top-full mt-1 w-48 bg-[#1A1A1D] border border-white/10 rounded-xl shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity z-50 overflow-hidden text-sm">
-              <button onClick={handleArchive} className="w-full text-left px-4 py-2 hover:bg-white/5 transition-colors">
+            <div className="absolute right-0 top-full mt-1 w-48 bg-surface-strong border border-[var(--border)] rounded-xl shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity z-50 overflow-hidden text-sm">
+              <button onClick={handleArchive} className="w-full text-left px-4 py-2 hover:bg-[var(--surface-strong)] transition-colors">
                 {conversation.isArchived ? "Unarchive Conversation" : "Archive Conversation"}
               </button>
               <button
@@ -286,23 +286,23 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
 
       {/* Toast Notification */}
       {toast && (
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 z-50 bg-[#FF4757]/90 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg animate-in slide-in-from-top-2">
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 z-50 bg-[#FF4757]/90 text-ink px-4 py-2 rounded-full text-sm font-medium shadow-lg animate-in slide-in-from-top-2">
           {toast}
         </div>
       )}
 
       {/* Summary Modal */}
       {summaryModalOpen && (
-        <div className="absolute inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-          <div className="bg-[#1A1A1D] border border-white/10 rounded-2xl w-full max-w-md p-6 relative">
+        <div className="absolute inset-0 z-50 bg-[var(--bg)]/80 flex items-center justify-center p-4">
+          <div className="bg-surface-strong border border-[var(--border)] rounded-2xl w-full max-w-md p-6 relative">
             <h3 className="text-lg font-semibold mb-4 text-[#D1C4FF]">Conversation Summary</h3>
-            <p className="text-gray-300 whitespace-pre-wrap text-sm leading-relaxed mb-6">
+            <p className="text-ink whitespace-pre-wrap text-sm leading-relaxed mb-6">
               {summaries[conversation._id] || "No summary available."}
             </p>
             <div className="flex justify-end">
               <button
                 onClick={() => setSummaryModalOpen(false)}
-                className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-sm font-medium transition-colors"
+                className="px-4 py-2 bg-[var(--surface-strong)] hover:bg-[var(--surface-strong)] border border-[var(--border)] rounded-lg text-sm font-medium transition-colors"
               >
                 Close
               </button>
@@ -313,23 +313,23 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
 
       {/* Block Confirmation Modal */}
       {blockModalOpen && (
-        <div className="absolute inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-          <div className="bg-[#1A1A1D] border border-white/10 rounded-2xl w-full max-w-sm p-6 relative">
+        <div className="absolute inset-0 z-50 bg-[var(--bg)]/80 flex items-center justify-center p-4">
+          <div className="bg-surface-strong border border-[var(--border)] rounded-2xl w-full max-w-sm p-6 relative">
             <h3 className="text-lg font-semibold mb-2">Block {conversation.otherUser?.name}?</h3>
-            <p className="text-gray-400 text-sm mb-6">
+            <p className="text-ink-soft text-sm mb-6">
               Are you sure you want to block this user? They won't be able to message you.
             </p>
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setBlockModalOpen(false)}
-                className="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white"
+                className="px-4 py-2 text-sm font-medium text-ink-soft hover:text-ink"
               >
                 Cancel
               </button>
               <button
                 onClick={handleBlock}
                 disabled={isBlocking}
-                className="px-4 py-2 bg-[#FF4757] hover:bg-[#FF4757]/80 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
+                className="px-4 py-2 bg-[#FF4757] hover:bg-[#FF4757]/80 text-ink rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
               >
                 {isBlocking ? "Blocking..." : "Block"}
               </button>
@@ -342,10 +342,10 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {isLoading ? (
           <div className="flex justify-center items-center h-full">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#6C5CE7]" />
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple" />
           </div>
         ) : messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-gray-500">
+          <div className="flex flex-col items-center justify-center h-full text-ink">
             <p>No messages yet. Send a message to start the conversation.</p>
           </div>
         ) : (
@@ -357,7 +357,7 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
             return (
               <div key={msg._id || idx} className={`flex flex-col group ${isMe ? "items-end" : "items-start"}`}>
                 {msg.isDeleted ? (
-                  <div className={`max-w-[75%] rounded-2xl px-4 py-2 italic text-gray-500 bg-white/5 border border-white/10`}>
+                  <div className={`max-w-[75%] rounded-2xl px-4 py-2 italic text-ink bg-[var(--surface-strong)] border border-[var(--border)]`}>
                     This message was unsent.
                   </div>
                 ) : (
@@ -367,7 +367,7 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
                       <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
                         <button
                           onClick={() => { setEditingMessageId(msg._id); setEditingText(msg.text); }}
-                          className="p-1.5 text-gray-400 hover:text-white bg-white/5 rounded-full"
+                          className="p-1.5 text-ink-soft hover:text-ink bg-[var(--surface-strong)] rounded-full"
                           title="Edit"
                         >
                           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -376,7 +376,7 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
                         </button>
                         <button
                           onClick={() => { if (confirm("Unsend message?")) handleMessageAction(msg._id, "delete") }}
-                          className="p-1.5 text-gray-400 hover:text-red-400 bg-white/5 rounded-full"
+                          className="p-1.5 text-ink-soft hover:text-red-400 bg-[var(--surface-strong)] rounded-full"
                           title="Unsend"
                         >
                           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -389,15 +389,15 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
                     {/* Message Bubble */}
                     <div className="relative flex flex-col">
                       <div className={`max-w-xs sm:max-w-md md:max-w-[75%] rounded-2xl px-4 py-2 relative ${isMe
-                          ? "bg-[#6C5CE7] text-white rounded-br-sm"
-                          : "bg-[#1A1A1D] text-gray-200 rounded-bl-sm border border-white/5"
+                          ? "bg-purple text-ink rounded-br-sm"
+                          : "bg-surface-strong text-ink rounded-bl-sm border border-[var(--border)]"
                         }`}>
                         {editingMessageId === msg._id ? (
                           <div className="flex flex-col gap-2">
                             <textarea
                               value={editingText}
                               onChange={e => setEditingText(e.target.value)}
-                              className="bg-black/20 rounded p-2 text-sm w-full outline-none resize-none min-w-[200px]"
+                              className="bg-[var(--bg)]/20 rounded p-2 text-sm w-full outline-none resize-none min-w-[200px]"
                               rows={2}
                             />
                             <div className="flex justify-end gap-2">
@@ -412,7 +412,7 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
                               <div className="flex flex-wrap gap-2 mt-2">
                                 {msg.attachments.map((url: string, i: number) => (
                                   <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="block">
-                                    <img src={url} alt="attachment" className="max-w-[200px] max-h-[200px] object-cover rounded-lg border border-white/20" />
+                                    <img src={url} alt="attachment" className="max-w-[200px] max-h-[200px] object-cover rounded-lg border border-[var(--border)]" />
                                   </a>
                                 ))}
                               </div>
@@ -425,12 +425,12 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
                       {!isMe && !editingMessageId && (
                         <div className="absolute top-1/2 -translate-y-1/2 -right-8 opacity-0 group-hover:opacity-100 transition-opacity">
                           <div className="relative group/react">
-                            <button className="p-1.5 text-gray-400 hover:text-white bg-white/5 rounded-full">
+                            <button className="p-1.5 text-ink-soft hover:text-ink bg-[var(--surface-strong)] rounded-full">
                               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                               </svg>
                             </button>
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 hidden group-hover/react:flex bg-[#1A1A1D] border border-white/10 rounded-full shadow-lg p-1 gap-1 z-10">
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 hidden group-hover/react:flex bg-surface-strong border border-[var(--border)] rounded-full shadow-lg p-1 gap-1 z-10">
                               {['👍', '❤️', '😂', '😮', '😢', '🔥'].map(emoji => (
                                 <button
                                   key={emoji}
@@ -455,10 +455,10 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
                               <button
                                 key={emoji as string}
                                 onClick={() => handleMessageAction(msg._id, "react", { emoji })}
-                                className={`flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded-full border ${didIReact ? 'bg-[#6C5CE7]/20 border-[#6C5CE7]/50' : 'bg-[#1A1A1D] border-white/10'} shadow-sm`}
+                                className={`flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded-full border ${didIReact ? 'bg-purple/20 border-purple/50' : 'bg-surface-strong border-[var(--border)]'} shadow-sm`}
                               >
                                 <span>{emoji as string}</span>
-                                {count > 1 && <span className="text-white/60">{count}</span>}
+                                {count > 1 && <span className="text-ink-soft">{count}</span>}
                               </button>
                             );
                           })}
@@ -469,12 +469,12 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
                   </div>
                 )}
 
-                <div className={`flex items-center gap-1 mt-1.5 text-[10px] text-gray-500 ${msg.reactions?.length > 0 ? 'mt-4' : ''}`}>
+                <div className={`flex items-center gap-1 mt-1.5 text-[10px] text-ink ${msg.reactions?.length > 0 ? 'mt-4' : ''}`}>
                   <span>{format(new Date(msg.createdAt), "h:mm a")}</span>
                   {msg.isEdited && <span>(edited)</span>}
                   {isMe && !msg.isDeleted && (
                     msg.readAt ? (
-                      <span className="text-[#6C5CE7] ml-1">Seen</span>
+                      <span className="text-purple ml-1">Seen</span>
                     ) : (
                       <span className="ml-1">Sent</span>
                     )
@@ -488,7 +488,7 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
       </div>
 
       {/* AI Assistance and Input Area */}
-      <div className="p-4 border-t border-white/10 bg-[#0F0F12]">
+      <div className="p-4 border-t border-[var(--border)] bg-surface">
         {!conversation.isBlocked && !conversation.blockedByOther && (
           <AiAssistance
             messages={messages}
@@ -515,13 +515,13 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
             <div className="flex flex-wrap gap-2 px-2">
               {attachments.map((url, idx) => (
                 <div key={idx} className="relative group">
-                  <img src={url} alt="attachment" className="h-16 w-16 object-cover rounded-xl border border-white/10" />
+                  <img src={url} alt="attachment" className="h-16 w-16 object-cover rounded-xl border border-[var(--border)]" />
                   <button
                     type="button"
                     onClick={() => setAttachments(prev => prev.filter((_, i) => i !== idx))}
                     className="absolute -top-1 -right-1 bg-red-500 hover:bg-red-600 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
                   >
-                    <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3 h-3 text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
@@ -542,7 +542,7 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={isUploading || conversation.isBlocked || conversation.blockedByOther}
-              className="p-2 text-gray-400 hover:text-white bg-[#1A1A1D] hover:bg-white/10 rounded-xl transition-colors shrink-0 h-10 disabled:opacity-50"
+              className="p-2 text-ink-soft hover:text-ink bg-surface-strong hover:bg-[var(--surface-strong)] rounded-xl transition-colors shrink-0 h-10 disabled:opacity-50"
             >
               {isUploading ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -553,7 +553,7 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
               )}
             </button>
 
-            <div className="flex-1 bg-[#1A1A1D] border border-white/10 rounded-xl overflow-hidden focus-within:border-[#6C5CE7] transition-colors">
+            <div className="flex-1 bg-surface-strong border border-[var(--border)] rounded-xl overflow-hidden focus-within:border-purple transition-colors">
               <textarea
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
@@ -579,7 +579,7 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
             <button
               type="submit"
               disabled={(!newMessage.trim() && attachments.length === 0) || isSending || conversation.isBlocked || conversation.blockedByOther}
-              className="bg-[#6C5CE7] hover:bg-[#5B4BC4] text-white p-2.5 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed shrink-0 h-10 w-10 flex items-center justify-center"
+              className="bg-purple hover:bg-purple text-ink p-2.5 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed shrink-0 h-10 w-10 flex items-center justify-center"
             >
               {isSending ? (
                 <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

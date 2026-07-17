@@ -42,7 +42,7 @@ export default function FreelancerMarketplace({ role }: { role?: UserRole }) {
     <div>
       <div className="mb-6">
         <h1 className="bb-display text-2xl font-semibold sm:text-3xl">Freelancer Marketplace</h1>
-        <p className="mt-1 text-sm text-white/55">Discover and hire top creative talent for your projects.</p>
+        <p className="mt-1 text-sm text-ink-soft">Discover and hire top creative talent for your projects.</p>
       </div>
 
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -52,8 +52,8 @@ export default function FreelancerMarketplace({ role }: { role?: UserRole }) {
               key={tab}
               onClick={() => setCategory(tab)}
               className={`whitespace-nowrap px-4 py-2 text-sm font-medium transition-colors rounded-full ${category === tab
-                  ? "bg-purple-500/20 text-purple-300 border border-purple-500/30"
-                  : "bg-white/5 text-white/50 hover:bg-white/10 border border-transparent"
+                  ? "bg-purple-500/20 text-purple border border-purple-500/30"
+                  : "bg-[var(--surface-strong)] text-ink-faint hover:bg-[var(--surface-strong)] border border-transparent"
                 }`}
             >
               {tab === "all" ? "All Categories" : tab}
@@ -61,7 +61,7 @@ export default function FreelancerMarketplace({ role }: { role?: UserRole }) {
           ))}
         </div>
         <div className="relative w-full sm:w-64">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" />
           <input
             className="bb-input w-full rounded-xl py-2 pl-10 pr-4 text-sm"
             placeholder="Search freelancers..."
@@ -96,8 +96,8 @@ export default function FreelancerMarketplace({ role }: { role?: UserRole }) {
             const fp = item.freelancerProfile || {};
 
             return (
-              <div key={user._id} className="bb-glass flex flex-col rounded-2xl p-5 transition hover:bg-white/5 relative group">
-                <button className="absolute right-4 top-4 text-white/20 hover:text-red-400 transition">
+              <div key={user._id} className="bb-glass flex flex-col rounded-2xl p-5 transition hover:bg-[var(--surface-strong)] relative group">
+                <button className="absolute right-4 top-4 text-ink-faint hover:text-red-400 transition">
                   <Heart size={18} className={item.saved ? "fill-red-400 text-red-400" : ""} />
                 </button>
 
@@ -105,17 +105,17 @@ export default function FreelancerMarketplace({ role }: { role?: UserRole }) {
                   {profile.avatar ? (
                     <Image src={profile.avatar} alt={user.name || "User"} width={56} height={56} className="rounded-full object-cover w-14 h-14 ring-2 ring-white/10" />
                   ) : (
-                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-purple-500/20 text-xl font-bold text-purple-300 ring-2 ring-purple-500/30">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-purple-500/20 text-xl font-bold text-purple ring-2 ring-purple-500/30">
                       {(user.name || "F").charAt(0)}
                     </div>
                   )}
                   <div>
-                    <h3 className="text-base font-semibold text-white">{user.name || "Anonymous Freelancer"}</h3>
-                    <p className="text-sm text-purple-300">{fp.skills?.[0] || "Creative Professional"}</p>
+                    <h3 className="text-base font-semibold text-ink">{user.name || "Anonymous Freelancer"}</h3>
+                    <p className="text-sm text-purple">{fp.skills?.[0] || "Creative Professional"}</p>
                   </div>
                 </div>
 
-                <div className="mb-4 text-xs text-white/60 line-clamp-2">
+                <div className="mb-4 text-xs text-ink-soft line-clamp-2">
                   {profile.bio || "No bio provided."}
                 </div>
 
@@ -124,19 +124,19 @@ export default function FreelancerMarketplace({ role }: { role?: UserRole }) {
                     <Star size={14} className="fill-amber-400" />
                     {profile.avgRating && profile.avgRating > 0 ? profile.avgRating.toFixed(1) : "New"}
                   </span>
-                  <span className="flex items-center gap-1 text-white/70">
-                    <span className="text-white/40">$</span>
+                  <span className="flex items-center gap-1 text-ink-soft">
+                    <span className="text-ink-faint">$</span>
                     {fp.hourlyRate || "N/A"}/hr
                   </span>
                   {profile.location && (
-                    <span className="flex items-center gap-1 text-white/50">
+                    <span className="flex items-center gap-1 text-ink-faint">
                       <MapPin size={12} />
                       {profile.location}
                     </span>
                   )}
                 </div>
 
-                <div className="mt-auto flex items-center gap-2 pt-4 border-t border-white/10">
+                <div className="mt-auto flex items-center gap-2 pt-4 border-t border-[var(--border)]">
                   <button
                     onClick={() => setHiringFreelancer(item)}
                     className="bb-btn-primary flex-1 rounded-xl py-2 text-sm font-medium"
@@ -145,7 +145,7 @@ export default function FreelancerMarketplace({ role }: { role?: UserRole }) {
                   </button>
                   <Link
                     href={`/dashboard/${role}/messages?partnerId=${user._id}&partnerName=${encodeURIComponent(user.name || "Anonymous Freelancer")}`}
-                    className="rounded-xl bg-white/5 px-4 py-2 text-sm font-medium text-white hover:bg-white/10 transition"
+                    className="rounded-xl bg-[var(--surface-strong)] px-4 py-2 text-sm font-medium text-ink hover:bg-[var(--surface-strong)] transition"
                   >
                     Message
                   </Link>

@@ -77,17 +77,17 @@ export default function AIHubPage() {
                 }}
                 className={`w-full text-left rounded-2xl p-4 transition-all border cursor-pointer ${
                   active
-                    ? "bg-purple-500/15 border-purple-500/30 text-purple-200 shadow-lg shadow-purple-500/5"
-                    : "bb-glass border-white/5 text-white/70 hover:bg-white/5 hover:text-white"
+                    ? "bg-purple-500/15 border-purple-500/30 text-purple shadow-lg shadow-purple-500/5"
+                    : "bb-glass border-[var(--border)] text-ink-soft hover:bg-[var(--surface-strong)] hover:text-ink"
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <span className={`rounded-xl p-2.5 ${active ? "bg-purple-500/25 text-purple-200" : "bg-white/5 text-white/50"}`}>
+                  <span className={`rounded-xl p-2.5 ${active ? "bg-purple-500/25 text-purple" : "bg-[var(--surface-strong)] text-ink-faint"}`}>
                     <tab.icon size={18} />
                   </span>
                   <div>
                     <h4 className="font-semibold text-sm">{tab.label}</h4>
-                    <p className="text-[11px] text-white/45 mt-0.5 line-clamp-1">{tab.desc}</p>
+                    <p className="text-[11px] text-ink-faint mt-0.5 line-clamp-1">{tab.desc}</p>
                   </div>
                 </div>
               </button>
@@ -98,15 +98,15 @@ export default function AIHubPage() {
         {/* Console / Result Panel */}
         <div className="lg:col-span-2 space-y-6">
           <form onSubmit={handleGenerate} className="bb-glass rounded-2xl p-6 space-y-4">
-            <h3 className="bb-display text-base font-semibold text-white flex items-center gap-2">
-              <Sparkles size={16} className="text-purple-400" />
+            <h3 className="bb-display text-base font-semibold text-ink flex items-center gap-2">
+              <Sparkles size={16} className="text-purple" />
               {tabs.find((t) => t.id === activeTab)?.label} Console
             </h3>
 
             {activeTab === "proposal" && (
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs text-white/50">Sender Company Name</label>
+                  <label className="text-xs text-ink-faint">Sender Company Name</label>
                   <input
                     className="bb-input w-full rounded-xl px-4 py-2.5 text-xs"
                     placeholder="e.g. Apex Health Corp"
@@ -116,7 +116,7 @@ export default function AIHubPage() {
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs text-white/50">Recipient Brand Partner</label>
+                  <label className="text-xs text-ink-faint">Recipient Brand Partner</label>
                   <input
                     className="bb-input w-full rounded-xl px-4 py-2.5 text-xs"
                     placeholder="e.g. Aura Studio"
@@ -129,7 +129,7 @@ export default function AIHubPage() {
             )}
 
             <div className="space-y-1.5">
-              <label className="text-xs text-white/50">
+              <label className="text-xs text-ink-faint">
                 {activeTab === "consultant"
                   ? "What would you like to consult about?"
                   : activeTab === "swot"
@@ -163,12 +163,12 @@ export default function AIHubPage() {
           {/* AI Result Box */}
           {(result || loading) && (
             <div className="bb-glass rounded-2xl p-6 space-y-4">
-              <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                <h4 className="text-xs font-semibold uppercase text-purple-300">Generated Results</h4>
+              <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
+                <h4 className="text-xs font-semibold uppercase text-purple">Generated Results</h4>
                 {result && (
                   <button
                     onClick={handleCopy}
-                    className="flex items-center gap-1 text-[11px] font-semibold text-white/50 hover:text-white cursor-pointer"
+                    className="flex items-center gap-1 text-[11px] font-semibold text-ink-faint hover:text-ink cursor-pointer"
                   >
                     {copied ? (
                       <>
@@ -184,12 +184,12 @@ export default function AIHubPage() {
               </div>
 
               {loading ? (
-                <div className="flex items-center gap-2.5 text-xs text-white/50 py-10 justify-center">
+                <div className="flex items-center gap-2.5 text-xs text-ink-faint py-10 justify-center">
                   <span className="h-4 w-4 animate-spin rounded-full border-2 border-purple-500 border-t-transparent" />
                   Running AI Hub models...
                 </div>
               ) : (
-                <div className="whitespace-pre-wrap text-xs text-white/80 leading-relaxed font-mono bg-white/2 border border-white/5 rounded-xl p-4 overflow-x-auto max-h-[40vh]">
+                <div className="whitespace-pre-wrap text-xs text-ink leading-relaxed font-mono bg-white/2 border border-[var(--border)] rounded-xl p-4 overflow-x-auto max-h-[40vh]">
                   {result}
                 </div>
               )}

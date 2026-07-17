@@ -120,7 +120,7 @@ export default function ProfileForm({
                 alt="Avatar"
                 className="h-20 w-20 rounded-2xl object-cover ring-2 ring-purple-500/30"
               />
-              <p className="mt-1.5 text-[10px] text-white/40">Avatar</p>
+              <p className="mt-1.5 text-[10px] text-ink-faint">Avatar</p>
             </div>
           )}
           {form.logo && (
@@ -130,7 +130,7 @@ export default function ProfileForm({
                 alt="Logo"
                 className="h-20 w-20 rounded-2xl object-cover ring-2 ring-purple-500/30"
               />
-              <p className="mt-1.5 text-[10px] text-white/40">Logo</p>
+              <p className="mt-1.5 text-[10px] text-ink-faint">Logo</p>
             </div>
           )}
         </div>
@@ -142,7 +142,7 @@ export default function ProfileForm({
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {role === "hirer" && (
             <div>
-              <label className="mb-1.5 block text-xs text-white/50">Account Type</label>
+              <label className="mb-1.5 block text-xs text-ink-faint">Account Type</label>
               <select
                 className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
                 value={form.accountType ?? "individual"}
@@ -156,7 +156,7 @@ export default function ProfileForm({
 
           {(role === "brand" || role === "product_owner" || role === "hirer") && (
             <div>
-              <label className="mb-1.5 block text-xs text-white/50">
+              <label className="mb-1.5 block text-xs text-ink-faint">
                 {role === "hirer" && form.accountType === "business" ? "Company Name" : role === "hirer" ? "Name" : "Company Name"}
               </label>
               <input
@@ -170,7 +170,7 @@ export default function ProfileForm({
           
           {(role === "brand" || role === "product_owner" || role === "freelancer") && (
             <div>
-              <label className="mb-1.5 block text-xs text-white/50">Location</label>
+              <label className="mb-1.5 block text-xs text-ink-faint">Location</label>
               <input
                 className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
                 value={form.location ?? ""}
@@ -181,7 +181,7 @@ export default function ProfileForm({
         </div>
 
         <div>
-          <label className="mb-1.5 block text-xs text-white/50">Bio</label>
+          <label className="mb-1.5 block text-xs text-ink-faint">Bio</label>
           <textarea
             className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
             rows={3}
@@ -192,7 +192,7 @@ export default function ProfileForm({
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
-            <label className="mb-1.5 block text-xs text-white/50">Industry</label>
+            <label className="mb-1.5 block text-xs text-ink-faint">Industry</label>
             <select
               className="bb-input w-full rounded-xl px-4 py-2.5 text-sm "
               value={form.industry ?? ""}
@@ -205,7 +205,7 @@ export default function ProfileForm({
             </select>
           </div>
           <div>
-            <label className="mb-1.5 block text-xs text-white/50">Website</label>
+            <label className="mb-1.5 block text-xs text-ink-faint">Website</label>
             <input
               className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
               value={form.website ?? ""}
@@ -218,7 +218,7 @@ export default function ProfileForm({
         {(role === "brand" || role === "product_owner") && (
           <>
             <div>
-              <label className="mb-1.5 block text-xs text-white/50">Target Audience</label>
+              <label className="mb-1.5 block text-xs text-ink-faint">Target Audience</label>
               <textarea
                 className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
                 rows={2}
@@ -228,7 +228,7 @@ export default function ProfileForm({
             </div>
             {role === "brand" && (
               <div>
-                <label className="mb-1.5 block text-xs text-white/50">Marketing Budget ($)</label>
+                <label className="mb-1.5 block text-xs text-ink-faint">Marketing Budget ($)</label>
                 <input
                   type="number"
                   className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
@@ -243,7 +243,7 @@ export default function ProfileForm({
         {role === "hirer" && (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="mb-1.5 block text-xs text-white/50">Typical Project Budget Range</label>
+              <label className="mb-1.5 block text-xs text-ink-faint">Typical Project Budget Range</label>
               <select
                 className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
                 value={form.projectBudgetRange ?? ""}
@@ -266,12 +266,12 @@ export default function ProfileForm({
                     checked={form.paymentVerified ?? false}
                     onChange={(e) => update("paymentVerified", e.target.checked)}
                   />
-                  <div className="block h-6 w-10 rounded-full bg-white/10 peer-checked:bg-purple-500 transition"></div>
+                  <div className="block h-6 w-10 rounded-full bg-[var(--surface-strong)] peer-checked:bg-purple-500 transition"></div>
                   <div className="absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition peer-checked:translate-x-4"></div>
                 </div>
-                <div className="text-sm font-medium text-white/90">
+                <div className="text-sm font-medium text-ink">
                   Payment Method Verified
-                  <p className="text-[10px] font-normal text-white/40">Shows a trust badge to freelancers</p>
+                  <p className="text-[10px] font-normal text-ink-faint">Shows a trust badge to freelancers</p>
                 </div>
               </label>
             </div>
@@ -280,14 +280,14 @@ export default function ProfileForm({
 
         {role === "hirer" && (
           <div>
-            <label className="mb-2 block text-xs text-white/50">Preferred Freelancer Categories</label>
+            <label className="mb-2 block text-xs text-ink-faint">Preferred Freelancer Categories</label>
             <div className="flex flex-wrap gap-2">
               {FREELANCER_CATEGORIES.map((cat) => (
                 <button
                   key={cat}
                   type="button"
                   onClick={() => toggleArray("preferredCategories", cat)}
-                  className={`rounded-full px-3 py-1 text-xs transition ${(form.preferredCategories ?? []).includes(cat) ? "bg-purple-500/25 text-purple-200" : "bg-white/5 text-white/50 hover:bg-white/10"}`}
+                  className={`rounded-full px-3 py-1 text-xs transition ${(form.preferredCategories ?? []).includes(cat) ? "bg-purple-500/25 text-purple" : "bg-[var(--surface-strong)] text-ink-faint hover:bg-[var(--surface-strong)]"}`}
                 >
                   {cat}
                 </button>
@@ -297,33 +297,33 @@ export default function ProfileForm({
         )}
 
         {role === "hirer" && (
-          <div className="mt-6 border-t border-white/10 pt-6">
-            <h3 className="mb-4 text-sm font-medium text-white">Hiring History Stats</h3>
+          <div className="mt-6 border-t border-[var(--border)] pt-6">
+            <h3 className="mb-4 text-sm font-medium text-ink">Hiring History Stats</h3>
             <div className="grid grid-cols-3 gap-4">
-              <div className="rounded-xl bg-white/5 p-4 text-center">
-                <p className="text-xs text-white/50 mb-1">Total Projects</p>
-                <p className="text-xl font-semibold text-white">{form.totalProjectsPosted ?? 0}</p>
+              <div className="rounded-xl bg-[var(--surface-strong)] p-4 text-center">
+                <p className="text-xs text-ink-faint mb-1">Total Projects</p>
+                <p className="text-xl font-semibold text-ink">{form.totalProjectsPosted ?? 0}</p>
               </div>
-              <div className="rounded-xl bg-white/5 p-4 text-center">
-                <p className="text-xs text-white/50 mb-1">Hire Success Rate</p>
-                <p className="text-xl font-semibold text-white">{form.hireSuccessRate ?? 0}%</p>
+              <div className="rounded-xl bg-[var(--surface-strong)] p-4 text-center">
+                <p className="text-xs text-ink-faint mb-1">Hire Success Rate</p>
+                <p className="text-xl font-semibold text-ink">{form.hireSuccessRate ?? 0}%</p>
               </div>
-              <div className="rounded-xl bg-white/5 p-4 text-center">
-                <p className="text-xs text-white/50 mb-1">Avg Rating Given</p>
-                <p className="text-xl font-semibold text-white">{form.avgRatingGiven ? form.avgRatingGiven.toFixed(1) : "N/A"}</p>
+              <div className="rounded-xl bg-[var(--surface-strong)] p-4 text-center">
+                <p className="text-xs text-ink-faint mb-1">Avg Rating Given</p>
+                <p className="text-xl font-semibold text-ink">{form.avgRatingGiven ? form.avgRatingGiven.toFixed(1) : "N/A"}</p>
               </div>
             </div>
           </div>
         )}
 
         <div className="flex gap-4">
-          <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-xs text-white/60 hover:bg-white/5">
+          <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-[var(--border)] px-4 py-2 text-xs text-ink-soft hover:bg-[var(--surface-strong)]">
             <Upload size={14} />
             {uploading ? "Uploading..." : "Avatar"}
             <input type="file" accept="image/*" className="hidden" onChange={(e) => handleUpload(e, "avatar")} />
           </label>
           {(role === "brand" || role === "product_owner" || role === "hirer") && (
-            <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-xs text-white/60 hover:bg-white/5">
+            <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-[var(--border)] px-4 py-2 text-xs text-ink-soft hover:bg-[var(--surface-strong)]">
               <Upload size={14} />
               Logo
               <input type="file" accept="image/*" className="hidden" onChange={(e) => handleUpload(e, "logo")} />
@@ -339,7 +339,7 @@ export default function ProfileForm({
           <h2 className="bb-display text-lg font-medium">Freelancer Details</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="mb-1.5 block text-xs text-white/50">Hourly Rate ($)</label>
+              <label className="mb-1.5 block text-xs text-ink-faint">Hourly Rate ($)</label>
               <input
                 type="number"
                 className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
@@ -348,7 +348,7 @@ export default function ProfileForm({
               />
             </div>
             <div>
-              <label className="mb-1.5 block text-xs text-white/50">Availability</label>
+              <label className="mb-1.5 block text-xs text-ink-faint">Availability</label>
               <select
                 className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
                 value={form.availability ?? ""}
@@ -362,7 +362,7 @@ export default function ProfileForm({
             </div>
           </div>
           <div>
-            <label className="mb-1.5 block text-xs text-white/50">Experience</label>
+            <label className="mb-1.5 block text-xs text-ink-faint">Experience</label>
             <textarea
               className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
               rows={2}
@@ -371,14 +371,14 @@ export default function ProfileForm({
             />
           </div>
           <div>
-            <label className="mb-2 block text-xs text-white/50">Categories</label>
+            <label className="mb-2 block text-xs text-ink-faint">Categories</label>
             <div className="flex flex-wrap gap-2">
               {FREELANCER_CATEGORIES.map((cat) => (
                 <button
                   key={cat}
                   type="button"
                   onClick={() => toggleArray("categories", cat)}
-                  className={`rounded-full px-3 py-1 text-xs transition ${(form.categories ?? []).includes(cat) ? "bg-purple-500/25 text-purple-200" : "bg-white/5 text-white/50 hover:bg-white/10"}`}
+                  className={`rounded-full px-3 py-1 text-xs transition ${(form.categories ?? []).includes(cat) ? "bg-purple-500/25 text-purple" : "bg-[var(--surface-strong)] text-ink-faint hover:bg-[var(--surface-strong)]"}`}
                 >
                   {cat}
                 </button>
@@ -386,7 +386,7 @@ export default function ProfileForm({
             </div>
           </div>
           <div>
-            <label className="mb-2 block text-xs text-white/50">Skills</label>
+            <label className="mb-2 block text-xs text-ink-faint">Skills</label>
             <input
               className="bb-input w-full rounded-xl px-4 py-2.5 text-sm"
               placeholder="Type skill and press Enter"
@@ -403,9 +403,9 @@ export default function ProfileForm({
             />
             <div className="mt-2 flex flex-wrap gap-2">
               {(form.skills ?? []).map((s) => (
-                <span key={s} className="rounded-full bg-purple-500/15 px-2 py-0.5 text-xs text-purple-200">
+                <span key={s} className="rounded-full bg-purple-500/15 px-2 py-0.5 text-xs text-purple">
                   {s}
-                  <button type="button" onClick={() => toggleArray("skills", s)} className="ml-1 text-white/40">×</button>
+                  <button type="button" onClick={() => toggleArray("skills", s)} className="ml-1 text-ink-faint">×</button>
                 </span>
               ))}
             </div>

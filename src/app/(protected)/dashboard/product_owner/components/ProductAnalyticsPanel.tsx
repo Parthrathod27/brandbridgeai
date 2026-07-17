@@ -17,23 +17,23 @@ export default function ProductAnalyticsPanel({ analytics, productName }: Produc
       <h2 className="bb-display text-lg font-medium">Analytics — {productName}</h2>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="bb-glass rounded-2xl p-5">
-          <Eye size={18} className="text-purple-300" />
+          <Eye size={18} className="text-purple" />
           <div className="bb-display mt-3 text-2xl font-semibold">{analytics.views}</div>
-          <div className="text-xs text-white/45">Total views</div>
+          <div className="text-xs text-ink-faint">Total views</div>
         </div>
         <div className="bb-glass rounded-2xl p-5">
           <Handshake size={18} className="text-blue-300" />
           <div className="bb-display mt-3 text-2xl font-semibold">
             {analytics.collaborationRequests}
           </div>
-          <div className="text-xs text-white/45">Collaboration requests</div>
+          <div className="text-xs text-ink-faint">Collaboration requests</div>
         </div>
         <div className="bb-glass rounded-2xl p-5">
           <TrendingUp size={18} className="text-emerald-300" />
           <div className="bb-display mt-3 text-2xl font-semibold">
             {history.reduce((sum, d) => sum + d.views, 0)}
           </div>
-          <div className="text-xs text-white/45">Views (last {history.length || 0} days tracked)</div>
+          <div className="text-xs text-ink-faint">Views (last {history.length || 0} days tracked)</div>
         </div>
       </div>
       <PerformanceChart data={history} title="Performance over time" />

@@ -38,15 +38,15 @@ export default function StatCard({
         className="flex h-10 w-10 items-center justify-center rounded-xl transition-colors duration-200"
         style={{ background: "rgba(139,92,246,0.18)" }}
       >
-        <Icon size={18} className="text-purple-200" />
+        <Icon size={18} className="text-purple" />
       </div>
 
       {isEmpty && emptyMessage ? (
-        <p className="mt-4 text-sm text-white/55">{emptyMessage}</p>
+        <p className="mt-4 text-sm text-ink-soft">{emptyMessage}</p>
       ) : (
         <>
           <div className="bb-display mt-4 text-2xl font-semibold">{display}</div>
-          <div className="mt-1 text-xs text-white/45">{label}</div>
+          <div className="mt-1 text-xs text-ink-faint">{label}</div>
         </>
       )}
     </>
@@ -55,7 +55,7 @@ export default function StatCard({
   if (isEmpty && emptyCta) {
     return (
       <div className={className}>
-        <div className="text-xs text-white/45">{label}</div>
+        <div className="text-xs text-ink-faint">{label}</div>
         {inner}
         <Link
           href={href}

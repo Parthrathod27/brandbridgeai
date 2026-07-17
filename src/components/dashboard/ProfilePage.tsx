@@ -73,7 +73,7 @@ export default function ProfilePage({ role }: ProfilePageProps) {
     router.refresh();
   }
 
-  if (loading) return <div className="text-white/50">Loading profile...</div>;
+  if (loading) return <div className="text-ink-faint">Loading profile...</div>;
 
   return (
     <div>
