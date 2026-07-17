@@ -48,13 +48,13 @@ export default function ForgotPasswordPage() {
       <AuthCard>
         {success ? (
           <div className="text-center">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-ink-soft">
               If an account exists for <strong>{email}</strong>, you&apos;ll
               receive a password reset link shortly.
             </p>
             <Link
               href="/login"
-              className="mt-6 inline-flex items-center gap-1 text-sm text-purple-300 hover:text-purple-200"
+              className="mt-6 inline-flex items-center gap-1 text-sm text-purple hover:text-purple"
             >
               <ArrowLeft size={14} />
               Back to login
@@ -88,7 +88,7 @@ export default function ForgotPasswordPage() {
 
             <Link
               href="/login"
-              className="flex items-center justify-center gap-1 text-xs text-white/50 hover:text-white/70"
+              className="flex items-center justify-center gap-1 text-xs text-ink-faint hover:text-ink-soft"
             >
               <ArrowLeft size={12} />
               Back to login

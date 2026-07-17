@@ -11,7 +11,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
   ({ label, error, className = "", ...props }, ref) => {
     return (
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-white/70">
+        <label className="mb-1.5 block text-xs font-medium text-ink-soft">
           {label}
         </label>
         <input

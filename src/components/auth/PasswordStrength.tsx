@@ -23,11 +23,11 @@ export default function PasswordStrength({ password }: PasswordStrengthProps) {
         {[0, 1, 2, 3].map((i) => (
           <div
             key={i}
-            className={`h-1 flex-1 rounded-full ${i <= idx ? colors[idx] : "bg-white/10"}`}
+            className={`h-1 flex-1 rounded-full ${i <= idx ? colors[idx] : "bg-[var(--surface-strong)]"}`}
           />
         ))}
       </div>
-      <p className="mt-1 text-xs text-white/40">{labels[idx]}</p>
+      <p className="mt-1 text-xs text-ink-faint">{labels[idx]}</p>
     </div>
   );
 }

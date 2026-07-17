@@ -127,7 +127,7 @@ export default function LoginForm() {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="mt-1 flex items-center gap-1 text-xs text-white/40 hover:text-white/60"
+              className="mt-1 flex items-center gap-1 text-xs text-ink-faint hover:text-ink-soft"
             >
               {showPassword ? <EyeOff size={12} /> : <Eye size={12} />}
               {showPassword ? "Hide" : "Show"} password
@@ -135,18 +135,18 @@ export default function LoginForm() {
           </div>
 
           <div className="flex items-center justify-between">
-            <label className="flex items-center gap-2 text-xs text-white/60">
+            <label className="flex items-center gap-2 text-xs text-ink-soft">
               <input
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="rounded border-white/20"
+                className="rounded border-[var(--border)]"
               />
               Remember me
             </label>
             <Link
               href="/forgot-password"
-              className="text-xs text-purple-300 hover:text-purple-200"
+              className="text-xs text-purple hover:text-purple"
             >
               Forgot password?
             </Link>
@@ -168,9 +168,9 @@ export default function LoginForm() {
           </button>
         </form>
 
-        <p className="text-center text-xs text-white/50">
+        <p className="text-center text-xs text-ink-faint">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-purple-300 hover:text-purple-200">
+          <Link href="/signup" className="text-purple hover:text-purple">
             Sign up
           </Link>
         </p>

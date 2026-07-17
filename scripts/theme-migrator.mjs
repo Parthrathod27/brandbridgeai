@@ -115,3 +115,5 @@ function runMigration(targetDir) {
 runMigration(path.join(process.cwd(), 'src', 'components', 'dashboard'));
 runMigration(path.join(process.cwd(), 'src', 'components', 'messages'));
 runMigration(path.join(process.cwd(), 'src', 'app', '(protected)'));
+runMigration(path.join(process.cwd(), 'src', 'components', 'auth'));
+runMigration(path.join(process.cwd(), 'src', 'app', '(auth)'));

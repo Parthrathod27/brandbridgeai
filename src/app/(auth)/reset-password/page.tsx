@@ -61,8 +61,8 @@ function ResetPasswordForm() {
   if (!token) {
     return (
       <AuthShell title="Invalid link" subtitle="This reset link is invalid or expired">
-        <p className="text-center text-sm text-white/55">
-          <Link href="/forgot-password" className="text-purple-300 hover:text-purple-200">
+        <p className="text-center text-sm text-ink-soft">
+          <Link href="/forgot-password" className="text-purple hover:text-purple">
             Request a new reset link
           </Link>
         </p>
@@ -90,7 +90,7 @@ function ResetPasswordForm() {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="mt-1 flex items-center gap-1 text-xs text-white/40 hover:text-white/60"
+              className="mt-1 flex items-center gap-1 text-xs text-ink-faint hover:text-ink-soft"
             >
               {showPassword ? <EyeOff size={12} /> : <Eye size={12} />}
               {showPassword ? "Hide" : "Show"} password
@@ -123,7 +123,7 @@ function ResetPasswordForm() {
 
           <Link
             href="/login"
-            className="flex items-center justify-center gap-1 text-xs text-white/50 hover:text-white/70"
+            className="flex items-center justify-center gap-1 text-xs text-ink-faint hover:text-ink-soft"
           >
             <ArrowLeft size={12} />
             Back to login

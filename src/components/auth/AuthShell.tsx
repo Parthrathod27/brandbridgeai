@@ -30,10 +30,10 @@ export default function AuthShell({ children, title, subtitle }: AuthShellProps)
             className="flex h-8 w-8 items-center justify-center rounded-xl"
             style={{ background: "linear-gradient(135deg,#8b5cf6,#4f8cff)" }}
           >
-            <Sparkles size={16} className="text-white" />
+            <Sparkles size={16} className="text-ink" />
           </span>
           <span className="bb-grad-text">BrandBridge</span>
-          <span className="text-sm font-normal text-white/40">AI</span>
+          <span className="text-sm font-normal text-ink-faint">AI</span>
         </Link>
 
         <motion.div
@@ -46,7 +46,7 @@ export default function AuthShell({ children, title, subtitle }: AuthShellProps)
             <br />
             <span className="bb-grad-text">Empowering creators.</span>
           </h1>
-          <p className="mt-4 max-w-md text-sm text-white/55">
+          <p className="mt-4 max-w-md text-sm text-ink-soft">
             AI-powered collaboration marketplace for smarter marketing campaigns.
           </p>
 
@@ -56,12 +56,12 @@ export default function AuthShell({ children, title, subtitle }: AuthShellProps)
               { icon: Users, text: "Collaborate with verified brands" },
               { icon: Sparkles, text: "Auto-generated proposals & emails" },
             ].map(({ icon: Icon, text }) => (
-              <div key={text} className="flex items-center gap-3 text-sm text-white/70">
+              <div key={text} className="flex items-center gap-3 text-sm text-ink-soft">
                 <div
                   className="flex h-8 w-8 items-center justify-center rounded-lg"
                   style={{ background: "rgba(139,92,246,0.18)" }}
                 >
-                  <Icon size={16} className="text-purple-300" />
+                  <Icon size={16} className="text-purple" />
                 </div>
                 {text}
               </div>
@@ -71,18 +71,18 @@ export default function AuthShell({ children, title, subtitle }: AuthShellProps)
           <div className="bb-glass bb-card mt-12 max-w-sm rounded-2xl p-5">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-xs text-white/45">AI Match Score</div>
+                <div className="text-xs text-ink-faint">AI Match Score</div>
                 <div className="bb-display bb-grad-text text-2xl font-semibold">94%</div>
               </div>
               <div className="text-right">
-                <div className="text-xs text-white/45">Solace Audio × Verve Fitness</div>
+                <div className="text-xs text-ink-faint">Solace Audio × Verve Fitness</div>
                 <div className="mt-1 text-xs text-green-400">High compatibility</div>
               </div>
             </div>
           </div>
         </motion.div>
 
-        <p className="text-xs text-white/30">
+        <p className="text-xs text-ink-faint">
           © 2026 BrandBridge AI. All rights reserved.
         </p>
       </div>
@@ -97,7 +97,7 @@ export default function AuthShell({ children, title, subtitle }: AuthShellProps)
             className="flex h-8 w-8 items-center justify-center rounded-xl"
             style={{ background: "linear-gradient(135deg,#8b5cf6,#4f8cff)" }}
           >
-            <Sparkles size={16} className="text-white" />
+            <Sparkles size={16} className="text-ink" />
           </span>
           <span className="bb-grad-text">BrandBridge AI</span>
         </Link>
@@ -111,7 +111,7 @@ export default function AuthShell({ children, title, subtitle }: AuthShellProps)
           <div className="mb-6 text-center">
             <h2 className="bb-display text-2xl font-semibold">{title}</h2>
             {subtitle && (
-              <p className="mt-2 text-sm text-white/55">{subtitle}</p>
+              <p className="mt-2 text-sm text-ink-soft">{subtitle}</p>
             )}
           </div>
           {children}

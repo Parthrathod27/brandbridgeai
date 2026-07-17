@@ -41,7 +41,7 @@ export default function GoogleButton({ role, mode = "signup" }: GoogleButtonProp
       <button
         type="button"
         disabled
-        className="flex w-full cursor-not-allowed items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-2.5 text-sm font-medium text-white/40"
+        className="flex w-full cursor-not-allowed items-center justify-center gap-3 rounded-xl border border-[var(--border)] bg-white/[0.02] px-4 py-2.5 text-sm font-medium text-ink-faint"
       >
         <GoogleIcon dimmed />
         Select a role to continue with Google
@@ -54,7 +54,7 @@ export default function GoogleButton({ role, mode = "signup" }: GoogleButtonProp
   return (
     <a
       href={`/api/auth/google?role=${role}`}
-      className="flex w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white/90 transition hover:bg-white/10"
+      className="flex w-full items-center justify-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-strong)] px-4 py-2.5 text-sm font-medium text-ink transition hover:bg-[var(--surface-strong)]"
     >
       <GoogleIcon />
       {mode === "login" ? "Sign in with Google" : "Continue with Google"}

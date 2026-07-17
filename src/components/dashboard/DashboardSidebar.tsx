@@ -41,7 +41,7 @@ export default function DashboardSidebar({
 
   return (
     <aside
-      className={`bb-sidebar-mobile fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-[var(--border)] transition-transform lg:static lg:z-40 lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+      className={`bb-sidebar-mobile bg-surface fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-[var(--border)] transition-transform lg:static lg:z-40 lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
     >
       <div className="flex items-center justify-between p-5">
         <Link
@@ -85,7 +85,7 @@ export default function DashboardSidebar({
         })}
       </nav>
 
-        <div className="border-t border-[var(--border)] p-4">
+      <div className="border-t border-[var(--border)] p-4">
         {user && (
           <div className="mb-3 flex items-center gap-3 px-2">
             <div className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-purple-500/20 text-sm font-semibold text-purple">

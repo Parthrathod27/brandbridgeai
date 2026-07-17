@@ -127,7 +127,7 @@ export default function SignupPage() {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="mt-1 flex items-center gap-1 text-xs text-white/40 hover:text-white/60"
+              className="mt-1 flex items-center gap-1 text-xs text-ink-faint hover:text-ink-soft"
             >
               {showPassword ? <EyeOff size={12} /> : <Eye size={12} />}
               {showPassword ? "Hide" : "Show"} password
@@ -143,19 +143,19 @@ export default function SignupPage() {
             required
           />
 
-          <label className="flex items-start gap-2 text-xs text-white/60">
+          <label className="flex items-start gap-2 text-xs text-ink-soft">
             <input
               type="checkbox"
               checked={acceptedTerms}
               onChange={(e) => setAcceptedTerms(e.target.checked)}
-              className="mt-0.5 rounded border-white/20"
+              className="mt-0.5 rounded border-[var(--border)]"
             />
             I agree to the{" "}
-            <Link href="#" className="text-purple-300 hover:text-purple-200">
+            <Link href="#" className="text-purple hover:text-purple">
               Terms of Service
             </Link>{" "}
             and{" "}
-            <Link href="#" className="text-purple-300 hover:text-purple-200">
+            <Link href="#" className="text-purple hover:text-purple">
               Privacy Policy
             </Link>
           </label>
@@ -176,9 +176,9 @@ export default function SignupPage() {
           </button>
         </form>
 
-        <p className="text-center text-xs text-white/50">
+        <p className="text-center text-xs text-ink-faint">
           Already have an account?{" "}
-          <Link href="/login" className="text-purple-300 hover:text-purple-200">
+          <Link href="/login" className="text-purple hover:text-purple">
             Sign in
           </Link>
         </p>

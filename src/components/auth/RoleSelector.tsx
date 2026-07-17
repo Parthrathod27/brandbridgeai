@@ -11,7 +11,7 @@ interface RoleSelectorProps {
 export default function RoleSelector({ value, onChange, error }: RoleSelectorProps) {
   return (
     <div>
-      <label className="mb-2 block text-xs font-medium text-white/70">
+      <label className="mb-2 block text-xs font-medium text-ink-soft">
         I am a...
       </label>
       <div className="grid grid-cols-2 gap-2">
@@ -25,7 +25,7 @@ export default function RoleSelector({ value, onChange, error }: RoleSelectorPro
               className={`rounded-xl border p-3 text-left transition ${
                 selected
                   ? "border-purple-500/50 bg-purple-500/10 ring-1 ring-purple-500/30"
-                  : "border-white/10 bg-white/[0.03] hover:border-white/20 hover:bg-white/5"
+                  : "border-[var(--border)] bg-white/[0.03] hover:border-[var(--border)] hover:bg-[var(--surface-strong)]"
               }`}
             >
               <div
@@ -38,11 +38,11 @@ export default function RoleSelector({ value, onChange, error }: RoleSelectorPro
               >
                 <role.icon
                   size={16}
-                  className={selected ? "text-white" : "text-purple-200"}
+                  className={selected ? "text-ink" : "text-purple"}
                 />
               </div>
               <div className="bb-display text-xs font-medium">{role.title}</div>
-              <div className="mt-0.5 text-[10px] leading-tight text-white/40">
+              <div className="mt-0.5 text-[10px] leading-tight text-ink-faint">
                 {role.desc}
               </div>
             </button>

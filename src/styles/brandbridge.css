@@ -32,7 +32,7 @@
 
 /* Solid sidebar on mobile — glass transparency breaks over page content */
 .bb-sidebar-mobile {
-  background: #0f0f18;
+  background: var(--surface);
   border-right: 1px solid var(--border);
 }
 

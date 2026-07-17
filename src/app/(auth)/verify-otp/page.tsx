@@ -92,8 +92,8 @@ function VerifyOtpForm() {
   if (!email) {
     return (
       <AuthShell title="Verify your email" subtitle="Email address is required">
-        <p className="text-center text-sm text-white/55">
-          <Link href="/signup" className="text-purple-300 hover:text-purple-200">
+        <p className="text-center text-sm text-ink-soft">
+          <Link href="/signup" className="text-purple hover:text-purple">
             Go back to sign up
           </Link>
         </p>
@@ -120,7 +120,7 @@ function VerifyOtpForm() {
           </button>
         </form>
 
-        <p className="text-center text-xs text-white/50">
+        <p className="text-center text-xs text-ink-faint">
           Didn&apos;t receive the code?{" "}
           {resendTimer > 0 ? (
             <span>Resend in {resendTimer}s</span>
@@ -128,7 +128,7 @@ function VerifyOtpForm() {
             <button
               onClick={handleResend}
               disabled={resending}
-              className="text-purple-300 hover:text-purple-200"
+              className="text-purple hover:text-purple"
             >
               {resending ? "Sending..." : "Resend code"}
             </button>
