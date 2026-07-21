@@ -121,13 +121,13 @@ export default function ProtectedLayout({
         />
       )}
 
-      <div className="flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col min-w-0 overflow-hidden">
         <DashboardHeader
           role={user?.role}
           onMenuOpen={() => setSidebarOpen(true)}
           onSearchOpen={() => setSearchOpen(true)}
         />
-        <main className="flex-1 overflow-auto p-5 sm:p-8">{children}</main>
+        <main className="flex-1 overflow-y-auto overflow-x-hidden p-3.5 sm:p-5 lg:p-8 w-full max-w-full">{children}</main>
       </div>
 
       {searchOpen && <GlobalSearchModal onClose={() => setSearchOpen(false)} />}

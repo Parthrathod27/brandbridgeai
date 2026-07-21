@@ -188,7 +188,7 @@ export default function FindBrandsPage() {
       <PageHeader title="Find Brand Partners" subtitle="Discover verified brands and compare analytics to promote your products." />
 
       {/* Tabs Row */}
-      <div className="flex border-b border-[var(--border)] pb-1 gap-4">
+      <div className="flex border-b border-[var(--border)] pb-1 gap-4 overflow-x-auto scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         {[
           { id: "browse", label: "Browse Brands" },
           { id: "saved", label: "Saved Favorites" },
@@ -197,7 +197,7 @@ export default function FindBrandsPage() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id as any)}
-            className={`pb-2 text-sm font-semibold cursor-pointer border-b-2 transition ${
+            className={`pb-2 text-sm font-semibold cursor-pointer border-b-2 transition whitespace-nowrap flex-shrink-0 ${
               activeTab === tab.id
                 ? "border-purple-500 text-purple"
                 : "border-transparent text-ink-faint hover:text-ink"
@@ -432,11 +432,12 @@ export default function FindBrandsPage() {
       )}
 
       {activeTab === "compare" && (
-        <div className="bb-glass rounded-2xl p-6 overflow-x-auto">
+        <div className="bb-glass rounded-2xl p-6">
           <h3 className="bb-display text-base font-semibold text-ink mb-4">Comparison Matrix</h3>
           {compareList.length === 0 ? (
             <p className="text-sm text-ink-faint">Select brands from browse tab to compare them side-by-side.</p>
           ) : (
+            <div className="overflow-x-auto -mx-1">
             <table className="w-full text-left text-xs min-w-[500px]">
               <thead>
                 <tr className="border-b border-[var(--border)] text-ink-faint">
@@ -491,6 +492,7 @@ export default function FindBrandsPage() {
                 </tr>
               </tbody>
             </table>
+            </div>
           )}
         </div>
       )}

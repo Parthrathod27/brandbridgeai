@@ -162,12 +162,12 @@ export default function ProductOwnerCampaignsPage() {
       {showWizard && (
         <div className="bb-glass rounded-2xl p-6 space-y-6 border border-purple-500/10 shadow-2xl">
           {/* Progress bar */}
-          <div className="flex items-center justify-between border-b border-[var(--border)] pb-4 text-xs font-semibold">
+          <div className="flex flex-wrap items-center gap-1 border-b border-[var(--border)] pb-4 text-xs font-semibold">
             <span className={step >= 1 ? "text-purple" : "text-ink-faint"}>1. Core Details</span>
-            <ChevronRight size={14} className="text-ink-faint" />
-            <span className={step >= 2 ? "text-purple" : "text-ink-faint"}>2. Milestones & Goals</span>
-            <ChevronRight size={14} className="text-ink-faint" />
-            <span className={step >= 3 ? "text-purple" : "text-ink-faint"}>3. Budget & ROI</span>
+            <ChevronRight size={14} className="text-ink-faint flex-shrink-0" />
+            <span className={step >= 2 ? "text-purple" : "text-ink-faint"}>2. Milestones &amp; Goals</span>
+            <ChevronRight size={14} className="text-ink-faint flex-shrink-0" />
+            <span className={step >= 3 ? "text-purple" : "text-ink-faint"}>3. Budget &amp; ROI</span>
           </div>
 
           <form onSubmit={handleCreate} className="space-y-4">

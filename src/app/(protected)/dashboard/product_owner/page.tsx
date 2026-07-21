@@ -120,7 +120,7 @@ export default function ProductOwnerHomePage() {
   const activeWidgets = widgets.filter((w) => w.visible);
 
   return (
-    <div>
+    <div className="w-full max-w-full overflow-x-hidden">
       {/* Top Welcome / Header section */}
       <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
@@ -136,7 +136,7 @@ export default function ProductOwnerHomePage() {
         </div>
 
         {/* Global Toolbar */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-shrink-0 items-center gap-2">
           <button
             onClick={() => setShowNotifications(true)}
             className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--surface-strong)] text-ink-soft hover:bg-[var(--surface-strong)] hover:text-ink cursor-pointer relative"
@@ -205,16 +205,16 @@ export default function ProductOwnerHomePage() {
           <Link
             key={href}
             href={href}
-            className="bb-glass flex items-center gap-2 rounded-xl px-4 py-3 text-sm text-ink-soft hover:text-purple"
+            className="bb-glass flex items-center gap-2 rounded-xl px-3 py-3 text-sm text-ink-soft hover:text-purple min-w-0 truncate"
           >
-            <Icon size={16} />
-            {label}
+            <Icon size={16} className="flex-shrink-0" />
+            <span className="truncate">{label}</span>
           </Link>
         ))}
       </div>
 
       {/* Flexible Widgets Grid */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {activeWidgets.map((widget) => {
           if (widget.id === "quickActions") {
             return (

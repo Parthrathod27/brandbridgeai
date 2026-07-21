@@ -22,7 +22,7 @@ export default function ProductOwnerSubNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="mb-6 flex gap-2 overflow-x-auto pb-1">
+    <nav className="mb-6 flex gap-2 overflow-x-auto pb-1 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
       {links.map(({ href, icon: Icon, label }) => {
         const active =
           href === "/dashboard/product_owner"
