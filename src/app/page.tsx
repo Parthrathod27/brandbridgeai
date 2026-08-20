@@ -323,7 +323,9 @@ export default function BrandBridgeLanding() {
   }, []);
 
   return (
-    <div>
+    // overflow-x-clip (not hidden) guards against stray decorative overflow
+    // without creating a scroll container, which would break the sticky navbar.
+    <div className="overflow-x-clip">
 
       {/* Navbar Wrapper */}
       <div style={{ position: "sticky", top: 0, zIndex: 50, padding: scrolled ? "10px 16px 0" : "18px 16px 0", transition: "padding .35s ease" }}>
@@ -413,7 +415,7 @@ export default function BrandBridgeLanding() {
 
       {/* Features */}
       <Reveal>
-        <section id="features" className="mx-auto max-w-6xl px-5 py-20 sm:px-6 relative">
+        <section id="features" className="mx-auto max-w-6xl px-5 py-20 sm:px-6 relative overflow-hidden">
           <div className="bb-orb" style={{ background: "#4f8cff", width: 350, height: 350, right: "-10%", top: "20%", opacity: 0.15, animationDelay: "1s" }} />
           <SectionHeading eyebrow="Platform" title="Everything a collaboration needs" subtitle="End to end workflows to ensure high engagement and successful creative campaigns." />
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 relative z-10">
@@ -432,7 +434,7 @@ export default function BrandBridgeLanding() {
 
       {/* How It Works */}
       <Reveal>
-        <section id="how-it-works" className="mx-auto max-w-3xl px-5 py-20 sm:px-6 relative">
+        <section id="how-it-works" className="mx-auto max-w-3xl px-5 py-20 sm:px-6 relative overflow-hidden">
           <div className="bb-orb" style={{ background: "#FF6B4A", width: 400, height: 400, left: "-30%", top: "10%", opacity: 0.12, animationDelay: "3s" }} />
           <SectionHeading eyebrow="Process" title="From sign-up to launch in six steps" />
 
@@ -464,7 +466,7 @@ export default function BrandBridgeLanding() {
 
       {/* Why Choose */}
       <Reveal>
-        <section className="mx-auto max-w-5xl px-5 py-16 sm:px-6 relative">
+        <section className="mx-auto max-w-5xl px-5 py-16 sm:px-6 relative overflow-hidden">
           <div className="bb-orb" style={{ background: "#8b5cf6", width: 250, height: 250, right: "10%", bottom: "0%", opacity: 0.15, animationDelay: "5s" }} />
           <SectionHeading eyebrow="Why BrandBridge" title="Built so brands actually want to collaborate" />
           <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2 relative z-10">

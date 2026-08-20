@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BrandBridge AI — User Manual</title>
+<style>
+  @page { size: A4; margin: 15mm 14mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Inter, system-ui, sans-serif;
+    font-size: 9.8pt; line-height: 1.55; color: #1c1c25;
+  }
+  h1,h2,h3,h4 { font-weight: 650; line-height: 1.25; margin: 0; }
+
+  /* Cover */
+  .cover {
+    height: 262mm; display: flex; flex-direction: column; justify-content: center;
+    page-break-after: always;
+    background: linear-gradient(140deg,#6C63FF 0%,#8B5CF6 50%,#FF6B4A 100%);
+    color:#fff; margin:-15mm -14mm 0; padding: 24mm 20mm;
+  }
+  .cover .eyebrow { font-size:9pt; letter-spacing:.24em; text-transform:uppercase; opacity:.85; margin-bottom:14mm; }
+  .cover h1 { font-size:36pt; letter-spacing:-.025em; }
+  .cover .sub { font-size:13pt; opacity:.93; margin-top:5mm; font-weight:400; line-height:1.45; }
+  .cover .rule { height:2px; background:rgba(255,255,255,.45); margin:12mm 0; width:70mm; }
+  .cover .tagline { font-size:11pt; font-style:italic; opacity:.9; }
+  .cover .foot { margin-top:auto; font-size:9pt; opacity:.85; }
+
+  /* Contents */
+  .toc { page-break-after: always; }
+  .toc ol { list-style:none; padding:0; margin:4mm 0 0; counter-reset: sec; }
+  .toc > ol > li {
+    counter-increment: sec; padding: 2.2mm 0; border-bottom:1px solid #e8e8f0;
+    font-weight:600; font-size:10.5pt;
+  }
+  .toc > ol > li::before { content: counter(sec) ". "; color:#6C63FF; }
+  .toc ul { list-style:none; padding:0 0 0 6mm; margin:1.5mm 0 0; font-weight:400; font-size:9pt; color:#55556a; }
+  .toc ul li { padding:.7mm 0; }
+
+  h2 {
+    font-size:15.5pt; margin:0 0 4mm; padding-bottom:2.5mm;
+    border-bottom:2px solid #6C63FF; color:#171722; page-break-after:avoid;
+  }
+  h2 .num { display:inline-block; min-width:9mm; color:#6C63FF; }
+  h3 { font-size:11.5pt; margin:6.5mm 0 2.5mm; color:#2a2a38; page-break-after:avoid; }
+  h4 { font-size:9.8pt; margin:4.5mm 0 1.8mm; color:#3a3a4a; page-break-after:avoid; }
+  p { margin:0 0 3mm; }
+  .break { page-break-before: always; }
+
+  table { width:100%; border-collapse:collapse; margin:3mm 0 5mm; font-size:8.6pt; }
+  thead { display:table-header-group; }
+  tr { page-break-inside:avoid; }
+  th { text-align:left; padding:2.3mm 2.5mm; background:#f0effa; border-bottom:1.5px solid #6C63FF; font-weight:650; color:#2a2a45; }
+  td { padding:2.3mm 2.5mm; border-bottom:1px solid #e3e3ec; vertical-align:top; }
+  tbody tr:nth-child(even) td { background:#fafafd; }
+  td.mono { font-family:"Cascadia Mono",Consolas,monospace; font-size:8pt; color:#4b3ba8; }
+
+  code { font-family:"Cascadia Mono",Consolas,monospace; font-size:8.3pt; background:#f2f2f7; padding:.4mm 1.2mm; border-radius:2px; color:#4b3ba8; }
+  pre {
+    font-family:"Cascadia Mono",Consolas,monospace; font-size:8.2pt; line-height:1.5;
+    background:#16161f; color:#e8e8f2; padding:3.5mm 4mm; border-radius:3px;
+    white-space:pre-wrap; word-break:break-word; margin:2.5mm 0 4mm; page-break-inside:avoid;
+  }
+  pre .c { color:#8b8ba8; }
+
+  .callout { border-left:3px solid #6C63FF; background:#f5f4fd; padding:3mm 4mm; margin:3mm 0 5mm; border-radius:0 3px 3px 0; page-break-inside:avoid; }
+  .callout.warn { border-left-color:#E0821B; background:#fdf7ef; }
+  .callout .t { font-weight:650; display:block; margin-bottom:1.5mm; }
+
+  /* Role banner */
+  .rolebar {
+    color:#fff; padding:3.5mm 5mm; border-radius:4px; margin:0 0 4mm;
+    page-break-after:avoid; page-break-inside:avoid;
+  }
+  .rolebar h3 { color:#fff; margin:0; font-size:13pt; }
+  .rolebar .who { font-size:8.8pt; opacity:.92; margin-top:1mm; }
+  .r-brand { background:linear-gradient(120deg,#6C63FF,#8B5CF6); }
+  .r-po    { background:linear-gradient(120deg,#8B5CF6,#C04ED9); }
+  .r-free  { background:linear-gradient(120deg,#FF6B4A,#FFB088); }
+  .r-hire  { background:linear-gradient(120deg,#1B9E77,#4FC3A1); }
+
+  /* Flow chain */
+  .flow { margin:3mm 0 5mm; page-break-inside:avoid; }
+  .flow .step {
+    display:inline-block; background:#eeedfb; border:1px solid #d5d2f5;
+    border-radius:3px; padding:1.6mm 3mm; font-size:8.4pt; font-weight:600; color:#3d2f9e;
+    margin:0 0 1.5mm;
+  }
+  .flow .arr { color:#9a97b8; margin:0 1.5mm; font-weight:700; }
+
+  ul,ol { margin:0 0 3.5mm; padding-left:5.5mm; }
+  li { margin-bottom:1.3mm; }
+  .muted { color:#63637a; }
+  .lead { font-size:10.5pt; color:#3a3a4a; }
+
+  .kbd {
+    font-family:"Cascadia Mono",Consolas,monospace; font-size:8pt;
+    border:1px solid #c9c9d8; border-bottom-width:2px; border-radius:3px;
+    padding:.3mm 1.5mm; background:#fbfbfe;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== COVER ===== -->
+<div class="cover">
+  <div class="eyebrow">Platform User Manual</div>
+  <h1>BrandBridge&nbsp;AI</h1>
+  <div class="sub">Complete guide to every feature, role and workflow</div>
+  <div class="rule"></div>
+  <div class="tagline">“Stop competing for budget. Start collaborating for growth.”</div>
+  <div class="foot">
+    Version 0.1.0 &nbsp;·&nbsp; 20 August 2026<br>
+    Next.js 16 · React 19 · MongoDB · Google Gemini
+  </div>
+</div>
+
+<!-- ===== CONTENTS ===== -->
+<div class="toc">
+<h2>Contents</h2>
+<ol>
+  <li>What BrandBridge AI does
+    <ul><li>The problem it solves · Core concepts · The four roles</li></ul>
+  </li>
+  <li>Getting the app running
+    <ul><li>Install · Environment variables · Commands</li></ul>
+  </li>
+  <li>Creating an account
+    <ul><li>Email signup · OTP verification · Google sign-in · Password recovery</li></ul>
+  </li>
+  <li>Onboarding
+    <ul><li>Choosing a role · Completing your profile · Profile completeness</li></ul>
+  </li>
+  <li>Finding your way around
+    <ul><li>Sidebar · Header · Global search · Notifications · Theme</li></ul>
+  </li>
+  <li>Brand role guide
+    <ul><li>AI brand matching · Collaborations · Campaigns · Hiring freelancers</li></ul>
+  </li>
+  <li>Product Owner role guide
+    <ul><li>Products · Finding brands · Analytics · AI Hub · Campaign wizard</li></ul>
+  </li>
+  <li>Freelancer role guide
+    <ul><li>Portfolio · Browsing projects · Proposals · Earnings</li></ul>
+  </li>
+  <li>Hirer role guide
+    <ul><li>Browsing freelancers · Posting projects · Managing hires</li></ul>
+  </li>
+  <li>Messaging
+    <ul><li>Conversations · Attachments · AI assistance · Context panel</li></ul>
+  </li>
+  <li>AI features reference
+    <ul><li>All nine AI endpoints · Rate limits · Fallback behaviour</li></ul>
+  </li>
+  <li>Settings and security
+    <ul><li>Account · Password · Two-factor · Sessions · Deleting your account</li></ul>
+  </li>
+  <li>Status reference
+    <ul><li>Lifecycle values for every record type</li></ul>
+  </li>
+  <li>Troubleshooting</li>
+</ol>
+</div>
+
+<!-- ===== 1 ===== -->
+<section>
+<h2><span class="num">1</span>What BrandBridge AI does</h2>
+
+<p class="lead">BrandBridge AI is a collaboration marketplace. Instead of every brand buying its own
+audience, two compatible brands partner on a shared campaign — splitting the cost while doubling
+the reach. The platform finds the partner, drafts the outreach, generates the campaign assets, and
+brings in freelance creatives to produce the work.</p>
+
+<h3>The problem it solves</h3>
+<p>A small brand spends its entire marketing budget acquiring an audience another brand already has.
+If a coffee roaster and a bakery share the same customer, they are competing for the same ad
+impressions rather than sharing them. BrandBridge AI makes that introduction, then handles the
+paperwork and production around it.</p>
+
+<h3>Core concepts</h3>
+<table>
+  <thead><tr><th style="width:34mm">Concept</th><th>What it means</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Match</strong></td><td>An AI-scored compatibility rating (0–100%) between two brands, based on audience overlap, industry alignment and shared goals</td></tr>
+    <tr><td><strong>Collaboration</strong></td><td>A partnership between two brands. Starts as a request, becomes active once accepted</td></tr>
+    <tr><td><strong>Campaign</strong></td><td>The actual marketing initiative run under a collaboration — with a budget, dates, goals and milestones</td></tr>
+    <tr><td><strong>Project</strong></td><td>A piece of creative work posted for freelancers to bid on</td></tr>
+    <tr><td><strong>Proposal</strong></td><td>A freelancer's bid on a project</td></tr>
+    <tr><td><strong>Hire</strong></td><td>An engaged freelancer working on agreed deliverables at an agreed rate</td></tr>
+    <tr><td><strong>Product</strong></td><td>An item a Product Owner wants brands to promote</td></tr>
+  </tbody>
+</table>
+
+<h3>The four roles</h3>
+<p>Your role is chosen once during onboarding and determines your entire dashboard. Each role sees a
+different sidebar, different statistics and different pages.</p>
+
+<table>
+  <thead><tr><th style="width:30mm">Role</th><th style="width:52mm">You are…</th><th>You mainly do</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Brand</strong></td><td>A business with an audience and a marketing budget</td><td>Find partner brands, run joint campaigns, hire creatives</td></tr>
+    <tr><td><strong>Product Owner</strong></td><td>Someone with a product needing exposure</td><td>List products, find brands to promote them, track performance</td></tr>
+    <tr><td><strong>Freelancer</strong></td><td>A designer, editor, copywriter or similar</td><td>Showcase work, bid on projects, get hired, track earnings</td></tr>
+    <tr><td><strong>Hirer</strong></td><td>Someone who needs creative talent directly</td><td>Browse freelancers, post projects, manage hires</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <span class="t">One role per account</span>
+  A role is selected at onboarding and the app routes you to that role's dashboard on every login.
+  Visiting another role's URL redirects you back to your own. To work in a different role you need a
+  separate account.
+</div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="break">
+<h2><span class="num">2</span>Getting the app running</h2>
+
+<h3>Install and start</h3>
+<pre>npm install
+npm run dev        <span class="c"># http://localhost:3000</span></pre>
+
+<h3>All commands</h3>
+<table>
+  <thead><tr><th style="width:44mm">Command</th><th>Does</th></tr></thead>
+  <tbody>
+    <tr><td class="mono">npm run dev</td><td>Development server with hot reload</td></tr>
+    <tr><td class="mono">npm run build</td><td>Production build</td></tr>
+    <tr><td class="mono">npm start</td><td>Serve the production build</td></tr>
+    <tr><td class="mono">npm run lint</td><td>ESLint</td></tr>
+    <tr><td class="mono">npm test</td><td>Run the test suite once</td></tr>
+    <tr><td class="mono">npm run test:watch</td><td>Tests in watch mode</td></tr>
+    <tr><td class="mono">npm run test:coverage</td><td>Tests with a coverage report</td></tr>
+  </tbody>
+</table>
+
+<h3>Environment variables</h3>
+<p>These live in <code>.env.local</code>. The app degrades gracefully when the optional ones are absent.</p>
+<table>
+  <thead><tr><th style="width:46mm">Variable</th><th style="width:18mm">Required</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td class="mono">MONGODB_URI</td><td>Yes</td><td>Database connection</td></tr>
+    <tr><td class="mono">JWT_SECRET</td><td>Yes</td><td>Signs session tokens</td></tr>
+    <tr><td class="mono">GEMINI_API_KEY</td><td>Recommended</td><td>Powers all AI features. Without it, AI routes return curated fallback text instead of failing</td></tr>
+    <tr><td class="mono">GMAIL_USER<br>GMAIL_APP_PASSWORD</td><td>Yes</td><td>Sends OTP and password-reset emails</td></tr>
+    <tr><td class="mono">GOOGLE_CLIENT_ID<br>GOOGLE_CLIENT_SECRET<br>GOOGLE_REDIRECT_URI</td><td>Optional</td><td>Enables “Continue with Google”</td></tr>
+    <tr><td class="mono">CLOUDINARY_CLOUD_NAME<br>CLOUDINARY_API_KEY<br>CLOUDINARY_API_SECRET</td><td>Optional</td><td>Image hosting. Without these, uploads fall back to inline base64 storage</td></tr>
+    <tr><td class="mono">NEXT_PUBLIC_APP_URL</td><td>Yes</td><td>Base URL used in emails, sitemap and Open Graph tags</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <span class="t">The AI keeps working without a key</span>
+  Every AI route has a hand-written fallback response. If <code>GEMINI_API_KEY</code> is missing or the
+  Gemini call fails, the user still gets sensible sample output rather than an error — useful for demos,
+  but remember the output is then generic rather than tailored.
+</div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="break">
+<h2><span class="num">3</span>Creating an account</h2>
+
+<h3>The signup flow</h3>
+<div class="flow">
+  <span class="step">Sign up</span><span class="arr">→</span>
+  <span class="step">Email OTP</span><span class="arr">→</span>
+  <span class="step">Choose role</span><span class="arr">→</span>
+  <span class="step">Complete profile</span><span class="arr">→</span>
+  <span class="step">Dashboard</span>
+</div>
+
+<h4>Step 1 — Sign up</h4>
+<p>Go to <code>/signup</code>. Enter your name, email and password. The password strength meter updates
+live as you type. Submitting sends a one-time code to your email address.</p>
+
+<h4>Step 2 — Verify the code</h4>
+<p>You land on <code>/verify-otp</code>. Enter the six-digit code from your inbox. The field auto-advances
+between boxes and accepts a pasted code. A countdown shows when you may request a new code.</p>
+
+<h4>Step 3 and 4</h4>
+<p>Covered in section 4 — you cannot reach the dashboard until both are done.</p>
+
+<h3>Signing in with Google</h3>
+<p>Press “Continue with Google” on either the login or signup page. Google-authenticated accounts skip
+OTP verification, since Google has already verified the address. You still choose a role and complete
+a profile.</p>
+<p class="muted">Google accounts have no password on the platform, so the change-password section of
+settings is hidden for them.</p>
+
+<h3>Forgotten password</h3>
+<div class="flow">
+  <span class="step">/forgot-password</span><span class="arr">→</span>
+  <span class="step">Emailed link</span><span class="arr">→</span>
+  <span class="step">/reset-password</span><span class="arr">→</span>
+  <span class="step">Sign in</span>
+</div>
+<p>Enter your email at <code>/forgot-password</code> and a reset link is sent. The link carries a
+single-use token; opening it takes you to <code>/reset-password</code> where you set a new password.
+Requesting a reset does not reveal whether an account exists, which prevents the form being used to
+discover registered addresses.</p>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="break">
+<h2><span class="num">4</span>Onboarding</h2>
+
+<h3>Choosing your role</h3>
+<p>At <code>/onboarding/role</code> you pick one of the four roles from section 1. This is the single most
+important choice in the app — it determines your navigation, your dashboard and which features exist
+for you at all. Read the four descriptions before choosing.</p>
+
+<h3>Completing your profile</h3>
+<p>At <code>/onboarding/profile</code> you fill in the fields your role requires. <strong>The app blocks
+access to the dashboard until the profile is marked complete</strong>, so this is not optional.</p>
+
+<h4>What each role is asked for</h4>
+<table>
+  <thead><tr><th style="width:30mm">Role</th><th>Fields that count toward completeness</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Brand</strong></td><td>Company name, logo, bio, industry, location, website, target audience, budget range, collaboration preferences, business type — ten fields, each worth 10%</td></tr>
+    <tr><td><strong>Freelancer</strong></td><td>Profile photo, bio, location, at least one skill, a category, an hourly rate above zero, and at least one portfolio item — seven checks</td></tr>
+    <tr><td><strong>Product Owner / Hirer</strong></td><td>Company name, bio, industry, target audience — four fields, each worth 25%</td></tr>
+  </tbody>
+</table>
+
+<h3>The completeness widget</h3>
+<p>Your profile page shows a live percentage bar with the specific fields still missing, phrased as
+actions — “Upload brand logo”, “Set hourly rate”. Completeness matters beyond tidiness: brand matching
+quality depends on how much the AI knows about you, and freelancers with incomplete profiles surface
+lower in the marketplace.</p>
+
+<div class="callout warn">
+  <span class="t">Empty is not the same as zero</span>
+  For freelancers, an hourly rate of <code>0</code> counts as unset, not as “free”. Set a real rate or the
+  check stays unfilled.
+</div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="break">
+<h2><span class="num">5</span>Finding your way around</h2>
+
+<h3>The sidebar</h3>
+<p>On the left at desktop widths, and behind the ☰ menu button on phones and tablets. It shows your
+role badge, your role's pages, your account, and the logout button. Tapping any link on mobile closes
+the drawer automatically.</p>
+
+<h3>The header</h3>
+<table>
+  <thead><tr><th style="width:32mm">Control</th><th>Does</th></tr></thead>
+  <tbody>
+    <tr><td>☰ Menu</td><td>Opens the sidebar drawer. Only visible below the <code>lg</code> breakpoint</td></tr>
+    <tr><td>🔍 Search</td><td>Opens global search. Keyboard shortcut <span class="kbd">Ctrl</span>+<span class="kbd">K</span> (<span class="kbd">⌘</span>+<span class="kbd">K</span> on Mac)</td></tr>
+    <tr><td>☀/🌙 Theme</td><td>Toggles light and dark. Your choice persists across sessions</td></tr>
+    <tr><td>🔔 Bell</td><td>Notification panel with an unread badge. “Mark all read” clears the count</td></tr>
+  </tbody>
+</table>
+
+<h3>Global search</h3>
+<p>Press <span class="kbd">Ctrl</span>+<span class="kbd">K</span> anywhere in the dashboard to search
+across your records without navigating. Press it again, or <span class="kbd">Esc</span>, to close.</p>
+
+<h3>Working on a phone</h3>
+<ul>
+  <li>The sidebar becomes a slide-in drawer with a dimmed backdrop; tap outside to dismiss</li>
+  <li>Tab strips scroll horizontally rather than wrapping — swipe them sideways</li>
+  <li>Messages show one pane at a time: the conversation list, then the chat, with a back arrow</li>
+  <li>The context panel opens as a bottom sheet instead of a side column</li>
+</ul>
+</section>
+
+<!-- ===== 6 BRAND ===== -->
+<section class="break">
+<h2><span class="num">6</span>Brand role guide</h2>
+
+<div class="rolebar r-brand">
+  <h3>Brand</h3>
+  <div class="who">A business with an audience and a budget, looking for partners to campaign with</div>
+</div>
+
+<h3>Your pages</h3>
+<table>
+  <thead><tr><th style="width:38mm">Page</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Dashboard</strong></td><td>Statistics, AI recommendations, pending proposals, quick actions</td></tr>
+    <tr><td><strong>My Profile</strong></td><td>Four-section brand profile with a live completeness meter</td></tr>
+    <tr><td><strong>AI Brand Matching</strong></td><td>Scored partner suggestions</td></tr>
+    <tr><td><strong>Collaborations</strong></td><td>Partnership requests and active partnerships</td></tr>
+    <tr><td><strong>Campaigns</strong></td><td>Marketing initiatives under your collaborations</td></tr>
+    <tr><td><strong>Hire Freelancers</strong></td><td>The creative marketplace</td></tr>
+    <tr><td><strong>My Hires</strong></td><td>Freelancers currently engaged, and their deliverables</td></tr>
+    <tr><td><strong>Messages</strong></td><td>Conversations with partners and freelancers</td></tr>
+    <tr><td><strong>Settings</strong></td><td>Account, password, security, deletion</td></tr>
+  </tbody>
+</table>
+
+<h3>The complete brand workflow</h3>
+<div class="flow">
+  <span class="step">Complete profile</span><span class="arr">→</span>
+  <span class="step">Review AI matches</span><span class="arr">→</span>
+  <span class="step">Send proposal</span><span class="arr">→</span>
+  <span class="step">Collaboration accepted</span><span class="arr">→</span>
+  <span class="step">Create campaign</span><span class="arr">→</span>
+  <span class="step">Hire freelancers</span><span class="arr">→</span>
+  <span class="step">Track deliverables</span>
+</div>
+
+<h3>6.1 &nbsp;AI brand matching</h3>
+<p>The matching page scores potential partners from 0–100% using your industry, audience definition
+and stated collaboration goals — which is exactly why profile completeness matters. Each card shows
+the score, why the brands fit, and actions to open the full profile, save the match, or start outreach.</p>
+<p>Alongside registered brands the page can surface <strong>external brand suggestions</strong> — companies
+not yet on the platform that the AI identifies as a good fit, useful for offline outreach.</p>
+
+<h4>Sending outreach</h4>
+<p>Choosing a match and pressing outreach opens the <strong>AI-drafted email modal</strong>. The draft is
+generated from both brands' profiles. Always read and edit it before sending — it is a starting point,
+not a finished email.</p>
+
+<h3>6.2 &nbsp;Collaborations</h3>
+<p>A collaboration is <code>pending</code> until the other brand responds, then <code>accepted</code> or
+<code>declined</code>. Incoming requests appear here with accept and decline actions; opening one shows
+the full partner profile and the proposal text.</p>
+
+<h3>6.3 &nbsp;Campaigns</h3>
+<p>Campaigns run under an accepted collaboration — you cannot create one without a partner, which is
+deliberate, since a campaign is by definition shared. Press <strong>New Campaign</strong> and provide:</p>
+<ul>
+  <li>Campaign name and the linked collaboration</li>
+  <li>Type — co-branded social post, product bundle, influencer push, cross-promotion, or other</li>
+  <li>Goal — awareness, sales, engagement or reach</li>
+  <li>Start and end dates, and the budget</li>
+</ul>
+<p>Campaign status moves through <code>draft</code>, <code>active</code>, <code>paused</code>,
+<code>completed</code> or <code>cancelled</code>. Opening a campaign shows performance metrics and the
+cost split between both brands.</p>
+
+<h3>6.4 &nbsp;Hiring freelancers</h3>
+<p>The marketplace lists verified creatives filterable by category, skill, rate and rating. Opening a
+freelancer shows their bio, portfolio, skills and reviews. <strong>Hire</strong> opens a form for the
+agreed rate, the deadline, an optional linked campaign, and the deliverables expected.</p>
+<p>Hires progress through <code>pending</code> → <code>active</code> → <code>completed</code>, or
+<code>cancelled</code>. Under <strong>My Hires</strong> you review submitted deliverables and leave a
+review once work is complete.</p>
+</section>
+
+<!-- ===== 7 PRODUCT OWNER ===== -->
+<section class="break">
+<h2><span class="num">7</span>Product Owner role guide</h2>
+
+<div class="rolebar r-po">
+  <h3>Product Owner</h3>
+  <div class="who">You have a product; you need brands with audiences to put it in front of</div>
+</div>
+
+<h3>Your pages</h3>
+<table>
+  <thead><tr><th style="width:38mm">Page</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Dashboard</strong></td><td>Customisable widget grid with KPIs, AI insights, tasks, meetings and goals</td></tr>
+    <tr><td><strong>Find Brands</strong></td><td>Discover and request promotion from brands</td></tr>
+    <tr><td><strong>My Products</strong></td><td>Product catalogue with per-product analytics</td></tr>
+    <tr><td><strong>Campaigns</strong></td><td>Three-step campaign wizard with milestones and ROI</td></tr>
+    <tr><td><strong>Analytics</strong></td><td>Cross-product performance</td></tr>
+    <tr><td><strong>AI Hub</strong></td><td>Five AI tools in one console</td></tr>
+    <tr><td><strong>Messages · Profile · Settings</strong></td><td>As other roles</td></tr>
+  </tbody>
+</table>
+
+<h3>7.1 &nbsp;Managing products</h3>
+<p>Add a product with its name, description, category, pricing and images. Status is
+<code>draft</code>, <code>active</code> or <code>archived</code> — <strong>only active products can be
+attached to campaigns or shown to brands</strong>, so remember to activate after drafting.</p>
+<p>Opening a product shows an image gallery, an analytics panel, and an AI marketing generator that
+produces copy, SEO tags or hashtags for that specific product.</p>
+
+<h3>7.2 &nbsp;The dashboard customiser</h3>
+<p>Press <strong>Customize</strong> in the dashboard toolbar to show or hide individual widgets —
+KPIs, AI insights, quick actions, recent activity, upcoming meetings, goal progress and the
+performance chart. The toolbar also opens the notification centre, the task board, saved reports and
+the document library.</p>
+
+<h3>7.3 &nbsp;The campaign wizard</h3>
+<div class="flow">
+  <span class="step">1 · Core details</span><span class="arr">→</span>
+  <span class="step">2 · Milestones &amp; goals</span><span class="arr">→</span>
+  <span class="step">3 · Budget &amp; ROI</span>
+</div>
+<p>Step one captures the title, description and linked active product. Step two sets milestones —
+pre-filled with a sensible default sequence (contract signed, content draft approval, campaign live)
+that you can edit. Step three sets the budget and shows the projected return.</p>
+<p>An <strong>Ask AI</strong> button at any step suggests content and positioning ideas for the campaign
+you are describing. Creating a campaign also registers a workflow automation that generates tasks and
+notifies your team when the campaign is approved.</p>
+
+<h3>7.4 &nbsp;AI Hub</h3>
+<p>Five tools sharing one console. Pick a tool, fill the prompt, and the result appears in a copyable
+panel:</p>
+<table>
+  <thead><tr><th style="width:30mm">Tool</th><th>Produces</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Consultant</strong></td><td>Strategic answers to collaboration questions</td></tr>
+    <tr><td><strong>SWOT</strong></td><td>Strengths, weaknesses, opportunities and threats for a product or brand</td></tr>
+    <tr><td><strong>Proposal</strong></td><td>A full partnership proposal between a named sender and recipient</td></tr>
+    <tr><td><strong>Social</strong></td><td>Three caption variants with hashtags</td></tr>
+    <tr><td><strong>Pricing</strong></td><td>A tiered rate sheet with estimated ROI per tier</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- ===== 8 FREELANCER ===== -->
+<section class="break">
+<h2><span class="num">8</span>Freelancer role guide</h2>
+
+<div class="rolebar r-free">
+  <h3>Freelancer</h3>
+  <div class="who">A designer, editor, copywriter or other creative looking for campaign work</div>
+</div>
+
+<h3>Your pages</h3>
+<table>
+  <thead><tr><th style="width:38mm">Page</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Dashboard</strong></td><td>Active projects, pending hire requests, opportunities, earnings, skill ratings</td></tr>
+    <tr><td><strong>My Portfolio</strong></td><td>Work samples shown to prospective clients</td></tr>
+    <tr><td><strong>Browse Projects</strong></td><td>Open projects you can bid on</td></tr>
+    <tr><td><strong>Proposals</strong></td><td>Bids you have submitted and their outcomes</td></tr>
+    <tr><td><strong>Earnings</strong></td><td>Income, completed jobs and payment status</td></tr>
+    <tr><td><strong>Messages · Profile · Settings</strong></td><td>As other roles</td></tr>
+  </tbody>
+</table>
+
+<h3>The freelancer workflow</h3>
+<div class="flow">
+  <span class="step">Build portfolio</span><span class="arr">→</span>
+  <span class="step">Browse projects</span><span class="arr">→</span>
+  <span class="step">Submit proposal</span><span class="arr">→</span>
+  <span class="step">Accepted → hired</span><span class="arr">→</span>
+  <span class="step">Deliver work</span><span class="arr">→</span>
+  <span class="step">Get paid &amp; reviewed</span>
+</div>
+
+<h3>8.1 &nbsp;Portfolio first</h3>
+<p>Do this before anything else. Your profile is not complete without at least one portfolio item, and
+an incomplete profile keeps you out of marketplace results. Each item takes a title, description,
+media and a category.</p>
+
+<h3>8.2 &nbsp;Projects and proposals</h3>
+<p>Browse Projects lists work with status <code>open</code>. Each shows the budget — <code>fixed</code>
+or <code>hourly</code> — the scope and the skills wanted. Submitting a proposal records your bid amount,
+timeline and pitch.</p>
+<p>Proposals are <code>pending</code>, then <code>accepted</code> or <code>rejected</code>. You may
+<code>withdraw</code> your own proposal while it is still pending. An accepted proposal becomes a hire.</p>
+
+<h3>8.3 &nbsp;Hire requests and delivery</h3>
+<p>A brand or hirer can also approach you directly. Pending hire requests appear on your dashboard with
+the offered rate, deadline and deliverables — accept or decline from there. Once active, upload
+deliverables against the hire; the client reviews them and can then leave a rating.</p>
+
+<h3>8.4 &nbsp;Earnings</h3>
+<p>Totals, completed job count and per-hire payment status. Figures derive from your hire records, so
+they update as hires move to <code>completed</code>.</p>
+</section>
+
+<!-- ===== 9 HIRER ===== -->
+<section class="break">
+<h2><span class="num">9</span>Hirer role guide</h2>
+
+<div class="rolebar r-hire">
+  <h3>Hirer</h3>
+  <div class="who">You need creative talent directly, without running a brand collaboration</div>
+</div>
+
+<p>The Hirer role is the lightest of the four: talent sourcing and project management, without the
+brand-matching and collaboration machinery.</p>
+
+<h3>Your pages</h3>
+<table>
+  <thead><tr><th style="width:38mm">Page</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Dashboard</strong></td><td>Saved freelancers, active hires, open projects, message count</td></tr>
+    <tr><td><strong>Browse Freelancers</strong></td><td>The marketplace, filterable by category</td></tr>
+    <tr><td><strong>Projects</strong></td><td>Work you have posted, and the proposals received</td></tr>
+    <tr><td><strong>My Hires</strong></td><td>Engaged freelancers and their deliverables</td></tr>
+    <tr><td><strong>Messages · Profile · Settings</strong></td><td>As other roles</td></tr>
+  </tbody>
+</table>
+
+<h3>The hirer workflow</h3>
+<div class="flow">
+  <span class="step">Post a project</span><span class="arr">→</span>
+  <span class="step">Receive proposals</span><span class="arr">→</span>
+  <span class="step">Accept one</span><span class="arr">→</span>
+  <span class="step">Hire created</span><span class="arr">→</span>
+  <span class="step">Review deliverables</span><span class="arr">→</span>
+  <span class="step">Complete &amp; rate</span>
+</div>
+
+<h3>Two routes to a hire</h3>
+<p><strong>Post and wait</strong> — create a project with a title, scope, budget type and amount, and
+required skills. Freelancers bid; you compare proposals and accept one.</p>
+<p><strong>Search and approach</strong> — browse the marketplace, open a freelancer, and hire them
+directly with an agreed rate and deliverables. Save interesting freelancers for later; they appear on
+your dashboard.</p>
+<p>Projects move through <code>open</code> → <code>in_progress</code> → <code>completed</code>, or
+<code>closed</code> if you stop taking bids.</p>
+</section>
+
+<!-- ===== 10 MESSAGING ===== -->
+<section class="break">
+<h2><span class="num">10</span>Messaging</h2>
+
+<p>Every role has the same messaging centre, reachable from the sidebar or from any profile via a
+message button.</p>
+
+<h3>Layout</h3>
+<p>Three panes at desktop width: the conversation list, the chat, and an optional context panel. On
+phones these become one screen at a time with a back arrow.</p>
+
+<h3>What you can do</h3>
+<table>
+  <thead><tr><th style="width:34mm">Action</th><th>How</th></tr></thead>
+  <tbody>
+    <tr><td>Send a message</td><td>Type and press enter, or the send button</td></tr>
+    <tr><td>Attach a file</td><td>Paperclip icon. Attachments upload before the message sends</td></tr>
+    <tr><td>Edit a message</td><td>Pencil icon on your own messages</td></tr>
+    <tr><td>Unsend</td><td>Bin icon on your own messages. The bubble becomes “This message was unsent”</td></tr>
+    <tr><td>Filter conversations</td><td>Type chips above the list — collaboration, freelancer hire, product promotion</td></tr>
+    <tr><td>Archive</td><td>From the conversation menu</td></tr>
+    <tr><td>Block someone</td><td>From the conversation menu, with a confirmation step</td></tr>
+    <tr><td>Summarise a thread</td><td>AI summary of a long conversation</td></tr>
+    <tr><td>Open context</td><td>Shows the related collaboration, hire or product beside the chat</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <span class="t">Messages arrive on their own</span>
+  The chat refreshes every 5 seconds and the conversation list every 15, so a message from the other
+  person appears without you reloading. Refreshing pauses while the browser tab is in the background,
+  and the view will not scroll away from you while you are reading older messages.
+</div>
+
+<h3>Editing on a phone</h3>
+<p>The edit and unsend controls sit beside your own message bubbles. On touch devices they are always
+visible; at desktop widths they appear on hover to keep the thread clean.</p>
+</section>
+
+<!-- ===== 11 AI ===== -->
+<section class="break">
+<h2><span class="num">11</span>AI features reference</h2>
+
+<p>All AI features run on Google Gemini and require you to be signed in.</p>
+
+<table>
+  <thead><tr><th style="width:40mm">Feature</th><th style="width:26mm">Where</th><th>What it produces</th></tr></thead>
+  <tbody>
+    <tr><td>Brand matching</td><td>Brand · Matching</td><td>Compatibility scores with reasoning</td></tr>
+    <tr><td>Product matching</td><td>Product Owner · Brands</td><td>Brands suited to a specific product</td></tr>
+    <tr><td>External brands</td><td>Brand · Matching</td><td>Off-platform companies worth approaching</td></tr>
+    <tr><td>Outreach email</td><td>Match card</td><td>A ready-to-edit introduction email</td></tr>
+    <tr><td>Proposal</td><td>Matching · AI Hub</td><td>A full partnership proposal</td></tr>
+    <tr><td>Campaign brief</td><td>Campaigns</td><td>A structured brief for a campaign</td></tr>
+    <tr><td>Content ideas</td><td>Campaigns</td><td>Cross-platform content concepts</td></tr>
+    <tr><td>Message assistance</td><td>Messages</td><td>Reply suggestions and thread summaries</td></tr>
+    <tr><td>AI Hub</td><td>Product Owner</td><td>Consultant, SWOT, proposal, social, pricing</td></tr>
+  </tbody>
+</table>
+
+<h3>Usage limits</h3>
+<p>To keep costs predictable, AI requests are capped per user:</p>
+<table>
+  <thead><tr><th style="width:52mm">Limit</th><th style="width:26mm">Allowance</th><th>Applies to</th></tr></thead>
+  <tbody>
+    <tr><td>Per individual feature</td><td>12 per minute</td><td>Each AI endpoint separately</td></tr>
+    <tr><td>Across all AI features</td><td>30 per minute</td><td>Everything combined</td></tr>
+  </tbody>
+</table>
+<p>Exceeding a limit returns a message telling you how many seconds to wait. Nothing is lost — retry
+after the countdown.</p>
+
+<h3>When AI output looks generic</h3>
+<p>Two causes. Either <code>GEMINI_API_KEY</code> is not configured, so the route is serving its built-in
+fallback text; or your profile is thin, leaving the model little to work with. Completing your profile
+measurably improves match and proposal quality.</p>
+
+<div class="callout warn">
+  <span class="t">Always review AI output before it leaves the platform</span>
+  Outreach emails, proposals and campaign copy are drafts. They can contain plausible but incorrect
+  details about either brand. Read them properly before sending.
+</div>
+</section>
+
+<!-- ===== 12 SETTINGS ===== -->
+<section class="break">
+<h2><span class="num">12</span>Settings and security</h2>
+
+<p>Settings lives at <code>/dashboard/&lt;your-role&gt;/settings</code> and has four sections.</p>
+
+<h3>Account</h3>
+<p>Update your display name and email address. Changing an email requires verifying the new address
+before it takes effect — until then the old address stays active and the pending change is shown.</p>
+
+<h3>Password</h3>
+<p>Requires your current password plus the new one. Hidden entirely for Google-authenticated accounts,
+which have no platform password.</p>
+
+<h3>Security</h3>
+<h4>Two-factor authentication</h4>
+<div class="flow">
+  <span class="step">Enable 2FA</span><span class="arr">→</span>
+  <span class="step">Scan QR code</span><span class="arr">→</span>
+  <span class="step">Enter 6-digit code</span><span class="arr">→</span>
+  <span class="step">Active</span>
+</div>
+<p>The app generates a QR code for any authenticator app — Google Authenticator, Authy, 1Password.
+Scan it, then confirm with a generated code. 2FA is only active once that confirmation succeeds, which
+prevents locking yourself out with a mis-scanned code.</p>
+
+<h4>Active sessions</h4>
+<p>Lists every device signed into your account with its browser, operating system and last-active time.
+Revoke any session you do not recognise; that device is signed out immediately.</p>
+
+<h3>Deleting your account</h3>
+<p>Permanent. You must type your email address to confirm, and password-based accounts must also supply
+their password. Do this only if you are certain — there is no undo.</p>
+
+<h3>Notifications</h3>
+<p>Notification preferences are stored per account and control which platform events reach you.</p>
+</section>
+
+<!-- ===== 13 STATUS ===== -->
+<section class="break">
+<h2><span class="num">13</span>Status reference</h2>
+
+<p>Every record type has a defined lifecycle. This table is the authoritative list.</p>
+
+<table>
+  <thead><tr><th style="width:32mm">Record</th><th>Statuses</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Collaboration</strong></td><td><code>pending</code> · <code>accepted</code> · <code>declined</code></td></tr>
+    <tr><td><strong>Campaign</strong></td><td><code>draft</code> · <code>active</code> · <code>paused</code> · <code>completed</code> · <code>cancelled</code></td></tr>
+    <tr><td><strong>Project</strong></td><td><code>open</code> · <code>in_progress</code> · <code>completed</code> · <code>closed</code></td></tr>
+    <tr><td><strong>Proposal</strong></td><td><code>pending</code> · <code>accepted</code> · <code>rejected</code> · <code>withdrawn</code></td></tr>
+    <tr><td><strong>Hire</strong></td><td><code>pending</code> · <code>active</code> · <code>completed</code> · <code>cancelled</code></td></tr>
+    <tr><td><strong>Product</strong></td><td><code>draft</code> · <code>active</code> · <code>archived</code></td></tr>
+    <tr><td><strong>Task</strong></td><td><code>todo</code> · <code>in_progress</code> · <code>done</code> — priority <code>low</code> / <code>medium</code> / <code>high</code></td></tr>
+  </tbody>
+</table>
+
+<h3>Conversation types</h3>
+<p>Every conversation is tagged <code>collaboration</code>, <code>freelancer_hire</code> or
+<code>product_promotion</code>, which drives the filter chips and the context panel.</p>
+
+<h3>Automation triggers</h3>
+<p>Workflow automations can fire on: campaign approved, collaboration accepted, task completed,
+product activated, project approved, hire accepted, payment released, project completed, and promotion
+accepted. Available actions are: create a task, notify the team, generate a report, and send an email.</p>
+</section>
+
+<!-- ===== 14 ===== -->
+<section class="break">
+<h2><span class="num">14</span>Troubleshooting</h2>
+
+<table>
+  <thead><tr><th style="width:56mm">Symptom</th><th>Cause and fix</th></tr></thead>
+  <tbody>
+    <tr><td>Redirected to profile completion repeatedly</td><td>A required field is still empty. The completeness widget names exactly which one</td></tr>
+    <tr><td>Cannot create a campaign</td><td>Campaigns require an <em>accepted</em> collaboration. A pending one is not enough</td></tr>
+    <tr><td>Product not selectable in a campaign</td><td>Only <code>active</code> products can be linked. Change it from <code>draft</code></td></tr>
+    <tr><td>“Too many AI requests”</td><td>You hit the rate limit. Wait the number of seconds shown</td></tr>
+    <tr><td>AI output feels generic</td><td>Either <code>GEMINI_API_KEY</code> is unset and fallback text is being served, or your profile is too sparse</td></tr>
+    <tr><td>Not appearing in the freelancer marketplace</td><td>Your profile is incomplete — most often a missing portfolio item or an hourly rate of zero</td></tr>
+    <tr><td>Signed out unexpectedly</td><td>The session was revoked from Settings → Security, or the password changed on another device</td></tr>
+    <tr><td>Another role's URL bounces back</td><td>Expected. Accounts are locked to one role</td></tr>
+    <tr><td>Images not loading after upload</td><td>Cloudinary credentials are probably missing, so uploads fall back to inline base64 — functional, but heavy on large files</td></tr>
+    <tr><td>OTP email never arrives</td><td>Check spam, then verify <code>GMAIL_USER</code> and <code>GMAIL_APP_PASSWORD</code>. A Gmail <em>app password</em> is required, not the account password</td></tr>
+    <tr><td>“This section could not be loaded”</td><td>A request failed. Press Retry — your data is unaffected</td></tr>
+  </tbody>
+</table>
+
+<h3>Getting help</h3>
+<p>When an error screen shows a reference code, quote it — it matches an entry in the server logs and
+identifies the exact failure.</p>
+
+<div class="callout">
+  <span class="t">Keyboard shortcuts</span>
+  <span class="kbd">Ctrl</span>+<span class="kbd">K</span> opens global search from anywhere in the
+  dashboard. <span class="kbd">Esc</span> closes any open modal.
+</div>
+</section>
+
+</body>
+</html>
