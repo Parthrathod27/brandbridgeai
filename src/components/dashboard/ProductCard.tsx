@@ -27,7 +27,7 @@ export default function ProductCard({
     <div className="bb-glass bb-card rounded-2xl overflow-hidden">
       <div className="aspect-video bg-[var(--surface-strong)]">
         {image ? (
-          <img src={image} alt={name} className="h-full w-full object-cover" />
+          <img src={image} alt={name} className="h-full w-full object-cover" loading="lazy" decoding="async" />
         ) : (
           <div className="flex h-full items-center justify-center">
             <Package size={32} className="text-ink-faint" />

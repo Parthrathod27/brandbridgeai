@@ -312,7 +312,7 @@ export default function ProductDetailPage() {
             <h3 className="bb-display text-sm font-semibold text-ink flex items-center gap-1.5">
               <Sparkles size={16} className="text-purple" /> AI Marketing Generator
             </h3>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <button
                 onClick={() => handleAIGenerator("desc")}
                 className="bg-[var(--surface-strong)] hover:bg-[var(--surface-strong)] border border-[var(--border)] rounded-xl py-3.5 text-center text-xs font-semibold text-ink cursor-pointer"

@@ -44,7 +44,7 @@ export default function HireDeliverablesModal({ hire, role, onClose, onUpdate }:
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-0">
-      <div className="bg-[#1a1a24] border border-[var(--border)] w-full max-w-lg rounded-2xl shadow-2xl flex flex-col max-h-[90vh]">
+      <div className="bg-[#1a1a24] border border-[var(--border)] w-full max-w-lg rounded-2xl shadow-2xl flex flex-col max-h-[90dvh]">
         
         <div className="flex items-center justify-between p-5 border-b border-[var(--border)]">
           <div>

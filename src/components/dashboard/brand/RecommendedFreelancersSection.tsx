@@ -52,7 +52,7 @@ export default function RecommendedFreelancersSection({
               <div className="flex items-start gap-3">
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-purple-500/20 text-sm font-semibold text-purple">
                   {f.avatar ? (
-                    <img src={f.avatar} alt={f.name} className="h-full w-full object-cover" />
+                    <img src={f.avatar} alt={f.name} className="h-full w-full object-cover" loading="lazy" decoding="async" />
                   ) : (
                     f.name.charAt(0)
                   )}
@@ -69,11 +69,10 @@ export default function RecommendedFreelancersSection({
               </div>
               {f.portfolioThumb && (
                 <div className="mt-3 aspect-video overflow-hidden rounded-lg bg-[var(--surface-strong)]">
-                  <img
+                  <img 
                     src={f.portfolioThumb}
                     alt="Portfolio"
-                    className="h-full w-full object-cover"
-                  />
+                    className="h-full w-full object-cover" loading="lazy" decoding="async" />
                 </div>
               )}
               <div className="mt-3 flex gap-2">

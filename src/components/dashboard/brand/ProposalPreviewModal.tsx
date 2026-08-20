@@ -34,7 +34,7 @@ export default function ProposalPreviewModal({
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="bb-glass-strong relative z-10 flex max-h-[90vh] w-full flex-col overflow-hidden rounded-t-3xl sm:max-w-xl sm:rounded-3xl">
+      <div className="bb-glass-strong relative z-10 flex max-h-[90dvh] w-full flex-col overflow-hidden rounded-t-3xl sm:max-w-xl sm:rounded-3xl">
         <div className="flex items-center justify-between border-b border-[var(--border)] px-6 py-4">
           <h2 className="bb-display text-lg font-semibold">
             Collaboration Proposal — {partnerName}

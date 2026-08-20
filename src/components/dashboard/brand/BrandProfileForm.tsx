@@ -178,7 +178,7 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
           <div className="h-2 w-full overflow-hidden rounded-full bg-[var(--surface-strong)]">
             <div
               className="h-full rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 transition-all duration-500"
-              style={{ width: `\${completenessPercent}%` }}
+              style={{ width: `${completenessPercent}%` }}
             />
           </div>
         </div>
@@ -215,7 +215,7 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors border-b-2 \${
+                className={`flex items-center gap-2 whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors border-b-2 ${
                   activeTab === tab.id
                     ? "border-purple-500 text-purple"
                     : "border-transparent text-ink-faint hover:text-ink"
@@ -230,23 +230,23 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
           <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
             
             {/* SECTION 1: Basic Info */}
-            <div className={`bb-glass rounded-2xl overflow-hidden transition-all duration-300 \${activeTab === 'basic' ? 'block' : 'hidden sm:hidden'}`}>
+            <div className={`bb-glass rounded-2xl overflow-hidden transition-all duration-300 ${activeTab === 'basic' ? 'block' : 'hidden sm:hidden'}`}>
               <div className="sm:hidden bg-[var(--surface-strong)] px-6 py-4 border-b border-[var(--border)] cursor-pointer" onClick={() => setActiveTab('basic')}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-base font-medium">
                     <User size={16} className="text-purple" /> Basic Info
                   </div>
-                  <ChevronDown size={16} className={`transition-transform \${activeTab === 'basic' ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={16} className={`transition-transform ${activeTab === 'basic' ? 'rotate-180' : ''}`} />
                 </div>
               </div>
               <div className="p-6 space-y-6">
                 <div className="flex items-start gap-4 pb-4 border-b border-[var(--border)]">
                   <label className="flex cursor-pointer flex-col items-center justify-center gap-1 h-20 w-20 rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-strong)] text-[10px] text-ink-soft hover:bg-[var(--surface-strong)] transition overflow-hidden">
-                    {form.logo ? <img src={form.logo} alt="Logo" className="w-full h-full object-cover" /> : <><Upload size={14} /> Logo</>}
+                    {form.logo ? <img src={form.logo} alt="Logo" className="w-full h-full object-cover" loading="lazy" decoding="async" /> : <><Upload size={14} /> Logo</>}
                     <input type="file" accept="image/*" className="hidden" onChange={(e) => handleUpload(e, "logo")} />
                   </label>
                   <label className="flex cursor-pointer flex-col items-center justify-center gap-1 h-20 w-20 rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-strong)] text-[10px] text-ink-soft hover:bg-[var(--surface-strong)] transition overflow-hidden">
-                    {form.avatar ? <img src={form.avatar} alt="Avatar" className="w-full h-full object-cover" /> : <><Upload size={14} /> Avatar</>}
+                    {form.avatar ? <img src={form.avatar} alt="Avatar" className="w-full h-full object-cover" loading="lazy" decoding="async" /> : <><Upload size={14} /> Avatar</>}
                     <input type="file" accept="image/*" className="hidden" onChange={(e) => handleUpload(e, "avatar")} />
                   </label>
                   <div className="flex-1 text-xs text-ink-faint pt-2">
@@ -297,9 +297,9 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
                     <button
                       type="button"
                       onClick={() => update("isRegisteredBusiness", !form.isRegisteredBusiness)}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors \${form.isRegisteredBusiness ? "bg-purple-500" : "bg-[var(--surface-strong)]"}`}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${form.isRegisteredBusiness ? "bg-purple-500" : "bg-[var(--surface-strong)]"}`}
                     >
-                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform \${form.isRegisteredBusiness ? "translate-x-6" : "translate-x-1"}`} />
+                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${form.isRegisteredBusiness ? "translate-x-6" : "translate-x-1"}`} />
                     </button>
                   </div>
                 </div>
@@ -307,13 +307,13 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
             </div>
 
             {/* SECTION 2: Industry & Audience */}
-            <div className={`bb-glass rounded-2xl overflow-hidden transition-all duration-300 \${activeTab === 'industry' ? 'block' : 'hidden sm:hidden'}`}>
+            <div className={`bb-glass rounded-2xl overflow-hidden transition-all duration-300 ${activeTab === 'industry' ? 'block' : 'hidden sm:hidden'}`}>
               <div className="sm:hidden bg-[var(--surface-strong)] px-6 py-4 border-b border-[var(--border)] cursor-pointer" onClick={() => setActiveTab('industry')}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-base font-medium">
                     <Target size={16} className="text-purple" /> Industry & Audience
                   </div>
-                  <ChevronDown size={16} className={`transition-transform \${activeTab === 'industry' ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={16} className={`transition-transform ${activeTab === 'industry' ? 'rotate-180' : ''}`} />
                 </div>
               </div>
               <div className="p-6 space-y-6">
@@ -347,7 +347,7 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
                           key={age}
                           type="button"
                           onClick={() => toggleArray("targetAgeGroups", age)}
-                          className={`rounded-full px-3 py-1.5 text-xs transition \${(form.targetAgeGroups ?? []).includes(age) ? "bg-purple-500/25 text-purple border border-purple-500/50" : "bg-[var(--surface-strong)] text-ink-faint border border-transparent hover:bg-[var(--surface-strong)]"}`}
+                          className={`rounded-full px-3 py-1.5 text-xs transition ${(form.targetAgeGroups ?? []).includes(age) ? "bg-purple-500/25 text-purple border border-purple-500/50" : "bg-[var(--surface-strong)] text-ink-faint border border-transparent hover:bg-[var(--surface-strong)]"}`}
                         >
                           {age}
                         </button>
@@ -408,13 +408,13 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
             </div>
 
             {/* SECTION 3: Collaboration Preferences */}
-            <div className={`bb-glass rounded-2xl overflow-hidden transition-all duration-300 \${activeTab === 'collab' ? 'block' : 'hidden sm:hidden'}`}>
+            <div className={`bb-glass rounded-2xl overflow-hidden transition-all duration-300 ${activeTab === 'collab' ? 'block' : 'hidden sm:hidden'}`}>
               <div className="sm:hidden bg-[var(--surface-strong)] px-6 py-4 border-b border-[var(--border)] cursor-pointer" onClick={() => setActiveTab('collab')}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-base font-medium">
                     <Handshake size={16} className="text-purple" /> Collaboration Preferences
                   </div>
-                  <ChevronDown size={16} className={`transition-transform \${activeTab === 'collab' ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={16} className={`transition-transform ${activeTab === 'collab' ? 'rotate-180' : ''}`} />
                 </div>
               </div>
               <div className="p-6 space-y-6">
@@ -426,7 +426,7 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
                         key={item}
                         type="button"
                         onClick={() => toggleArray("collaborationLookingFor", item)}
-                        className={`rounded-full px-3 py-1.5 text-xs transition \${(form.collaborationLookingFor ?? []).includes(item) ? "bg-purple-500/25 text-purple border border-purple-500/50" : "bg-[var(--surface-strong)] text-ink-faint border border-transparent hover:bg-[var(--surface-strong)]"}`}
+                        className={`rounded-full px-3 py-1.5 text-xs transition ${(form.collaborationLookingFor ?? []).includes(item) ? "bg-purple-500/25 text-purple border border-purple-500/50" : "bg-[var(--surface-strong)] text-ink-faint border border-transparent hover:bg-[var(--surface-strong)]"}`}
                       >
                         {item}
                       </button>
@@ -470,13 +470,13 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
             </div>
 
             {/* SECTION 4: Verification & Social Proof */}
-            <div className={`bb-glass rounded-2xl overflow-hidden transition-all duration-300 \${activeTab === 'verification' ? 'block' : 'hidden sm:hidden'}`}>
+            <div className={`bb-glass rounded-2xl overflow-hidden transition-all duration-300 ${activeTab === 'verification' ? 'block' : 'hidden sm:hidden'}`}>
               <div className="sm:hidden bg-[var(--surface-strong)] px-6 py-4 border-b border-[var(--border)] cursor-pointer" onClick={() => setActiveTab('verification')}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-base font-medium">
                     <ShieldCheck size={16} className="text-purple" /> Verification & Social
                   </div>
-                  <ChevronDown size={16} className={`transition-transform \${activeTab === 'verification' ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={16} className={`transition-transform ${activeTab === 'verification' ? 'rotate-180' : ''}`} />
                 </div>
               </div>
               <div className="p-6 space-y-6">
@@ -527,7 +527,7 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
               <div className="flex items-start gap-4">
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-purple-500/20">
                   {form.logo ? (
-                    <img src={form.logo} alt="Logo" className="h-full w-full object-cover" />
+                    <img src={form.logo} alt="Logo" className="h-full w-full object-cover" loading="lazy" decoding="async" />
                   ) : (
                     <span className="text-xl font-semibold text-purple">
                       {form.companyName ? form.companyName.charAt(0) : "?"}
@@ -541,7 +541,7 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
                 <div className="inline-flex items-center gap-1.5 rounded-full bg-[var(--surface-strong)] px-2.5 py-1 text-[10px] text-ink-soft">
-                  <span className={`h-1.5 w-1.5 rounded-full \${form.availabilityStatus === 'Actively looking' ? 'bg-green-400' : form.availabilityStatus === 'Open to offers' ? 'bg-yellow-400' : 'bg-gray-400'}`}></span>
+                  <span className={`h-1.5 w-1.5 rounded-full ${form.availabilityStatus === 'Actively looking' ? 'bg-green-400' : form.availabilityStatus === 'Open to offers' ? 'bg-yellow-400' : 'bg-gray-400'}`}></span>
                   {form.availabilityStatus || "Open to offers"}
                 </div>
                 {form.businessType && (
@@ -559,7 +559,7 @@ export default function BrandProfileForm({ initial, onSubmit }: BrandProfileForm
       </div>
 
       {/* Floating Save Bar */}
-      <div className={`fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between border-t border-[var(--border)] bg-[#0a0a0a]/90 px-6 py-4 backdrop-blur-md transition-transform duration-300 \${isDirty ? "translate-y-0" : "translate-y-full"} md:pl-[17rem]`}>
+      <div className={`fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between border-t border-[var(--border)] bg-[#0a0a0a]/90 px-6 py-4 backdrop-blur-md transition-transform duration-300 ${isDirty ? "translate-y-0" : "translate-y-full"} lg:pl-[17rem]`}>
         <div className="text-sm text-ink-soft hidden sm:block">You have unsaved changes.</div>
         <div className="flex w-full sm:w-auto items-center justify-between sm:justify-start gap-4">
           <button onClick={() => { setForm(initial ?? {}); setIsDirty(false); }} className="text-sm text-ink-faint hover:text-ink transition flex-1 sm:flex-none">

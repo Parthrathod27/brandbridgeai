@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -13,7 +13,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(appUrl),
   title: "BrandBridge AI — Connect Brands. Launch Better Campaigns.",
   description:
     "AI-powered collaboration marketplace connecting brands, product owners, and freelancers to build smarter marketing campaigns.",
@@ -23,6 +26,16 @@ export const metadata: Metadata = {
       "Connecting brands. Empowering creators. Building smarter campaigns.",
     type: "website",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f7f7fb" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a12" },
+  ],
 };
 
 export default function RootLayout({

@@ -68,7 +68,7 @@ export default function BrandDetailModal({
         className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-200"
         onClick={onClose}
       />
-      <div className="bb-glass-strong relative z-10 flex max-h-[90vh] w-full flex-col overflow-hidden rounded-t-3xl sm:max-w-lg sm:rounded-3xl">
+      <div className="bb-glass-strong relative z-10 flex max-h-[90dvh] w-full flex-col overflow-hidden rounded-t-3xl sm:max-w-lg sm:rounded-3xl">
         <div className="flex items-center justify-between border-b border-[var(--border)] px-6 py-4">
           <h2 className="bb-display text-lg font-semibold">Brand Details</h2>
           <button onClick={onClose} className="rounded-lg p-1.5 text-ink-faint hover:bg-[var(--surface-strong)]">
@@ -87,7 +87,7 @@ export default function BrandDetailModal({
               <div className="flex items-start gap-4">
                 <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-purple-500/20 text-2xl font-semibold text-purple">
                   {brand.logo ? (
-                    <img src={brand.logo} alt={brand.companyName} className="h-full w-full object-cover" />
+                    <img src={brand.logo} alt={brand.companyName} className="h-full w-full object-cover" loading="lazy" decoding="async" />
                   ) : (
                     (brand.companyName || brand.name).charAt(0)
                   )}

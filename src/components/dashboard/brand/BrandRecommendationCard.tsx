@@ -90,7 +90,7 @@ export default function BrandRecommendationCard({
       <div className="flex items-start gap-4">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-purple-500/20">
           {rec.logo ? (
-            <img src={rec.logo} alt={rec.companyName} className="h-full w-full object-cover" />
+            <img src={rec.logo} alt={rec.companyName} className="h-full w-full object-cover" loading="lazy" decoding="async" />
           ) : (
             <span className="text-lg font-semibold text-purple">
               {rec.companyName.charAt(0)}

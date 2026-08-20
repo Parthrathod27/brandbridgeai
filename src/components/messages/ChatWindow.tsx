@@ -4,6 +4,19 @@ import { format } from "date-fns";
 import { UserRole } from "@/models/types";
 import AiAssistance from "./AiAssistance";
 
+const MESSAGE_POLL_MS = 5000;
+
+/** Cheap structural compare so background polls don't re-render an unchanged list. */
+function isSameMessageList(a: any[], b: any[]) {
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i++) {
+    if (a[i]?._id !== b[i]?._id) return false;
+    if (a[i]?.text !== b[i]?.text) return false;
+    if (a[i]?.isDeleted !== b[i]?.isDeleted) return false;
+  }
+  return true;
+}
+
 interface ChatWindowProps {
   conversation: any;
   role: UserRole;
@@ -32,6 +45,8 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const prevCountRef = useRef(0);
 
   useEffect(() => {
     if (toast) {
@@ -41,31 +56,62 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
   }, [toast]);
 
   useEffect(() => {
-    if (conversation?._id && !conversation.isTemp) {
-      fetchMessages(conversation._id);
-    } else {
+    if (!conversation?._id || conversation.isTemp) {
       setMessages([]);
       setIsLoading(false);
+      return;
     }
+
+    const id = conversation._id;
+    prevCountRef.current = 0;
+    fetchMessages(id);
+
+    // Poll so messages from the other participant arrive without a manual
+    // refresh. Paused while the tab is hidden to avoid useless requests.
+    const timer = setInterval(() => {
+      if (!document.hidden) fetchMessages(id, { silent: true });
+    }, MESSAGE_POLL_MS);
+
+    const onVisibilityChange = () => {
+      if (!document.hidden) fetchMessages(id, { silent: true });
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
   }, [conversation?._id, conversation?.isTemp]);
 
   useEffect(() => {
-    scrollToBottom();
+    if (messages.length === prevCountRef.current) return;
+    const grew = messages.length > prevCountRef.current;
+    const firstLoad = prevCountRef.current === 0;
+    prevCountRef.current = messages.length;
+    // Never yank the viewport away from someone reading earlier messages.
+    if (grew && (firstLoad || isNearBottom())) scrollToBottom();
   }, [messages]);
 
-  const fetchMessages = async (id: string) => {
-    setIsLoading(true);
+  const fetchMessages = async (id: string, options?: { silent?: boolean }) => {
+    if (!options?.silent) setIsLoading(true);
     try {
       const res = await fetch(`/api/messages?conversationId=${id}`);
       if (res.ok) {
         const data = await res.json();
-        setMessages(data.messages || []);
+        const next = data.messages || [];
+        setMessages((prev) => (isSameMessageList(prev, next) ? prev : next));
       }
     } catch (error) {
       console.error("Failed to fetch messages", error);
     } finally {
-      setIsLoading(false);
+      if (!options?.silent) setIsLoading(false);
     }
+  };
+
+  const isNearBottom = () => {
+    const el = messagesContainerRef.current;
+    if (!el) return true;
+    return el.scrollHeight - el.scrollTop - el.clientHeight < 120;
   };
 
   const scrollToBottom = () => {
@@ -339,7 +385,7 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
       )}
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4">
         {isLoading ? (
           <div className="flex justify-center items-center h-full">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple" />
@@ -364,7 +410,7 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
                   <div className="flex items-center gap-2">
                     {/* Action Menu for ME */}
                     {isMe && (
-                      <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                      <div className="opacity-100 transition-opacity flex items-center gap-1 sm:opacity-0 sm:group-hover:opacity-100">
                         <button
                           onClick={() => { setEditingMessageId(msg._id); setEditingText(msg.text); }}
                           className="p-1.5 text-ink-soft hover:text-ink bg-[var(--surface-strong)] rounded-full"
@@ -412,7 +458,7 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
                               <div className="flex flex-wrap gap-2 mt-2">
                                 {msg.attachments.map((url: string, i: number) => (
                                   <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="block">
-                                    <img src={url} alt="attachment" className="max-w-[200px] max-h-[200px] object-cover rounded-lg border border-[var(--border)]" />
+                                    <img src={url} alt="attachment" className="max-w-[200px] max-h-[200px] object-cover rounded-lg border border-[var(--border)]" loading="lazy" decoding="async" />
                                   </a>
                                 ))}
                               </div>
@@ -515,7 +561,7 @@ export default function ChatWindow({ conversation, role, currentUserId, onBack, 
             <div className="flex flex-wrap gap-2 px-2">
               {attachments.map((url, idx) => (
                 <div key={idx} className="relative group">
-                  <img src={url} alt="attachment" className="h-16 w-16 object-cover rounded-xl border border-[var(--border)]" />
+                  <img src={url} alt="attachment" className="h-16 w-16 object-cover rounded-xl border border-[var(--border)]" loading="lazy" decoding="async" />
                   <button
                     type="button"
                     onClick={() => setAttachments(prev => prev.filter((_, i) => i !== idx))}

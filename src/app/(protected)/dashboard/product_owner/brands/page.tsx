@@ -325,7 +325,7 @@ export default function FindBrandsPage() {
                         <div className="flex gap-3 items-center">
                           <div className="h-12 w-12 rounded-xl bg-purple-500/10 flex items-center justify-center font-bold text-purple text-lg border border-purple-500/15 overflow-hidden">
                             {b.profile.logo ? (
-                              <img src={b.profile.logo} alt="" className="h-full w-full object-cover" />
+                              <img src={b.profile.logo} alt="" className="h-full w-full object-cover" loading="lazy" decoding="async" />
                             ) : (
                               b.profile.companyName.charAt(0)
                             )}

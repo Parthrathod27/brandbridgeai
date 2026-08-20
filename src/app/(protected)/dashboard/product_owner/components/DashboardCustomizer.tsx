@@ -53,7 +53,7 @@ export default function DashboardCustomizer({
             <X size={18} />
           </button>
         </div>
-        <div className="max-h-[60vh] space-y-3 overflow-y-auto p-6">
+        <div className="max-h-[60dvh] space-y-3 overflow-y-auto p-6">
           {widgets.map((widget, i) => (
             <div
               key={widget.id}

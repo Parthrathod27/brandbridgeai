@@ -228,6 +228,20 @@ select.bb-input option {
   border-color: rgba(239, 68, 68, 0.6);
 }
 
+/* iOS Safari zooms the viewport when a focused field is under 16px.
+   Keep every form control at 16px on phones so focus never zooms. */
+@media (max-width: 640px) {
+  .bb-input,
+  input.bb-input,
+  select.bb-input,
+  textarea.bb-input,
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
 .bb-divider {
   display: flex;
   align-items: center;

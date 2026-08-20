@@ -17,13 +17,13 @@ export default function FreelancerDetailModal({ freelancer, onClose, onHire, onM
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-0">
-      <div className="bg-[#1a1a24] border border-[var(--border)] w-full max-w-4xl rounded-2xl shadow-2xl flex flex-col max-h-[90vh]">
+      <div className="bg-[#1a1a24] border border-[var(--border)] w-full max-w-4xl rounded-2xl shadow-2xl flex flex-col max-h-[90dvh]">
 
-        <div className="flex items-start justify-between p-6 border-b border-[var(--border)] shrink-0">
+        <div className="flex items-start justify-between p-4 sm:p-6 border-b border-[var(--border)] shrink-0">
           <div className="flex items-center gap-4">
             <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-purple-500/20 text-2xl font-semibold text-purple">
               {profile?.avatar ? (
-                <img src={profile.avatar} alt={freelancer.user?.name} className="h-full w-full object-cover" />
+                <img src={profile.avatar} alt={freelancer.user?.name} className="h-full w-full object-cover" loading="lazy" decoding="async" />
               ) : (
                 freelancer.user?.name?.charAt(0).toUpperCase()
               )}
@@ -57,7 +57,7 @@ export default function FreelancerDetailModal({ freelancer, onClose, onHire, onM
           </button>
         </div>
 
-        <div className="p-6 overflow-y-auto flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
             <div>
               <h3 className="font-medium text-ink mb-3">About</h3>
@@ -70,7 +70,7 @@ export default function FreelancerDetailModal({ freelancer, onClose, onHire, onM
                 <div className="grid grid-cols-2 gap-4">
                   {freelancer.portfolio.map((p) => (
                     <div key={p.title} className="group relative aspect-video overflow-hidden rounded-xl bg-[var(--surface-strong)] border border-[var(--border)]">
-                      <img src={p.mediaUrl} alt={p.title} className="h-full w-full object-cover transition-transform group-hover:scale-105" />
+                      <img src={p.mediaUrl} alt={p.title} className="h-full w-full object-cover transition-transform group-hover:scale-105" loading="lazy" decoding="async" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-3 opacity-0 group-hover:opacity-100 transition-opacity">
                         <span className="text-sm font-medium text-ink">{p.title}</span>
                       </div>

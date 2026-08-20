@@ -25,7 +25,7 @@ export default function ProductImageGallery({ images, name }: ProductImageGaller
     <div className="space-y-3">
       <div className="relative aspect-video overflow-hidden rounded-2xl bg-[var(--surface-strong)]">
         {current ? (
-          <img src={current} alt={`${name} image ${index + 1}`} className="h-full w-full object-cover" />
+          <img src={current} alt={`${name} image ${index + 1}`} className="h-full w-full object-cover" loading="lazy" decoding="async" />
         ) : (
           <div className="flex h-full items-center justify-center">
             <Package size={40} className="text-ink-faint" />
@@ -63,7 +63,7 @@ export default function ProductImageGallery({ images, name }: ProductImageGaller
                 i === index ? "border-purple-400" : "border-transparent opacity-70"
               }`}
             >
-              <img src={img} alt="" className="h-full w-full object-cover" />
+              <img src={img} alt="" className="h-full w-full object-cover" loading="lazy" decoding="async" />
             </button>
           ))}
         </div>

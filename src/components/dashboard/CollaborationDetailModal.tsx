@@ -43,10 +43,10 @@ export default function CollaborationDetailModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-0">
-      <div className="bg-[#1a1a24] border border-[var(--border)] w-full max-w-2xl rounded-2xl shadow-2xl flex flex-col max-h-[90vh]">
+      <div className="bg-[#1a1a24] border border-[var(--border)] w-full max-w-2xl rounded-2xl shadow-2xl flex flex-col max-h-[90dvh]">
         
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-[var(--border)]">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-[var(--border)]">
           <div>
             <h2 className="bb-display text-xl font-semibold">Collaboration Details</h2>
             <p className="text-sm text-ink-faint mt-1">Partnership with {collaboration.partnerName}</p>
@@ -57,7 +57,7 @@ export default function CollaborationDetailModal({
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto flex-1 space-y-6">
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1 space-y-6">
           
           {/* Status & Actions */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[var(--surface-strong)] rounded-xl p-4">

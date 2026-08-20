@@ -28,7 +28,7 @@ export default function BrandCard({
       <div className="flex items-start gap-4">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-purple-500/20">
           {logo ? (
-            <img src={logo} alt={companyName} className="h-full w-full object-cover" />
+            <img src={logo} alt={companyName} className="h-full w-full object-cover" loading="lazy" decoding="async" />
           ) : (
             <span className="text-lg font-semibold text-purple">
               {(companyName || "B").charAt(0)}

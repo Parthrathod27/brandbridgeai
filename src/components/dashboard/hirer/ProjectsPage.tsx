@@ -222,7 +222,7 @@ function NewProjectModal({ onClose, onSuccess }: { onClose: () => void; onSucces
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-      <div className="w-full max-w-2xl rounded-2xl bg-surface border border-[var(--border)] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+      <div className="w-full max-w-2xl rounded-2xl bg-surface border border-[var(--border)] shadow-2xl overflow-hidden max-h-[90dvh] flex flex-col">
         <div className="flex items-center justify-between border-b border-[var(--border)] px-6 py-4">
           <h2 className="bb-display text-lg font-medium text-ink">Post a Project</h2>
           <button onClick={onClose} className="rounded-full p-2 hover:bg-[var(--surface-strong)] transition-colors">

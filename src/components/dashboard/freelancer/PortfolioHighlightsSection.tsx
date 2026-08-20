@@ -54,11 +54,10 @@ export default function PortfolioHighlightsSection({ items }: PortfolioHighlight
               className="bb-card-interactive group overflow-hidden rounded-xl border border-[var(--border)]"
             >
               <div className="aspect-square overflow-hidden bg-[var(--surface-strong)]">
-                <img
+                <img 
                   src={item.mediaUrl}
                   alt={item.title}
-                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
+                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async" />
               </div>
               <div className="p-2">
                 <p className="truncate text-xs font-medium">{item.title}</p>

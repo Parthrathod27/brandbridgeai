@@ -104,7 +104,7 @@ export default function AIHubPage() {
             </h3>
 
             {activeTab === "proposal" && (
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="text-xs text-ink-faint">Sender Company Name</label>
                   <input
@@ -189,7 +189,7 @@ export default function AIHubPage() {
                   Running AI Hub models...
                 </div>
               ) : (
-                <div className="whitespace-pre-wrap text-xs text-ink leading-relaxed font-mono bg-white/2 border border-[var(--border)] rounded-xl p-4 overflow-x-auto max-h-[40vh]">
+                <div className="whitespace-pre-wrap text-xs text-ink leading-relaxed font-mono bg-white/2 border border-[var(--border)] rounded-xl p-4 overflow-x-auto max-h-[40dvh]">
                   {result}
                 </div>
               )}

@@ -36,7 +36,7 @@ export default function FreelancerCard({
       <div className="flex items-start gap-4">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-purple-500/20 text-lg font-semibold text-purple">
           {avatar ? (
-            <img src={avatar} alt={name} className="h-full w-full object-cover" />
+            <img src={avatar} alt={name} className="h-full w-full object-cover" loading="lazy" decoding="async" />
           ) : (
             name.charAt(0).toUpperCase()
           )}
@@ -82,7 +82,7 @@ export default function FreelancerCard({
         <div className="mt-4 grid grid-cols-3 gap-2">
           {portfolio.slice(0, 3).map((p) => (
             <div key={p.title} className="aspect-video overflow-hidden rounded-lg bg-[var(--surface-strong)]">
-              <img src={p.mediaUrl} alt={p.title} className="h-full w-full object-cover" />
+              <img src={p.mediaUrl} alt={p.title} className="h-full w-full object-cover" loading="lazy" decoding="async" />
             </div>
           ))}
         </div>

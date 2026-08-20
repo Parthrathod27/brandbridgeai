@@ -23,7 +23,7 @@ export default function ProductOwnerProductCard({
       <Link href={`/dashboard/product_owner/products/${product._id}`} className="block">
         <div className="relative aspect-video bg-[var(--surface-strong)]">
           {cover ? (
-            <img src={cover} alt={product.name} className="h-full w-full object-cover" />
+            <img src={cover} alt={product.name} className="h-full w-full object-cover" loading="lazy" decoding="async" />
           ) : (
             <div className="flex h-full items-center justify-center text-ink-faint">No image</div>
           )}

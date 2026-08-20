@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireAuth } from "@/lib/api-utils";
+import { checkAiRateLimit } from "@/lib/rate-limit";
 import Profile from "@/models/Profile";
 import { connectDB } from "@/lib/mongodb";
 import { generateText } from "@/lib/gemini";
@@ -9,6 +10,9 @@ export async function POST(req: Request) {
   try {
     const authResult = await requireAuth();
     if ("error" in authResult) return authResult.error;
+
+    const limited = checkAiRateLimit(authResult.auth.userId, "outreach");
+    if (limited) return limited;
 
     await connectDB();
     const uid = new Types.ObjectId(authResult.auth.userId);

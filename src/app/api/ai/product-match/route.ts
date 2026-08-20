@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { requireAuth, jsonError } from "@/lib/api-utils";
+import { checkAiRateLimit } from "@/lib/rate-limit";
 import { rankBrandsForProduct } from "@/lib/ai/matching";
 import Product from "@/models/Product";
 import Profile from "@/models/Profile";
@@ -10,6 +11,9 @@ export async function POST(request: Request) {
   try {
     const result = await requireAuth();
     if ("error" in result) return result.error;
+
+    const limited = checkAiRateLimit(result.auth.userId, "product-match");
+    if (limited) return limited;
 
     const { productId } = await request.json();
     if (!productId) return jsonError("productId required");

@@ -82,10 +82,10 @@ export default function CampaignFormModal({ onClose, onSuccess, initialCollabora
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-0">
-      <div className="bg-[#1a1a24] border border-[var(--border)] w-full max-w-xl rounded-2xl shadow-2xl flex flex-col max-h-[90vh]">
+      <div className="bg-[#1a1a24] border border-[var(--border)] w-full max-w-xl rounded-2xl shadow-2xl flex flex-col max-h-[90dvh]">
         
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-[var(--border)] shrink-0">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-[var(--border)] shrink-0">
           <div>
             <h2 className="bb-display text-xl font-semibold">New Campaign</h2>
             <p className="text-sm text-ink-faint mt-1">Setup your marketing initiative</p>
@@ -96,7 +96,7 @@ export default function CampaignFormModal({ onClose, onSuccess, initialCollabora
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto flex-1">
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1">
           {error && (
             <div className="mb-6 p-3 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl text-sm">
               {error}
@@ -132,7 +132,7 @@ export default function CampaignFormModal({ onClose, onSuccess, initialCollabora
               </select>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs text-ink-soft mb-2 uppercase tracking-wider">Campaign Type *</label>
                 <div className="relative">
@@ -173,7 +173,7 @@ export default function CampaignFormModal({ onClose, onSuccess, initialCollabora
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs text-ink-soft mb-2 uppercase tracking-wider">Start Date *</label>
                 <div className="relative">
@@ -222,7 +222,7 @@ export default function CampaignFormModal({ onClose, onSuccess, initialCollabora
         </div>
         
         {/* Footer */}
-        <div className="p-6 border-t border-[var(--border)] shrink-0 flex justify-end gap-3">
+        <div className="p-4 sm:p-6 border-t border-[var(--border)] shrink-0 flex justify-end gap-3">
           <button onClick={onClose} className="px-5 py-2.5 rounded-xl text-sm hover:bg-[var(--surface-strong)] transition-colors">
             Cancel
           </button>

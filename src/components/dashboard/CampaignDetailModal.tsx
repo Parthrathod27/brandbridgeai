@@ -85,10 +85,10 @@ export default function CampaignDetailModal({ campaign, onClose }: CampaignDetai
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-0">
-      <div className="bg-[#1a1a24] border border-[var(--border)] w-full max-w-4xl rounded-2xl shadow-2xl flex flex-col max-h-[90vh]">
+      <div className="bg-[#1a1a24] border border-[var(--border)] w-full max-w-4xl rounded-2xl shadow-2xl flex flex-col max-h-[90dvh]">
         
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-[var(--border)] shrink-0">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-[var(--border)] shrink-0">
           <div>
             <h2 className="bb-display text-2xl font-semibold flex items-center gap-3">
               {campaign.title}
@@ -106,7 +106,7 @@ export default function CampaignDetailModal({ campaign, onClose }: CampaignDetai
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6">
           
           <div className="lg:col-span-2 space-y-6">
             

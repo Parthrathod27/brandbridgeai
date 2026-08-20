@@ -63,7 +63,7 @@ export default function NotificationCenterModal({ onClose }: NotificationCenterM
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-      <div className="bb-glass w-full max-w-lg overflow-hidden rounded-2xl border border-[var(--border)] shadow-2xl flex flex-col max-h-[80vh]">
+      <div className="bb-glass w-full max-w-lg overflow-hidden rounded-2xl border border-[var(--border)] shadow-2xl flex flex-col max-h-[80dvh]">
         <div className="flex items-center justify-between border-b border-[var(--border)] px-6 py-4">
           <div className="flex items-center gap-2">
             <Bell size={18} className="text-purple" />

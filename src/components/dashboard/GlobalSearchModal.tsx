@@ -114,7 +114,7 @@ export default function GlobalSearchModal({ onClose }: GlobalSearchModalProps) {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-start justify-center bg-[var(--bg)]/65 p-4 pt-[10vh] backdrop-blur-sm">
-      <div className="bb-glass w-full max-w-xl overflow-hidden rounded-2xl border border-[var(--border)] shadow-2xl flex flex-col max-h-[60vh]">
+      <div className="bb-glass w-full max-w-xl overflow-hidden rounded-2xl border border-[var(--border)] shadow-2xl flex flex-col max-h-[60dvh]">
         {/* Search bar */}
         <div className="flex items-center gap-3 border-b border-[var(--border)] px-4 py-3 bg-white/2">
           <Search size={18} className="text-purple shrink-0" />

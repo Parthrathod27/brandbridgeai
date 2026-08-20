@@ -2,6 +2,7 @@ import { createHash } from "crypto";
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { requireAuth, jsonError } from "@/lib/api-utils";
+import { checkAiRateLimit } from "@/lib/rate-limit";
 import Profile from "@/models/Profile";
 import {
   discoverExternalBrands,
@@ -40,6 +41,9 @@ export async function GET(request: Request) {
   try {
     const result = await requireAuth();
     if ("error" in result) return result.error;
+
+    const limited = checkAiRateLimit(result.auth.userId, "external-brands");
+    if (limited) return limited;
 
     const refresh = new URL(request.url).searchParams.get("refresh") === "true";
 

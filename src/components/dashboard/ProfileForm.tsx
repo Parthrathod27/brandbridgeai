@@ -115,21 +115,19 @@ export default function ProfileForm({
         <div className="bb-glass flex items-center gap-5 rounded-2xl p-5">
           {form.avatar && (
             <div className="text-center">
-              <img
+              <img 
                 src={form.avatar}
                 alt="Avatar"
-                className="h-20 w-20 rounded-2xl object-cover ring-2 ring-purple-500/30"
-              />
+                className="h-20 w-20 rounded-2xl object-cover ring-2 ring-purple-500/30" loading="lazy" decoding="async" />
               <p className="mt-1.5 text-[10px] text-ink-faint">Avatar</p>
             </div>
           )}
           {form.logo && (
             <div className="text-center">
-              <img
+              <img 
                 src={form.logo}
                 alt="Logo"
-                className="h-20 w-20 rounded-2xl object-cover ring-2 ring-purple-500/30"
-              />
+                className="h-20 w-20 rounded-2xl object-cover ring-2 ring-purple-500/30" loading="lazy" decoding="async" />
               <p className="mt-1.5 text-[10px] text-ink-faint">Logo</p>
             </div>
           )}
@@ -299,7 +297,7 @@ export default function ProfileForm({
         {role === "hirer" && (
           <div className="mt-6 border-t border-[var(--border)] pt-6">
             <h3 className="mb-4 text-sm font-medium text-ink">Hiring History Stats</h3>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="rounded-xl bg-[var(--surface-strong)] p-4 text-center">
                 <p className="text-xs text-ink-faint mb-1">Total Projects</p>
                 <p className="text-xl font-semibold text-ink">{form.totalProjectsPosted ?? 0}</p>

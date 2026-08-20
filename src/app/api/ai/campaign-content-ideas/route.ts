@@ -1,11 +1,15 @@
 import { NextResponse } from "next/server";
 import { requireAuth, jsonError } from "@/lib/api-utils";
+import { checkAiRateLimit } from "@/lib/rate-limit";
 import { generateText } from "@/lib/gemini";
 
 export async function POST(request: Request) {
   try {
     const result = await requireAuth();
     if ("error" in result) return result.error;
+
+    const limited = checkAiRateLimit(result.auth.userId, "campaign-content-ideas");
+    if (limited) return limited;
 
     const body = await request.json();
     const { campaignName, type, goal, partnerName, initiatorName } = body;

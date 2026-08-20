@@ -31,7 +31,7 @@ export default function PendingProposalRow({
       <div className="flex min-w-0 flex-1 items-center gap-3">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-purple-500/20 text-sm font-semibold text-purple">
           {item.partnerAvatar ? (
-            <img src={item.partnerAvatar} alt={item.partnerName} className="h-full w-full object-cover" />
+            <img src={item.partnerAvatar} alt={item.partnerName} className="h-full w-full object-cover" loading="lazy" decoding="async" />
           ) : (
             item.partnerName.charAt(0)
           )}

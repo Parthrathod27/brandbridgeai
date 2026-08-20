@@ -7,6 +7,8 @@ import ChatWindow from "./ChatWindow";
 import ContextPanel from "./ContextPanel";
 import { UserRole } from "@/models/types";
 
+const CONVERSATION_POLL_MS = 15000;
+
 interface MessagesCenterProps {
   role: UserRole;
 }
@@ -43,12 +45,34 @@ export default function MessagesCenter({ role }: MessagesCenterProps) {
     fetchConversations();
   }, [partnerId, partnerName]);
 
-  const fetchConversations = async () => {
+  // Surface conversations started by other people without a page reload.
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!document.hidden) fetchConversations({ silent: true });
+    }, CONVERSATION_POLL_MS);
+    return () => clearInterval(timer);
+  }, []);
+
+  const fetchConversations = async (options?: { silent?: boolean }) => {
     try {
       const res = await fetch("/api/conversations");
       if (res.ok) {
         const data = await res.json();
         let convs = data.conversations || [];
+
+        if (options?.silent) {
+          // Background refresh must not steal the user's current selection.
+          // Keep any unsent draft conversation that the server doesn't know yet.
+          setConversations((prev) => {
+            const drafts = prev.filter(
+              (c: any) =>
+                c.isTemp &&
+                !convs.some((n: any) => n.otherUser?._id === c.otherUser?._id),
+            );
+            return [...drafts, ...convs];
+          });
+          return;
+        }
 
         if (partnerId) {
           const existing = convs.find((c: any) => c.otherUser?._id === partnerId);
@@ -93,7 +117,7 @@ export default function MessagesCenter({ role }: MessagesCenterProps) {
   const activeConversation = conversations.find(c => c._id === activeConversationId);
 
   return (
-    <div className="flex h-[calc(100vh-80px)] overflow-hidden bg-bg text-ink">
+    <div className="flex h-[calc(100dvh-5.75rem)] sm:h-[calc(100dvh-6.5rem)] lg:h-[calc(100dvh-8rem)] overflow-hidden bg-bg text-ink">
       {/* Left Panel: Conversation List */}
       <div
         className={`${showChatOnMobile ? "hidden md:flex" : "flex"} w-full md:w-80 lg:w-96 flex-col border-r border-[var(--border)]`}
@@ -160,7 +184,7 @@ export default function MessagesCenter({ role }: MessagesCenterProps) {
       {activeConversation && isContextPanelOpen && (
         <div className="fixed inset-0 z-50 lg:hidden flex flex-col justify-end">
           <div className="absolute inset-0 bg-black/60" onClick={() => setIsContextPanelOpen(false)} />
-          <div className="bg-surface w-full max-h-[80vh] rounded-t-2xl relative flex flex-col">
+          <div className="bg-surface w-full max-h-[80dvh] rounded-t-2xl relative flex flex-col">
             <div className="p-4 border-b border-[var(--border)] flex justify-between items-center">
               <h3 className="font-semibold text-lg">Details</h3>
               <button onClick={() => setIsContextPanelOpen(false)} className="text-ink-soft p-2">

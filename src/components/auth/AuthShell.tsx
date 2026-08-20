@@ -106,7 +106,7 @@ export default function AuthShell({ children, title, subtitle }: AuthShellProps)
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="bb-glass-strong w-full max-w-lg rounded-3xl p-8"
+          className="bb-glass-strong w-full max-w-lg rounded-3xl p-6 sm:p-8"
         >
           <div className="mb-6 text-center">
             <h2 className="bb-display text-2xl font-semibold">{title}</h2>

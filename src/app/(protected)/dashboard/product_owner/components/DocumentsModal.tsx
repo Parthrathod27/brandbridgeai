@@ -84,7 +84,7 @@ export default function DocumentsModal({ onClose }: DocumentsModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-      <div className="bb-glass w-full max-w-3xl overflow-hidden rounded-2xl border border-[var(--border)] shadow-2xl flex flex-col max-h-[85vh]">
+      <div className="bb-glass w-full max-w-3xl overflow-hidden rounded-2xl border border-[var(--border)] shadow-2xl flex flex-col max-h-[85dvh]">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-[var(--border)] px-6 py-4">
           <h3 className="bb-display text-base font-semibold text-ink flex items-center gap-2">

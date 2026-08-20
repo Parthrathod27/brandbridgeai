@@ -61,7 +61,7 @@ export default function PortfolioPage() {
             <Upload size={14} /> {uploading ? "Uploading..." : "Upload Media"}
             <input type="file" accept="image/*" className="hidden" onChange={handleUpload} />
           </label>
-          {form.mediaUrl && <img src={form.mediaUrl} alt="Preview" className="h-32 rounded-xl object-cover" />}
+          {form.mediaUrl && <img src={form.mediaUrl} alt="Preview" className="h-32 rounded-xl object-cover" loading="lazy" decoding="async" />}
           <button type="submit" disabled={!form.mediaUrl} className="bb-btn-primary rounded-xl px-4 py-2 text-sm">Save</button>
         </form>
       )}
@@ -71,7 +71,7 @@ export default function PortfolioPage() {
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (
             <div key={item._id} className="bb-glass overflow-hidden rounded-2xl">
-              <div className="aspect-video"><img src={item.mediaUrl} alt={item.title} className="h-full w-full object-cover" /></div>
+              <div className="aspect-video"><img src={item.mediaUrl} alt={item.title} className="h-full w-full object-cover" loading="lazy" decoding="async" /></div>
               <div className="p-4">
                 <h3 className="bb-display font-medium">{item.title}</h3>
                 {item.category && <p className="text-xs text-purple">{item.category}</p>}

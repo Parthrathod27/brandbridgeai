@@ -80,7 +80,7 @@ export default function DashboardHeader({ role, onMenuOpen, onSearchOpen }: Dash
           )}
         </button>
         {open && (
-          <div className="absolute right-0 top-full z-50 mt-2 w-80 rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-3 shadow-xl">
+          <div className="absolute right-0 top-full z-50 mt-2 w-[calc(100vw-1.5rem)] max-w-80 rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-3 shadow-xl">
             <div className="mb-2 flex items-center justify-between">
               <span className="text-sm font-medium">Notifications</span>
               {unreadCount > 0 && (

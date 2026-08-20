@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { requireAuth, jsonError, parseBody } from "@/lib/api-utils";
+import { checkAiRateLimit } from "@/lib/rate-limit";
 import { aiMatchSchema } from "@/lib/validators";
 import { analyzeBrandCompatibility } from "@/lib/ai/matching";
 import Profile from "@/models/Profile";
@@ -10,6 +11,9 @@ export async function POST(request: Request) {
   try {
     const result = await requireAuth();
     if ("error" in result) return result.error;
+
+    const limited = checkAiRateLimit(result.auth.userId, "match");
+    if (limited) return limited;
 
     const body = await request.json();
     const parsed = parseBody(aiMatchSchema, body);

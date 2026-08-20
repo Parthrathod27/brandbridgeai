@@ -157,7 +157,7 @@ export default function ProductForm({
         <div className="flex flex-wrap gap-3">
           {form.images.map((img, i) => (
             <div key={img + i} className="relative h-20 w-20 overflow-hidden rounded-xl">
-              <img src={img} alt="" className="h-full w-full object-cover" />
+              <img src={img} alt="" className="h-full w-full object-cover" loading="lazy" decoding="async" />
               <button
                 type="button"
                 onClick={() => removeImage(i)}
